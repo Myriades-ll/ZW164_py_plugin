@@ -1,0 +1,10 @@
+Domoticz
+*.code-workspace
+__pycache__
+test?.py
+*.txt
+Algo
+*.pdf
+*.log
+wrapper
+htmls
