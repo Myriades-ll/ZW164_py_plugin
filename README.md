@@ -15,7 +15,7 @@ This plugin is intended to get you ability to use of [AEOTEC Ltd. Siren ZW164](h
 
 ## Install
 
-`git clone https://`
+`git clone https://github.com/Myriades-ll/ZW164_py_plugin.git`
 
 ## Notes
 
