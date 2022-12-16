@@ -179,7 +179,6 @@ class Mqtt:
                 if len(self._mqtt_id) == 0:
                     self._mqtt_id = pcf.mqtt_id = self._name + \
                         '_' + str(time_ns())
-        # self._mqtt_id = self._name + '_' + str(time_ns())
         return self._mqtt_id
 
     def on_start(self: Mqtt, parameters: dict) -> None:
@@ -206,7 +205,6 @@ class Mqtt:
             if not self._mqtt_connected:
                 mqtt_connect = MqttConnect()
                 mqtt_connect.ID = self._get_id()
-                # helpers.debug(mqtt_connect)
                 self._send_domoticz(mqtt_connect)
 
     def on_message(self: Mqtt, omer: OMER) -> Optional[Any]:
@@ -214,7 +212,6 @@ class Mqtt:
         self._last_request_time = time()
         if omer.connection is self._conn:
             response = MQTTResponse(**omer.data)
-            # helpers.debug(response)
             if response.Verb == 'CONNACK':  # follow CONNECT
                 if self._on_connack(response):
                     helpers.status('MQTT connection successfull!')
@@ -242,13 +239,6 @@ class Mqtt:
         """Publish new message on broker"""
         mqtt_publish = MqttPublish(topic, dumps(payload))
         self._send_domoticz(mqtt_publish)
-        # publish = {
-        #     'Verb': 'PUBLISH',
-        #     'Topic': topic,
-        #     'Payload': dumps(value),
-        #     'QoS': 0
-        # }
-        # self._conn.Send(mqtt_publish)
 
     def subscribe(self: Mqtt, topic: Union[str, List[str]], qos: int = 0) -> None:
         """Subscribe to topic"""
