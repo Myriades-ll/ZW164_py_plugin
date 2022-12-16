@@ -15,7 +15,10 @@ This plugin is intended to get you the ability to use the [AEOTEC Ltd. Siren ZW1
 
 ## Install
 
-`git clone https://github.com/Myriades-ll/ZW164_py_plugin.git`
+```Shell
+git clone https://github.com/Myriades-ll/ZW164_py_plugin.git
+sudo systemctl restart domoticz.service
+```
 
 ## Usage
 

@@ -1,2 +1,2 @@
 """Module init"""
-from app.app import DomXZW164
+from app.app2 import App2

@@ -6,12 +6,21 @@
 # standard libs
 from __future__ import annotations
 
-from typing import Any, Dict, Union
+from dataclasses import dataclass
+from typing import Dict, Union
 
-# Domoticz lib
+# plugin libs
 import Domoticz
-# helpers libs
 from helpers.common import debug, error
+
+
+@dataclass
+class DeviceMappingDatas:
+    """DeviceMappingDatas"""
+    endpoint_id: int
+    node_id: int
+    topic: str
+    unit: int
 
 
 class AppConfig:
@@ -54,7 +63,7 @@ class AppConfig:
         self._update_domoticz()
 
     @property
-    def device_mapping(self: AppConfig) -> dict:
+    def device_mapping(self: AppConfig) -> Dict[str, DeviceMappingDatas]:
         """Renvoie le device_mapping"""
         # set default value if not exists
         if 'device_mapping' not in self._config:
@@ -62,7 +71,7 @@ class AppConfig:
         return self._config['device_mapping']
 
     @device_mapping.setter
-    def device_mapping(self: AppConfig, value: Dict[str, Any]) -> None:
+    def device_mapping(self: AppConfig, value: Dict[str, DeviceMappingDatas]) -> None:
         """Positionne le device_mapping sur sa valeur"""
         if not isinstance(value, dict):
             raise TypeError(
