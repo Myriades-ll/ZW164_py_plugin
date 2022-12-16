@@ -8,24 +8,14 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from json import loads
-from typing import Any, List
+from typing import Any
 
-# plugin libs
-import Domoticz
-from domoticz.responses import OnCommandResponse as OCDR
 # pylint:disable=invalid-name
 
 
 @dataclass
 class ZwavePayloadDatas:
-    """ZwavePayload
-    {
-        "time":1670832488419,
-        "value":1,
-        "nodeName":"Sirène",
-        "nodeLocation":"Salon"
-    }
-    """
+    """ZwavePayload"""
     time: int
     value: Any
     nodeName: str
@@ -59,31 +49,9 @@ class ZwaveGateway:
         return bool(self.command_topic) and self.status and bool(self.version)
 
 
-class Zwave:
-    """Zwave manager"""
-
-
 @dataclass
 class SendCommandResult:
-    """Send command result
-
-    {
-        'success': True,
-        'message': 'Success zwave api call',
-        'result': 30,
-        'args': [
-            {
-                'nodeId': 32,
-                'commandClass': 121,
-                'endpoint': 0
-            },
-            'getToneCount',
-            []
-        ],
-        'origin': {'args': [{'nodeId': 32, 'commandClass': 121, 'endpoint': 0}, 'getToneCount', []]}
-    }
-
-    """
+    """Send command result"""
     args: list
     message: str
     origin: dict
@@ -104,33 +72,3 @@ class SendCommandResult:
             self.endpoint = target.get('endpoint')
             self.command = self.args[1]
             self.command_args = self.args[2]
-        # helpers.debug(self)
-
-
-class SoundSwitchCommand:
-    """SoundSwitchCommand"""
-    _command_ready = False
-    _command: list = []
-    _ocdr: OCDR
-    _device: Domoticz.Device
-
-    def __init__(self: SoundSwitchCommand, device: Domoticz.Device, ocdr: OCDR) -> None:
-        """Initialisation de la classe"""
-        node_id, endpoint_id, topic = device.DeviceID.split(
-            '_'
-        )
-        self._command.append(f"zwave/{node_id}/121/{endpoint_id}/{topic}/set")
-        value = 0
-        if ocdr.command == 'Set Level':
-            if topic == 'defaultVolume':
-                value = ocdr.level
-            elif topic == 'toneId':
-                if ocdr.level == 310:
-                    value = 255
-                else:
-                    value = int(ocdr.level / 10)
-        self._command.append(value)
-
-    def get_command(self: SoundSwitchCommand) -> List[str, int]:
-        """get_command"""
-        return self._command

@@ -77,9 +77,6 @@ class DeviceMapping:
 
     def index_of_unit(self: DeviceMapping, search_unit: int) -> Optional[str]:
         """search index of `search` in device mapping"""
-        # helpers.debug(
-        #     f'device mapping: ({type(self._devices_mapping)}){self._devices_mapping}'
-        # )
         for key, value in self._devices_mapping.items():
             if value.unit == search_unit:
                 return key
@@ -208,14 +205,13 @@ class DzDevices(DeviceMapping):
                     'sValue': str(value)
                 }
             )
-        # helpers.debug(f'Mise à jour volume: {kwargs}')
         return kwargs
 
     def _create_default_tone(
             self: DzDevices, endpoint: CCSSEndpoint,
             topic: str, device_id: str) -> Domoticz.Device:
         """creates a toneId device"""
-        # preparing options
+        # preparing device options
         tones = dict(sorted(endpoint.tones.items()))
         names = ''
         actions = '|' * (len(tones) - 1)
@@ -225,14 +221,13 @@ class DzDevices(DeviceMapping):
                 names += f' ({values.duration}s)'
             names += '|'
         names = names[:-1]
-        # updating options
+        # creating device options
         options = {
             "LevelActions": actions,
             "LevelNames": names,
             "LevelOffHidden": "false",
             "SelectorStyle": "1"  # drop down
         }
-        # helpers.debug(options)
         # create the device
         my_dev = Domoticz.Device(
             Name=f'N{endpoint.node_id}E{endpoint.endpoint_id}: tone',
