@@ -228,7 +228,7 @@ class CCSSNodes(Iterable):
         self._is_new = False
         if '/121/' in topic:  # is soundswitch commandclass
             return self._update_node_endpoint(topic, payload)
-        elif topic.endswith("sendCommand"):
+        if topic.endswith("sendCommand"):
             self._update_node_infos(payload)
         elif topic.endswith("status"):
             self._update_status(payload)
