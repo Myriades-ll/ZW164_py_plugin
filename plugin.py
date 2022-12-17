@@ -30,7 +30,6 @@
 # plugin libs
 import helpers
 import app
-# from domoticz.responses import OnCommandResponse as OCDR
 from domoticz.responses import OnConnectResponse as OCTR
 from domoticz.responses import OnDisconnectResponse as ODTR
 from domoticz.responses import OnMessageResponse as OMER
