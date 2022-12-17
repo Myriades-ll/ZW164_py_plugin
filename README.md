@@ -8,7 +8,7 @@ This plugin is intended to get you the ability to use Zwave hardwares that embed
 ## Prerequisites
 
 - [Domoticz](https://www.domoticz.com/) functional
-- A ==MQTT Auto Discover Client Gateway with LAN interface== plugin functional
+- A **MQTT Auto Discover Client Gateway with LAN interface** plugin functional
 
 ## functional hardwares
 
@@ -30,13 +30,13 @@ sudo systemctl restart domoticz.service
 
 ### Zwave-js-ui
 
-Set the retain flag ==ON== like in the picture below. This plugin don't use the autodiscovery. It has his own system. You may have to restart zwave-js-ui to get topic retained working.
+Set the retain flag **ON** like in the picture below. This plugin don't use the autodiscovery. It has his own system. You may have to restart zwave-js-ui to get topic retained working.
 
 ![retain flag][def_retain_flag]
 
 ### Domoticz
 
-Add the new hardware named ==CCSoundSwitch through Zwave-JS-UI==. Fill required fields, then start the plugin.
+Add the new hardware named **CCSoundSwitch through Zwave-JS-UI**. Fill required fields, then start the plugin.
 
 Plugin initialization may take a few time; at most 30 seconds; it has to retrieve some data from hardware.
 
