@@ -12,10 +12,9 @@ This plugin is intended to get you the ability to use Zwave hardwares that embed
 
 ## functional hardwares
 
-- [AEOTEC Siren 6 (ZW164)](https://aeotec.com/products/aeotec-siren-6)
-- [AEOTEC Doorbell 6 (ZW162)](https://aeotec.com/products/aeotec-doorbell-6)
+see [functionnal hardwares](docs/hardwares.md)
 
-Please, send feedback for your onw hardware; not listed above ;)
+Please, send feedback for your onw hardware; not listed ;)
 
 ## Install
 
