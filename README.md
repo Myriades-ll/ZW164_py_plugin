@@ -14,7 +14,7 @@ This plugin is intended to get you the ability to use Zwave hardwares that embed
 
 see [functionnal hardwares](docs/hardwares.md)
 
-Please, send feedback for your onw hardware; not listed ;)
+Please, send feedback for your onw hardware; not listed 😉
 
 ## Install
 
