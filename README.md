@@ -67,7 +67,8 @@ If you turn off the volume, the endpoint won't play anymore sound; it will be sk
 If you upgrade from version 1.0.0:
 
 - stop the previous plugin
-- delete it if you want
+- delete it; highly recommanded
+- install the new plugin; [see above](#install)
 - add the new plugin as [described above](#domoticz)
 
 [domoticz_shield]: <https://img.shields.io/badge/Domoticz-2022.2-brightgreen>
