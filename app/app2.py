@@ -13,7 +13,7 @@ import helpers
 from app.devices.devices import DzDevices
 from app.mqtt.mqtt import Mqtt, MQTTResponse
 from app.zwave.soundswitch import CCSSEndpoint, CCSSNodes
-from app.zwave.zwave import Zwave, ZwaveGateway
+from app.zwave.zwave import ZwaveGateway
 from domoticz.responses import OnCommandResponse as OCDR
 from domoticz.responses import OnConnectResponse as OCTR
 from domoticz.responses import OnDeviceRemovedResponse as ODRR
@@ -28,7 +28,6 @@ __author__ = "Laurent aka Myriades"
 class App2:
     """The core V2"""
     _mqtt = Mqtt()
-    _zwave = Zwave()
     _zwave_gateway = ZwaveGateway()
     _soundswitches = CCSSNodes()
     _dz_devices = DzDevices()
