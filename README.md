@@ -37,7 +37,8 @@ sudo systemctl restart domoticz.service
 ### Zwave-js-ui
 
 Set the retain flag ON
-![retain flag](/pictures/zjsui_retain.png "Retain flag")
+
+![retain flag][def_retain_flag]
 
 ### Domoticz
 
@@ -64,8 +65,8 @@ If you turn off the volume, the endpoint won't play anymore sound; it will be sk
 
 - might work with every z-wave device that embed the  [COMMAND_CLASS_SOUND_SWITCH](https://z-wave.me/files/manual/z-way/Command_Class_Reference.html#SECTION0016470000000000000000).
 
-[def_retain_flag]: [retain flag](https://github.com/Myriades-ll/ZW164_py_plugin/blob/Dev/pictures/zjsui_retain.png) "Retain flag"
 [domoticz_shield]: <https://img.shields.io/badge/Domoticz-2022.2-brightgreen>
 [python_shield]: <https://img.shields.io/badge/Python-3.7-brightgreen>
 [zjsui_shield]: <https://img.shields.io/badge/Python-3.7-brightgreen>
 [release_shield]: <https://img.shields.io/github/v/release/Myriades-ll/ZW164_py_plugin?color=green&logo=Version&style=flat>
+[def_retain_flag]: /pictures/zjsui_retain.png "Retain flag"
