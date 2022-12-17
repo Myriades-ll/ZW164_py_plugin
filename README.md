@@ -65,7 +65,7 @@ If you turn off the volume, the endpoint won't play anymore sound; it will be sk
 
 ## Note
 
-If you update from version 1.0.0:
+If you upgrade from version 1.0.0:
 
 - stop the previous plugin
 - delete it if you want
