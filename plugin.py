@@ -7,8 +7,8 @@
     <params>
         <param field="Address" label="IP du broker MQTT" width="100px" required="true" default="IPV4 (eg: 127.0.0.1)"/>
         <param field="Port" label="Port" width="50px" required="true" default="1883"/>
-        <param field="Username" label="MQTT login" width="150px" required="true"/>
-        <param field="Password" label="MQTT password" width="150px" required="true" password="true"/>
+        <param field="Username" label="MQTT login" width="150px"/>
+        <param field="Password" label="MQTT password" width="150px" password="true"/>
         <param field="Mode1" label="Plan name" width="100px"/>
         <param field="Mode6" label="Debugging">
             <options>
