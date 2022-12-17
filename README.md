@@ -74,6 +74,6 @@ If you upgrade from version 1.0.0:
 [domoticz_shield]: <https://img.shields.io/badge/Domoticz-2022.2-brightgreen>
 [python_shield]: <https://img.shields.io/badge/Python-3.7-brightgreen>
 [zjsui_shield]: <https://img.shields.io/badge/Zwave_JS_UI-8.4.1-brightgreen>
-[release_shield]: <https://img.shields.io/github/v/release/Myriades-ll/ZW164_py_plugin?color=green&logo=Version&style=flat>
+[release_shield]: <https://img.shields.io/github/v/release/Myriades-ll/ZW164_py_plugin?color=orange&logo=Version&style=flat>
 [def_retain_flag]: /pictures/zjsui_retain.png "Retain flag"
 [def_CCSS]: https://z-wave.me/files/manual/z-way/Command_Class_Reference.html#SECTION0016470000000000000000
