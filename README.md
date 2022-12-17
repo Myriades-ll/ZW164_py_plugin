@@ -30,15 +30,21 @@ sudo systemctl restart domoticz.service
 
 ### Zwave-js-ui
 
-Set the retain flag **ON** like in the picture below. This plugin don't use the autodiscovery. It has his own system. You may have to restart zwave-js-ui to get topic retained working.
+Set the retain flag **ON** like in the picture below.
 
 ![retain flag][def_retain_flag]
+
+This plugin don't use the autodiscovery. It has its own system. You may have to restart **zwave-js-ui** to get the retain working.
+
+```Shell
+sudo zwave-js-ui.restart
+```
 
 ### Domoticz
 
 Add the new hardware named **CCSoundSwitch through Zwave-JS-UI**. Fill required fields, then start the plugin.
 
-Plugin initialization may take a few time; at most 30 seconds; it has to retrieve some data from hardware.
+Plugin initialization may take a few time; at most 30 seconds; it has to retrieve some data from hardware. See Domoticz logs to view what's done.
 
 ## Usage
 
@@ -56,6 +62,14 @@ So first, adjust the volume and then select a sound to play it instantly.
 You can't change actual volume while playing a sound. It will change for the next sound.
 
 If you turn off the volume, the endpoint won't play anymore sound; it will be skipped.
+
+## Note
+
+If you update from version 1.0.0:
+
+- stop the previous plugin
+- delete it if you want
+- add the new plugin as [described above](#domoticz)
 
 [domoticz_shield]: <https://img.shields.io/badge/Domoticz-2022.2-brightgreen>
 [python_shield]: <https://img.shields.io/badge/Python-3.7-brightgreen>
