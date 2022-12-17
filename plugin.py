@@ -3,7 +3,7 @@
 
 # pylint: disable=line-too-long
 """
-<plugin key="zw164_pyplug" name="SoundSwitch through Zwave-JS-UI" author="Myriades" version="2.0.0" wikilink="https://github.com/Myriades-ll/FreeBox/blob/Dev/README.md">
+<plugin key="zw164_pyplug" name="CCSoundSwitch through Zwave-JS-UI" author="Myriades" version="2.0.0" wikilink="https://github.com/Myriades-ll/FreeBox/blob/Dev/README.md">
     <params>
         <param field="Address" label="IP du broker MQTT" width="100px" required="true" default="IPV4 (eg: 127.0.0.1)"/>
         <param field="Port" label="Port" width="50px" required="true" default="1883"/>
