@@ -12,9 +12,10 @@ from urllib.parse import quote
 
 # local libs
 from domoticz.responses import OnMessageResponse as OMER
-from helpers import api, log_func
+from helpers import api
 from helpers.app_config import AppConfig
 from helpers.common import debug, error, status
+from helpers.decorators import log_func
 from helpers.requests import RequestMethod, RequestRequest, RequestResponse
 
 
