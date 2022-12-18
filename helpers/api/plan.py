@@ -5,9 +5,11 @@
 # standard libs
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from enum import IntFlag, auto
-from typing import List, Optional, Union
+from gzip import decompress
+from json import loads
+from typing import Any, Dict, List, Optional, Union
 from urllib.parse import quote
 
 # local libs
@@ -27,7 +29,25 @@ class PlanDatas:
     Name: str
     Order: str
     idx: str
+
+
+@dataclass
+class HTTPHeaders:
+    """HTTPHeaders"""
+
+
+@dataclass
+class HTTPResponse:
+    """HTTPResponse"""
+    Status: str
+    Headers: Dict[str, Any]
+    Data: bytes
+    decoded_datas: Dict[str, Any] = field(default_factory=dict, init=False)
 # pylint:enable=invalid-name
+
+    def __post_init__(self: HTTPResponse) -> None:
+        """post init"""
+        self.decoded_datas = loads(decompress(self.Data))
 
 
 class PlanSteps(IntFlag):
@@ -92,7 +112,7 @@ class Plan:
     @log_func('debug', True, True)
     def next_step(self: Plan) -> None:
         """Execute next step to check Domoticz plan
-        #ignore_self_arg
+        # ignore_self_arg
         """
         debug(f'Cur step: {self._step}')
         if self._step & PlanSteps.GET_PLANS:
@@ -114,9 +134,11 @@ class Plan:
         elif self._step & PlanSteps.ADD_DEVICE:
             self._process_add_device()
 
-    def message(self: Plan, reponse: RequestResponse) -> None:
+    def message(self: Plan, omer: OMER) -> None:
         """Réception des données"""
-        debug(f'<Plan.message>{reponse}')
+        http_reponse = HTTPResponse(**omer.datas)
+        debug(f'<Plan.message>{http_reponse}')
+        return
         # retrieve plan list
         if self._step & PlanSteps.GET_PLANS:
             for plan in reponse.datas:
