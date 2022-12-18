@@ -55,6 +55,14 @@ Each device represent the actual values of your hardware.
 
 So first, adjust the volume and then select a sound to play it instantly.
 
+## Update
+
+in this plugin folder; usually ~/domoticz/plugins/ZW164_py_plugin
+
+```Shell
+git pull
+```
+
 ## Limits
 
 You can't change actual volume while playing a sound. It will change for the next sound.
