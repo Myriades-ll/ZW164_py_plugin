@@ -235,8 +235,7 @@ class Mqtt:
 
     def publish(self: Mqtt, topic: str, payload: Any) -> None:
         """Publish new message on broker"""
-        mqtt_publish = MqttPublish(topic, dumps(payload))
-        self._send_domoticz(mqtt_publish)
+        self._send_domoticz(MqttPublish(topic, dumps(payload)))
 
     def subscribe(self: Mqtt, topic: Union[str, List[str]], qos: int = 0) -> None:
         """Subscribe to topic"""
@@ -266,7 +265,7 @@ class Mqtt:
             topic_list.append(topic)
         else:
             helpers.error(
-                f'No valid topic type to subscribe: ({type(topic)}){topic}'
+                f'No valid topic type to unsubscribe: ({type(topic)}){topic}'
             )
             return
         self._send_domoticz(MqttUnsubscribe(topic_list))

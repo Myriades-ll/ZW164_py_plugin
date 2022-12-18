@@ -115,7 +115,7 @@ class App2:
                 cur_node = self._soundswitches.get_cur_node()
                 # subscribing node status
                 self._mqtt.subscribe(f'zwave/{cur_node.node_id}/status')
-                # send the getToneCount
+                # send the getToneCount command
                 self._mqtt.publish(
                     self._zwave_gateway.command_topic,
                     self._soundswitches.get_tone_count()
