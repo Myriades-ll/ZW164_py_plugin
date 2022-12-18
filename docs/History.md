@@ -7,6 +7,7 @@
 - Cleaned: some [PEP8][def_PEP8] misspelling
 - Fixed: makes some methods faster
 - Fixed: minor bug, wrong `nValue` when a command was thrown to hardware
+- Fixed: some unpythonic values
 
 ---
 
