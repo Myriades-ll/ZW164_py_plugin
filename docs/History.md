@@ -1,4 +1,4 @@
-# 2.0.1 - 2022/12/18
+# 2.1.0 - 2022/12/18
 
 - Added: [todo list](/docs/todo.md)
 - Added: mark device as used @ device creation
