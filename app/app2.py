@@ -87,7 +87,7 @@ class App2:
                 else:
                     helpers.error(message.Error)
 
-    @helpers.log_func('debug', True, True)
+    # @helpers.log_func('debug', True, True)
     def _on_publish(self: App2, response: MQTTResponse) -> None:
         """Recieve message from broker
         #ignore_self_arg
