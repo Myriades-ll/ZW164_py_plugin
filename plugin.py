@@ -51,7 +51,7 @@ def onStart():  # pylint:disable=invalid-name
     helpers.PluginConfig(Parameters)
 
     # now start
-    helpers.api.on_start()
+    helpers.api.API_REQUEST = helpers.api.on_start()
     APP2.on_start(Parameters, Devices)
     # pylint:enable=undefined-variable
 
