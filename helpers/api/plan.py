@@ -15,9 +15,10 @@ from helpers.common import debug, error, status
 from helpers.requests import (RequestMethod, RequestRequest,
                               RequestResponse)
 from helpers import api
-# from domoticz.responses import OnMessageResponse as OMER
+from domoticz.responses import OnMessageResponse as OMER
 
 
+# pylint:disable=invalid-name
 @dataclass
 class PlanDatas:
     """PlanDatas"""
@@ -25,6 +26,7 @@ class PlanDatas:
     Name: str
     Order: str
     idx: str
+# pylint:enable=invalid-name
 
 
 class PlanSteps(IntFlag):
@@ -110,6 +112,7 @@ class Plan:
 
     def message(self: Plan, reponse: RequestResponse) -> None:
         """Réception des données"""
+        debug(f'<Plan.message>{reponse}')
         # retrieve plan list
         if self._step & PlanSteps.GET_PLANS:
             for plan in reponse.datas:
