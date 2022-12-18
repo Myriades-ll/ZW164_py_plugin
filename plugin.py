@@ -59,7 +59,7 @@ def onStart():  # pylint:disable=invalid-name
 @helpers.log_func('debug', separator_line=True)
 def onStop():  # pylint: disable=invalid-name
     """onStop"""
-    helpers.api.on_stop()
+    # helpers.api.on_stop()
     APP2.on_stop()
 
 
