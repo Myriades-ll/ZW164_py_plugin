@@ -1,4 +1,3 @@
-<!-- TODO: rewrite/read everything -->
 # Zwave SoundSwitch CommandClass - plugin for Domoticz
 
 ![GitHub release (latest by date)][release_shield] ![Domoticz 2022.2][domoticz_shield] ![Python version][python_shield] ![Zwave JS-UI version][zjsui_shield]
