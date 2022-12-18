@@ -216,9 +216,7 @@ class Mqtt:
                 if self._on_connack(response):
                     helpers.status('MQTT connection successfull!')
                     # searching for zwave-js-ui command topic
-                    self.subscribe(
-                        'zwave/_CLIENTS/#'
-                    )
+                    self.subscribe('zwave/_CLIENTS/#')
             elif response.Verb == 'PUBLISH':  # server send message
                 return response
         return None

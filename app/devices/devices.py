@@ -4,6 +4,7 @@
 # standard libs
 from __future__ import annotations
 
+from re import sub
 from typing import Any, Dict, Optional
 
 # plugin libs
@@ -15,7 +16,7 @@ from domoticz.responses import OnDeviceRemovedResponse as ODRR
 from helpers.app_config import DeviceMappingDatas
 
 
-class DeviceMapping:
+class _DeviceMapping:
     """Device mapping"""
     _devices_ids = set()
     _devices_mapping: Dict[str, DeviceMappingDatas] = {}
@@ -23,7 +24,7 @@ class DeviceMapping:
     _next_unit_id = -1
     _units_ids = set()
 
-    def init_mapping(self: DeviceMapping) -> None:
+    def init_mapping(self: _DeviceMapping) -> None:
         """Acquisition du mapping"""
         with ZW164Config() as pcf:
             self._devices_mapping = pcf.device_mapping
@@ -39,13 +40,13 @@ class DeviceMapping:
         except ValueError:
             helpers.error('No more unit avaible')
 
-    def save_mapping(self: DeviceMapping) -> None:
+    def _save_mapping(self: _DeviceMapping) -> None:
         """save device mapping"""
         with ZW164Config() as pcf:
             pcf.device_mapping = self._devices_mapping
 
     def update_mapping(
-        self: DeviceMapping, device_id: str, node_id: int,
+        self: _DeviceMapping, device_id: str, node_id: int,
         endpoint_id: int, topic: str
     ) -> None:
         """_update_mapping"""
@@ -61,38 +62,38 @@ class DeviceMapping:
             }
         )
         self._units_ids.add(unit_id)
-        self.save_mapping()
+        self._save_mapping()
         self.init_mapping()
 
-    def remove_from_mapping(self: DeviceMapping, unit_id: int) -> Optional[DeviceMappingDatas]:
+    def remove_from_mapping(self: _DeviceMapping, unit_id: int) -> Optional[DeviceMappingDatas]:
         """remove_from_mapping"""
         tmp = self._devices_mapping.copy()
         for key, value in tmp.items():
             if value.unit == unit_id:
-                self._devices_mapping.pop(key)
-                self.save_mapping()
+                del self._devices_mapping[key]
+                self._save_mapping()
                 self.init_mapping()
                 return value
         return None
 
-    def index_of_unit(self: DeviceMapping, search_unit: int) -> Optional[str]:
+    def index_of_unit(self: _DeviceMapping, search_unit: int) -> Optional[str]:
         """search index of `search` in device mapping"""
         for key, value in self._devices_mapping.items():
             if value.unit == search_unit:
                 return key
         return None
 
-    def clean_mapping(self: DeviceMapping) -> None:
+    def clean_mapping(self: _DeviceMapping) -> None:
         """clean_mapping"""
         tmp = self._devices_mapping.copy()
         for device_id, datas in tmp.items():
             device = self._devices.get(datas.unit)
             if device is None:
-                self._devices_mapping.pop(device_id)
-        self.save_mapping()
+                del self._devices_mapping[device_id]
+        self._save_mapping()
         self.init_mapping()
 
-    def get_next_unit_id(self: DeviceMapping) -> int:
+    def get_next_unit_id(self: _DeviceMapping) -> int:
         """get_next_unit_id"""
         try:
             self._next_unit_id: int = min(set(range(1, 255)) - self._units_ids)
@@ -101,7 +102,7 @@ class DeviceMapping:
         return self._next_unit_id
 
     def get_device_from_device_id(
-            self: DeviceMapping, device_id: str) -> Optional[Domoticz.Device]:
+            self: _DeviceMapping, device_id: str) -> Optional[Domoticz.Device]:
         """
         @return Device if device_id exists, else `None`
         """
@@ -110,12 +111,12 @@ class DeviceMapping:
             return self._devices.get(mapping.unit)
         return None
 
-    def get_device_from_unit_id(self: DeviceMapping, unit_id: int) -> Optional[Domoticz.Device]:
+    def get_device_from_unit_id(self: _DeviceMapping, unit_id: int) -> Optional[Domoticz.Device]:
         """return the device"""
         return self._devices.get(unit_id)
 
 
-class DzDevices(DeviceMapping):
+class DzDevices(_DeviceMapping):
     """Domoticz devices"""
 
     def on_start(self: DzDevices, devices: Dict[int, Domoticz.Device]) -> None:
@@ -149,6 +150,8 @@ class DzDevices(DeviceMapping):
                 'defaultVolume',
                 device_id
             )
+            # update @ creation
+            device.Update(**self._update_at_creation(device.Name))
         # update defaultVolume
         datas = self._update_default_volume(endpoint.defaultVolume)
         device.Update(**datas)
@@ -165,12 +168,24 @@ class DzDevices(DeviceMapping):
                 'toneId',
                 device_id
             )
+            # update @ creation
+            device.Update(**self._update_at_creation(device.Name))
         # update toneId
         datas = self._update_default_tone(len(endpoint.tones), endpoint.toneId)
         device.Update(**datas)
         helpers.log(
             f'Mise à jour son: ({endpoint.node_id}-{endpoint.endpoint_id}){datas}'
         )
+
+    @staticmethod
+    def _update_at_creation(device_name: str) -> Dict[str, Any]:
+        """_update_at_creation"""
+        return {
+            'nValue': 0,
+            'sValue': "0",
+            "Used": 1,
+            "Name": sub(r'\w+ - (.*)', r"\1", device_name)
+        }
 
     def _create_default_volume(
             self: DzDevices,

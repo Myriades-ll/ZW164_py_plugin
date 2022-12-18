@@ -167,7 +167,7 @@ class DDevice:
         # mise à jour
         if need_update:
             self.name = formated_datas.get('Name', self.name)
-            status('Mise à jour {}'.format(self))
+            status(f'Mise à jour {self}')
             device.Update(**formated_datas)
         else:
             device.Touch()
@@ -207,20 +207,17 @@ class DDevice:
             'options': 'Options',
             'used': 'Used'
         }
-        for key in kwargs:
+        for key, value in kwargs.items():
             key_lower = key.lower()
             if key_lower in allowed_keys:
-                datas.update({allowed_keys[key_lower]: kwargs[key]})
+                datas.update({allowed_keys[key_lower]: value})
         device = Domoticz.Device(**datas)
         device.Create()
-        status('Création du device: ({}){}'.format(
-            device.ID,
-            self.name
-        ))
+        status(f'Création du device: ({device.ID}){self.name}')
 
     def __str__(self: DDevice) -> str:
         """str() wrapper"""
-        return '<({}){}> {}'.format(self.unit_id, self.name, self.device_id)
+        return f'<({self.unit_id}){self.name}> {self.device_id}'
 
 
 class DDevices:
@@ -234,8 +231,8 @@ class DDevices:
         if devices is not None:
             cls._devices = devices
             cls._build_mapping()
-            debug('Devices: {}'.format(cls._devices))
-            debug('Mapping: {}'.format(cls._device_mapping))
+            debug(f'Devices: {cls._devices}')
+            debug(f'Mapping: {cls._device_mapping}')
         return super(DDevices, cls).__new__(cls)
 
     @classmethod
@@ -289,14 +286,14 @@ class DDevices:
     def remove(cls: DDevices, unit_id: int) -> None:
         """Retire le device du mapping"""
         device_id = cls.get_device_id(unit_id)
-        cls._device_mapping.pop(device_id)
+        del cls._device_mapping[device_id]
         cls._rest_ids.add(unit_id)
         cls._rest_ids = set(sorted(cls._rest_ids))
         debug(
-            'Deletion of unit: {}'.format(unit_id),
+            f'Deletion of unit: {unit_id}',
             cls._device_mapping
         )
 
     @classmethod
     def __str__(cls: DDevices) -> str:
-        return 'Domoticz devices: {}'.format(cls._devices)
+        return f'Domoticz devices: {cls._devices}'

@@ -1,5 +1,5 @@
 <!-- TODO: rewrite/read everything -->
-# Zwave SoundSwitch CommandClass -  plugin for Domoticz
+# Zwave SoundSwitch CommandClass - plugin for Domoticz
 
 ![GitHub release (latest by date)][release_shield] ![Domoticz 2022.2][domoticz_shield] ![Python version][python_shield] ![Zwave JS-UI version][zjsui_shield]
 
@@ -68,12 +68,11 @@ If you upgrade from version 1.0.0:
 
 - stop the previous plugin
 - delete it; highly recommanded
-- install the new plugin; [see above](#install)
-- add the new plugin as [described above](#domoticz)
+- then follow installation and configuration steps of the new plugin; [see above](#install)
 
 [domoticz_shield]: <https://img.shields.io/badge/Domoticz-2022.2-brightgreen>
 [python_shield]: <https://img.shields.io/badge/Python-3.7-brightgreen>
 [zjsui_shield]: <https://img.shields.io/badge/Zwave_JS_UI-8.4.1-brightgreen>
 [release_shield]: <https://img.shields.io/github/v/release/Myriades-ll/ZW164_py_plugin?color=orange&logo=Version&style=flat>
 [def_retain_flag]: /pictures/zjsui_retain.png "Retain flag"
-[def_CCSS]: https://z-wave.me/files/manual/z-way/Command_Class_Reference.html#SECTION0016470000000000000000
+[def_CCSS]: https://github.com/zwave-js/node-zwave-js/blob/master/docs/api/CCs/SoundSwitch.md

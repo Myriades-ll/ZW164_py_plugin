@@ -20,8 +20,8 @@ from domoticz.responses import OnDeviceRemovedResponse as ODRR
 from domoticz.responses import OnDisconnectResponse as ODTR
 from domoticz.responses import OnMessageResponse as OMER
 
-__version__ = "2.0.0"
-__version_info__ = (2, 0, 0)
+__version__ = "2.0.1"
+__version_info__ = (2, 0, 1)
 __author__ = "Laurent aka Myriades"
 
 
@@ -78,7 +78,7 @@ class App2:
     @helpers.log_func('debug', True, True)
     def _on_publish(self: App2, response: MQTTResponse) -> None:
         """Recieve message from broker
-        # ignore_self_arg
+        #ignore_self_arg
         """
         if response.Topic.startswith("zwave/_CLIENTS/"):
             if response.Topic.endswith("sendCommand"):
