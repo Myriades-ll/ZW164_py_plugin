@@ -8,7 +8,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from json import loads
-from typing import Any
+from typing import Any, Dict
 
 # pylint:disable=invalid-name
 
@@ -16,10 +16,21 @@ from typing import Any
 @dataclass
 class ZwavePayloadDatas:
     """ZwavePayload"""
-    time: int
-    value: Any
-    nodeName: str
-    nodeLocation: str
+    payload: bytes
+    node_location: str = field(default_factory=str)
+    node_name: str = field(default_factory=str)
+    time: int = field(default_factory=int)
+    value: Any = field(default=None)
+
+    def __post_init__(self: ZwavePayloadDatas) -> None:
+        """post init"""
+        decoded: Dict[str, Any] = loads(self.payload)
+        if 'nodeLocation' in decoded:
+            self.node_location = decoded.get("nodeLocation")
+        if 'nodeName' in decoded:
+            self.node_name = decoded.get("nodeName")
+        self.time = decoded.get("time")
+        self.value = decoded.get("value")
 
 
 @dataclass
@@ -38,11 +49,11 @@ class ZwaveGateway:
             if not bool(self.response_topic):
                 self.response_topic = '/'.join(path) + '/api/sendCommand'
                 self.command_topic = self.response_topic + '/set'
-            decoded_payload: dict = loads(payload)
+            decoded_payload = ZwavePayloadDatas(payload)
             if cur_topic == 'status':
-                self.status = decoded_payload.get('value')
+                self.status = decoded_payload.value
             elif cur_topic == 'version':
-                self.version = decoded_payload.get('value')
+                self.version = decoded_payload.value
 
     def is_complete(self: ZwaveGateway) -> bool:
         """check if gateway is functionnal"""

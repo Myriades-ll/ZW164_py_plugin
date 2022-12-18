@@ -8,6 +8,7 @@
 - Fixed: makes some methods faster
 - Fixed: minor bug, wrong `nValue` when a command was thrown to hardware
 - Fixed: some unpythonic values
+- Removed: comments in README.md
 
 ---
 

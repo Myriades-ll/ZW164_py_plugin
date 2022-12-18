@@ -185,10 +185,10 @@ class CCSSNode:
 
     def update_endpoint(
             self: CCSSNode, node_id: int, endpoint_id: int,
-            topic: str, payload: dict) -> CCSSEndpoint:
+            topic: str, payload: dict) -> Optional[CCSSEndpoint]:
         """update endpoints dict"""
         if node_id != self.node_id:
-            return
+            return None
         cur_endpoint = self.endpoints.get(endpoint_id)
         if cur_endpoint is None:
             cur_endpoint = CCSSEndpoint(node_id, endpoint_id)
