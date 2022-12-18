@@ -1,5 +1,4 @@
-<!-- TODO: rewrite/read everything -->
-# Zwave SoundSwitch CommandClass -  plugin for Domoticz
+# Zwave SoundSwitch CommandClass - plugin for Domoticz
 
 ![GitHub release (latest by date)][release_shield] ![Domoticz 2022.2][domoticz_shield] ![Python version][python_shield] ![Zwave JS-UI version][zjsui_shield]
 
@@ -56,6 +55,14 @@ Each device represent the actual values of your hardware.
 
 So first, adjust the volume and then select a sound to play it instantly.
 
+## Update
+
+in this plugin folder; usually ~/domoticz/plugins/ZW164_py_plugin
+
+```Shell
+git pull
+```
+
 ## Limits
 
 You can't change actual volume while playing a sound. It will change for the next sound.
@@ -67,12 +74,12 @@ If you turn off the volume, the endpoint won't play anymore sound; it will be sk
 If you upgrade from version 1.0.0:
 
 - stop the previous plugin
-- delete it if you want
-- add the new plugin as [described above](#domoticz)
+- delete it; highly recommanded
+- then follow installation and configuration steps of the new plugin; [see above](#install)
 
 [domoticz_shield]: <https://img.shields.io/badge/Domoticz-2022.2-brightgreen>
 [python_shield]: <https://img.shields.io/badge/Python-3.7-brightgreen>
 [zjsui_shield]: <https://img.shields.io/badge/Zwave_JS_UI-8.4.1-brightgreen>
 [release_shield]: <https://img.shields.io/github/v/release/Myriades-ll/ZW164_py_plugin?color=orange&logo=Version&style=flat>
 [def_retain_flag]: /pictures/zjsui_retain.png "Retain flag"
-[def_CCSS]: https://z-wave.me/files/manual/z-way/Command_Class_Reference.html#SECTION0016470000000000000000
+[def_CCSS]: https://github.com/zwave-js/node-zwave-js/blob/master/docs/api/CCs/SoundSwitch.md

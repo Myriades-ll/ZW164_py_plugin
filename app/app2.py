@@ -13,22 +13,21 @@ import helpers
 from app.devices.devices import DzDevices
 from app.mqtt.mqtt import Mqtt, MQTTResponse
 from app.zwave.soundswitch import CCSSEndpoint, CCSSNodes
-from app.zwave.zwave import Zwave, ZwaveGateway
+from app.zwave.zwave import ZwaveGateway
 from domoticz.responses import OnCommandResponse as OCDR
 from domoticz.responses import OnConnectResponse as OCTR
 from domoticz.responses import OnDeviceRemovedResponse as ODRR
 from domoticz.responses import OnDisconnectResponse as ODTR
 from domoticz.responses import OnMessageResponse as OMER
 
-__version__ = "2.0.0"
-__version_info__ = (2, 0, 0)
+__version__ = "2.0.1"
+__version_info__ = (2, 0, 1)
 __author__ = "Laurent aka Myriades"
 
 
 class App2:
     """The core V2"""
     _mqtt = Mqtt()
-    _zwave = Zwave()
     _zwave_gateway = ZwaveGateway()
     _soundswitches = CCSSNodes()
     _dz_devices = DzDevices()
@@ -79,7 +78,7 @@ class App2:
     @helpers.log_func('debug', True, True)
     def _on_publish(self: App2, response: MQTTResponse) -> None:
         """Recieve message from broker
-        # ignore_self_arg
+        #ignore_self_arg
         """
         if response.Topic.startswith("zwave/_CLIENTS/"):
             if response.Topic.endswith("sendCommand"):
@@ -116,7 +115,7 @@ class App2:
                 cur_node = self._soundswitches.get_cur_node()
                 # subscribing node status
                 self._mqtt.subscribe(f'zwave/{cur_node.node_id}/status')
-                # send the getToneCount
+                # send the getToneCount command
                 self._mqtt.publish(
                     self._zwave_gateway.command_topic,
                     self._soundswitches.get_tone_count()

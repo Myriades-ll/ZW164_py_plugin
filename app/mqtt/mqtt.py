@@ -152,20 +152,18 @@ class MqttPublish(_MqttBaseCommand):
 class Mqtt:
     """Les fonctions de base du serveur MQTT"""
 
-    _conn: Optional[Domoticz.Connection] = None
-    _last_request_time = 0
-    _mqtt_connected = False
-    _mqtt_id = ''
-    _name = 'MQTT_ZW164'
-    _mqtt_error = False
-    MQTT_CONN = {
-        'Name': '',
-        **helpers.transport_protocol.TCP_IP_MQTT
-    }
-
     def __init__(self: Mqtt) -> None:
         """Initialisation de la classe"""
-        self.MQTT_CONN.update({'Name': self._name})
+        self._conn: Optional[Domoticz.Connection] = None
+        self._last_request_time = 0
+        self._mqtt_connected = False
+        self._mqtt_id = ''
+        self._name = 'MQTT_ZW164'
+        self._mqtt_error = False
+        self._mqtt_conn = {
+            'Name': self._name,
+            **helpers.transport_protocol.TCP_IP_MQTT
+        }
 
     def __str__(self: Mqtt) -> str:
         """str() wrapper"""
@@ -183,13 +181,13 @@ class Mqtt:
 
     def on_start(self: Mqtt, parameters: dict) -> None:
         """place this in `on_start`"""
-        self.MQTT_CONN.update(
+        self._mqtt_conn.update(
             {
                 'Address': parameters['Address'],
                 'Port': parameters['Port']
             }
         )
-        self._conn = Domoticz.Connection(**self.MQTT_CONN)
+        self._conn = Domoticz.Connection(**self._mqtt_conn)
         if not self._conn.Connected():
             self._conn.Connect()
 
@@ -216,9 +214,7 @@ class Mqtt:
                 if self._on_connack(response):
                     helpers.status('MQTT connection successfull!')
                     # searching for zwave-js-ui command topic
-                    self.subscribe(
-                        'zwave/_CLIENTS/#'
-                    )
+                    self.subscribe('zwave/_CLIENTS/#')
             elif response.Verb == 'PUBLISH':  # server send message
                 return response
         return None
@@ -237,8 +233,7 @@ class Mqtt:
 
     def publish(self: Mqtt, topic: str, payload: Any) -> None:
         """Publish new message on broker"""
-        mqtt_publish = MqttPublish(topic, dumps(payload))
-        self._send_domoticz(mqtt_publish)
+        self._send_domoticz(MqttPublish(topic, dumps(payload)))
 
     def subscribe(self: Mqtt, topic: Union[str, List[str]], qos: int = 0) -> None:
         """Subscribe to topic"""
@@ -268,7 +263,7 @@ class Mqtt:
             topic_list.append(topic)
         else:
             helpers.error(
-                f'No valid topic type to subscribe: ({type(topic)}){topic}'
+                f'No valid topic type to unsubscribe: ({type(topic)}){topic}'
             )
             return
         self._send_domoticz(MqttUnsubscribe(topic_list))

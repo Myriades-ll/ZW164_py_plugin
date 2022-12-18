@@ -3,7 +3,7 @@
 
 # pylint: disable=line-too-long
 """
-<plugin key="zw164_pyplug" name="CCSoundSwitch through Zwave-JS-UI" author="Myriades" version="2.0.0" wikilink="https://github.com/Myriades-ll/FreeBox/blob/Dev/README.md">
+<plugin key="zw164_pyplug" name="CCSoundSwitch through Zwave-JS-UI" author="Myriades" version="2.1.0" wikilink="https://github.com/Myriades-ll/ZW164_py_plugin/blob/master/README.md">
     <params>
         <param field="Address" label="IP du broker MQTT" width="100px" required="true" default="IPV4 (eg: 127.0.0.1)"/>
         <param field="Port" label="Port" width="50px" required="true" default="1883"/>
@@ -30,15 +30,14 @@
 # plugin libs
 import helpers
 import app
-# from domoticz.responses import OnCommandResponse as OCDR
 from domoticz.responses import OnConnectResponse as OCTR
 from domoticz.responses import OnDisconnectResponse as ODTR
 from domoticz.responses import OnMessageResponse as OMER
 from domoticz.responses import OnDeviceRemovedResponse as ODRR
 from domoticz.responses import OnCommandResponse as OCDR
 
-__version__ = "2.0.0"
-__version_info__ = (2, 0, 0)
+__version__ = "2.1.0"
+__version_info__ = (2, 1, 0)
 __author__ = "Laurent aka Myriades"
 
 APP2 = app.App2()

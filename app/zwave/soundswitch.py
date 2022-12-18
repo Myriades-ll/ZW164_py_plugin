@@ -144,10 +144,10 @@ class CCSSEndpoint:
     endpoint_id: int
     tones: Dict[int, SoundSwitchToneValues] = field(
         default_factory=dict, init=False)
-    defaultToneId: int = field(default_factory=int, init=False)
+    # defaultToneId: int = field(default_factory=int, init=False)
     defaultVolume: int = field(default_factory=int, init=False)
     toneId: int = field(default_factory=int, init=False)
-    volume: int = field(default_factory=int, init=False)
+    # volume: int = field(default_factory=int, init=False)
 
     def update(
             self: CCSSEndpoint, node_id: int, endpoint_id: int,
@@ -185,10 +185,10 @@ class CCSSNode:
 
     def update_endpoint(
             self: CCSSNode, node_id: int, endpoint_id: int,
-            topic: str, payload: dict) -> CCSSEndpoint:
+            topic: str, payload: dict) -> Optional[CCSSEndpoint]:
         """update endpoints dict"""
         if node_id != self.node_id:
-            return
+            return None
         cur_endpoint = self.endpoints.get(endpoint_id)
         if cur_endpoint is None:
             cur_endpoint = CCSSEndpoint(node_id, endpoint_id)
@@ -232,6 +232,8 @@ class CCSSNodes(Iterable):
             self._update_node_infos(payload)
         elif topic.endswith("status"):
             self._update_status(payload)
+        else:
+            helpers.error(f'Unexpected topic: {topic}')
         return None
 
     def _update_node_endpoint(
@@ -344,7 +346,6 @@ class CCSSNodes(Iterable):
         node_id, endpoint_id, topic = device_id.split('_')
         self._cur_node = self._nodes.get(int(node_id))
         if self._cur_node is not None:
-            nb_tones = self._cur_node.tones_count + 1
             endpoint = self._cur_node.get_endpoint(int(endpoint_id))
             if endpoint is not None:
                 value = 0
@@ -352,13 +353,17 @@ class CCSSNodes(Iterable):
                     if topic == 'defaultVolume':
                         value = ocdr.level
                     elif topic == 'toneId':
-                        if ocdr.level == nb_tones * 10:
+                        if ocdr.level == (self._cur_node.tones_count + 1) * 10:
                             value = 255
                         else:
-                            value = int(ocdr.level / 10)
+                            value = ocdr.level / 10
                 command = {
                     'topic': f'zwave/{node_id}/121/{endpoint_id}/{topic}/set',
-                    'payload': value
+                    'payload': int(value)
                 }
                 return command
+            helpers.error(
+                f'<CCSSNode.send_command> Endpoint {endpoint_id} not found in node {node_id}'
+            )
+        helpers.error(f'<CCSSNode.send_command> Node {node_id} not found')
         return None
