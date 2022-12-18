@@ -7,6 +7,7 @@ from __future__ import annotations
 from enum import IntFlag, auto
 from typing import List, Optional, Union
 from urllib.parse import quote
+from dataclasses import dataclass
 
 # local libs
 from helpers.app_config import AppConfig
@@ -14,7 +15,16 @@ from helpers.common import debug, error, status
 from helpers.requests import (RequestMethod, RequestRequest,
                               RequestResponse)
 from helpers import api
-# import helpers.api as api
+# from domoticz.responses import OnMessageResponse as OMER
+
+
+@dataclass
+class PlanDatas:
+    """PlanDatas"""
+    Devices: int
+    Name: str
+    Order: str
+    idx: str
 
 
 class PlanSteps(IntFlag):
@@ -104,6 +114,8 @@ class Plan:
         if self._step & PlanSteps.GET_PLANS:
             for plan in reponse.datas:
                 debug(plan)
+                plan_datas = PlanDatas(**plan)
+                debug(plan_datas)
                 if plan.get('Name', '') == self._plan_name:
                     with AppConfig() as app_config:
                         app_config.plan_id = plan.get('idx')

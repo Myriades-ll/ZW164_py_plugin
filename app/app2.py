@@ -31,11 +31,15 @@ class App2:
     _zwave_gateway = ZwaveGateway()
     _soundswitches = CCSSNodes()
     _dz_devices = DzDevices()
+    _dom_api_plan: Optional[helpers.api.Plan] = None
 
     def on_start(self: App2, parameters: dict, devices: Dict[int, Domoticz.Device]) -> None:
         """place this in `onStart`"""
         self._mqtt.on_start(parameters)
         self._dz_devices.on_start(devices)
+        # Plugin plan
+        self._dom_api_plan = helpers.api.Plan(helpers.PluginConfig.plugin_name)
+        self._dom_api_plan.create()
 
     def on_stop(self: App2) -> None:
         """place this in `onStop`"""
@@ -43,7 +47,10 @@ class App2:
 
     def on_connect(self: App2, octr: OCTR) -> None:
         """place this in `onConnect`"""
-        self._mqtt.on_connect(octr)
+        if octr.connection.Name == helpers.api.DOM_API_CON_NAME:
+            self._dom_api_plan.next_step()
+        else:
+            self._mqtt.on_connect(octr)
 
     def on_disconnect(self: App2, odtr: ODTR) -> None:
         """place this in `onConnect`"""
@@ -67,13 +74,18 @@ class App2:
         """place this in `onMessage`
         this the place where the plugin starts working
         """
-        message: Optional[MQTTResponse] = self._mqtt.on_message(omer)
-        if isinstance(message, MQTTResponse):
-            if message.is_success():
-                if message.Verb == "PUBLISH":
-                    self._on_publish(message)
-            else:
-                helpers.error(message.Error)
+        # Domoticz API response
+        if omer.connection.Name == helpers.api.DOM_API_CON_NAME:
+            # TODO: fix omer to helpers.requestreponse
+            self._dom_api_plan.message(omer)
+        else:
+            message: Optional[MQTTResponse] = self._mqtt.on_message(omer)
+            if isinstance(message, MQTTResponse):
+                if message.is_success():
+                    if message.Verb == "PUBLISH":
+                        self._on_publish(message)
+                else:
+                    helpers.error(message.Error)
 
     @helpers.log_func('debug', True, True)
     def _on_publish(self: App2, response: MQTTResponse) -> None:
