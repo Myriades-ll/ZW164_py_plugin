@@ -4,18 +4,18 @@
 
 # standard libs
 from __future__ import annotations
+
+from dataclasses import dataclass
 from enum import IntFlag, auto
 from typing import List, Optional, Union
 from urllib.parse import quote
-from dataclasses import dataclass
 
 # local libs
+from domoticz.responses import OnMessageResponse as OMER
+from helpers import api, log_func
 from helpers.app_config import AppConfig
 from helpers.common import debug, error, status
-from helpers.requests import (RequestMethod, RequestRequest,
-                              RequestResponse)
-from helpers import api
-from domoticz.responses import OnMessageResponse as OMER
+from helpers.requests import RequestMethod, RequestRequest, RequestResponse
 
 
 # pylint:disable=invalid-name
@@ -88,8 +88,11 @@ class Plan:
         self._api_request.add(request)
         self._api_request.send()
 
+    @log_func('debug', True, True)
     def next_step(self: Plan) -> None:
-        """Execute next step to check Domoticz plan"""
+        """Execute next step to check Domoticz plan
+        #ignore_self_arg
+        """
         debug(f'Cur step: {self._step}')
         if self._step & PlanSteps.GET_PLANS:
             request = RequestRequest(
