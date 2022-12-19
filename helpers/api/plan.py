@@ -61,11 +61,11 @@ class HTTPHeaders:
     Access_Control_Allow_Origin: str  # '*',
     Cache_Control: str  # 'no-cache',
     Connection: str  # 'Keep-Alive',
-    Content_Encoding: str  # 'gzip',
     Content_Length: str  # '401',
     Content_Type: str  # 'application/json;charset=UTF-8',
     Keep_Alive: str  # 'max=20, timeout=20'
     Pragma: str  # 'no-cache',
+    Content_Encoding: str = field(default_factory=str)  # 'gzip',
 
 
 @dataclass
