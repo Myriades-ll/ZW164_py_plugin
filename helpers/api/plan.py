@@ -112,7 +112,9 @@ class PlanSteps(IntFlag):
 
 
 class Plan:
-    """Création du plan pour les devices"""
+    """Création du plan pour les devices
+    /json.htm?name=ZW164&param=addplan&type=command
+    """
     _urls = {
         "plans": "/json.htm?type=plans",
         "addplan": "/json.htm?name={}&param=addplan&type=command",
@@ -201,7 +203,7 @@ class Plan:
             self._step = PlanSteps.ADD_PLAN
             self.next_step()
         elif self._step & PlanSteps.ADD_PLAN:
-            # debug(reponse)
+            debug(f'<PLan.message> {omer}')
             self._step = PlanSteps.GET_PLANS
             self.next_step()
         # we can perform any other actions
