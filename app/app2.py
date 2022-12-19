@@ -39,7 +39,7 @@ class App2:
         self._dz_devices.on_start(devices)
         # Plugin plan
         self._dom_api_plan = helpers.api.Plan(helpers.PluginConfig.plugin_name)
-        # self._dom_api_plan.create()
+        self._dom_api_plan.create()
 
     def on_stop(self: App2) -> None:
         """place this in `onStop`"""
@@ -76,7 +76,6 @@ class App2:
         """
         # Domoticz API response
         if omer.connection.Name == helpers.api.DOM_API_CON_NAME:
-            # TODO: fix omer to helpers.requestreponse
             self._dom_api_plan.message(omer)
         else:
             message: Optional[MQTTResponse] = self._mqtt.on_message(omer)
