@@ -169,14 +169,12 @@ class Plan:
     def message(self: Plan, omer: OMER) -> None:
         """Réception des données"""
         http_reponse = HTTPResponse(**omer.data)
-        status(f'<Plan.message>{http_reponse}')
-        return
         # retrieve plan list
         if self._step & PlanSteps.GET_PLANS:
-            for plan in reponse.datas:
-                debug(plan)
+            for plan in http_reponse.datas.result:
                 plan_datas = PlanDatas(**plan)
-                debug(plan_datas)
+                status(f'<Plan.message>{plan_datas}')
+                return  # FIXME: to remove
                 if plan.get('Name', '') == self._plan_name:
                     with AppConfig() as app_config:
                         app_config.plan_id = plan.get('idx')
@@ -185,7 +183,7 @@ class Plan:
                     return
             self._step = PlanSteps.ADD_PLAN
             self.next_step()
-        #
+        return  # FIXME: to remove
         elif self._step & PlanSteps.ADD_PLAN:
             debug(reponse)
             self._step = PlanSteps.GET_PLANS
