@@ -79,7 +79,7 @@ class HTTPResponse:
 
     def __post_init__(self: HTTPResponse) -> None:
         """post init"""
-        if self.Status == 200:
+        if self.Status == '200':
             tmp = self.Headers.copy()
             for old_key, value in self.Headers.items():
                 new_key = old_key.replace('-', '_')
