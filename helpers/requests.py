@@ -112,7 +112,7 @@ class RequestResponseDatas:
             self._response: dict = loads(datas)
         elif headers.content_type == 'text/html':
             datas_list = datas.split('\n')
-            error('Erreur de contenu: {}'.format(datas_list))
+            error(f'Erreur de contenu: {datas_list}')
             self._response = {}
         # Common APIS
         self.datas: Union[dict, list] = self._response.get('result', None)
@@ -201,7 +201,7 @@ class Request:
             'Accept-Encoding': 'gzip',
             'Connection': 'keep-alive',
             'Host': self._con_details['Address'],
-            'User-Agent': 'Domoticz/{}'.format(PluginConfig.domoticz_version),
+            'User-Agent': f'Domoticz/{PluginConfig.domoticz_version}'
         }
         request = {
             'URL': input_request.url,
