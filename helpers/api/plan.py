@@ -35,13 +35,17 @@ class PlanDatas:
 class HTTPData:
     """HTTPData"""
     raw_data: bytes
+    encoded: str
     result: list = field(default_factory=list, init=False)
     status: str = field(default_factory=str, init=False)
     title: str = field(default_factory=str, init=False)
 
     def __post_init__(self: HTTPData) -> None:
         """post init"""
-        results: Dict[str, Any] = loads(decompress(self.raw_data))
+        tmp = self.raw_data
+        if self.encoded == 'gzip':
+            tmp = decompress(tmp)
+        results: Dict[str, Any] = loads(tmp)
         for key, value in results.items():
             if hasattr(self, key):
                 setattr(self, key, value)
@@ -85,7 +89,10 @@ class HTTPResponse:
                 new_key = old_key.replace('-', '_')
                 tmp.update({new_key: value})
             self.headers = HTTPHeaders(**tmp)
-            self.datas = HTTPData(raw_data=self.Data)
+            self.datas = HTTPData(
+                raw_data=self.Data,
+                encoded=self.headers.Content_Encoding
+            )
         else:
             debug(f'<HTTPResponse.__post_init__> Status: {self.Status}')
             debug(f'<HTTPResponse.__post_init__> Headers: {self.Headers}')
