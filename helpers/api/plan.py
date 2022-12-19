@@ -80,10 +80,9 @@ class HTTPResponse:
     def __post_init__(self: HTTPResponse) -> None:
         """post init"""
         if self.Status == '200':
-            tmp = self.Headers.copy()
+            tmp = {}
             for old_key, value in self.Headers.items():
                 new_key = old_key.replace('-', '_')
-                tmp.pop(old_key)
                 tmp.update({new_key: value})
             self.headers = HTTPHeaders(**tmp)
             self.datas = HTTPData(raw_data=self.Data)
