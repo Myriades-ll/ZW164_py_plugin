@@ -174,7 +174,6 @@ class Plan:
             for plan in http_reponse.datas.result:
                 plan_datas = PlanDatas(**plan)
                 status(f'<Plan.message>{plan_datas}')
-                return  # FIXME: to remove
                 if plan.get('Name', '') == self._plan_name:
                     with AppConfig() as app_config:
                         app_config.plan_id = plan.get('idx')
@@ -184,7 +183,7 @@ class Plan:
             self._step = PlanSteps.ADD_PLAN
             self.next_step()
         elif self._step & PlanSteps.ADD_PLAN:
-            debug(reponse)
+            # debug(reponse)
             self._step = PlanSteps.GET_PLANS
             self.next_step()
         # we can perform any other actions
@@ -206,10 +205,10 @@ class Plan:
                     self._device_list.append(device_ids)
                 self._process_add_device()
             else:
-                error('Plan id not acquired!')
+                error('<Plan.add_device> Plan id not acquired!')
 
     def _process_add_device(self: Plan) -> None:
-        """"""
+        """_process_add_device"""
         # get next device_id
         try:
             device_id = self._device_list.pop()
