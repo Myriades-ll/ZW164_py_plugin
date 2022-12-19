@@ -84,6 +84,7 @@ class HTTPResponse:
             new_key = old_key.replace('-', '_')
             tmp.pop(old_key)
             tmp.update({new_key: value})
+        debug(f'<HTTPResponse.__post_init__> Status: {self.Status}')
         debug(f'<HTTPResponse.__post_init__> Headers: {tmp}')
         self.headers = HTTPHeaders(**tmp)
         self.datas = HTTPData(raw_data=self.Data)
