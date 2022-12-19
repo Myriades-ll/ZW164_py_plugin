@@ -90,7 +90,7 @@ class HTTPResponse:
         else:
             debug(f'<HTTPResponse.__post_init__> Status: {self.Status}')
             debug(f'<HTTPResponse.__post_init__> Headers: {self.Headers}')
-            debug(f'<HTTPResponse.__post_init__> Data: {loads(self.Data)}')
+            debug(f'<HTTPResponse.__post_init__> Data: {self.Data}')
 
 # pylint:enable=invalid-name
 
