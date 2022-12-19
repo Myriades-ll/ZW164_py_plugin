@@ -41,9 +41,10 @@ class HTTPData:
 
     def __post_init__(self: HTTPData) -> None:
         """post init"""
-        self.result, self.status, self.title = loads(
-            decompress(self.raw_data)
-        )
+        results: Dict[str, Any] = loads(decompress(self.raw_data))
+        for key, value in results.items():
+            if hasattr(self, key):
+                setattr(self, key, value)
 
 
 @dataclass
