@@ -49,7 +49,15 @@ class HTTPData:
 
 @dataclass
 class HTTPHeaders:
-    """HTTPHeaders"""
+    """HTTPHeaders
+    TypeError: __init__() missing 6 required positional arguments:
+    'Access_Control_Allow_Origin',
+    'Cache_Control',
+    'Connection',
+    'Content_Encoding',
+    'Keep_Alive',
+    'Pragma'
+    """
     Access_Control_Allow_Origin: str  # '*',
     Cache_Control: str  # 'no-cache',
     Connection: str  # 'Keep-Alive',
@@ -76,6 +84,7 @@ class HTTPResponse:
             new_key = old_key.replace('-', '_')
             tmp.pop(old_key)
             tmp.update({new_key: value})
+        debug(f'<HTTPResponse.__post_init__> Headers: {tmp}')
         self.headers = HTTPHeaders(**tmp)
         self.datas = HTTPData(raw_data=self.Data)
 
