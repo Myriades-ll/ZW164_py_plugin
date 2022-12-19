@@ -32,22 +32,53 @@ class PlanDatas:
 
 
 @dataclass
+class HTTPData:
+    """HTTPData"""
+    raw_data: bytes
+    result: list = field(default_factory=list, init=False)
+    status: str = field(default_factory=str, init=False)
+    title: str = field(default_factory=str, init=False)
+
+    def __post_init__(self: HTTPData) -> None:
+        """post init"""
+        self.result, self.status, self.title = loads(
+            decompress(self.raw_data)
+        )
+
+
+@dataclass
 class HTTPHeaders:
     """HTTPHeaders"""
+    Access_Control_Allow_Origin: str  # '*',
+    Cache_Control: str  # 'no-cache',
+    Connection: str  # 'Keep-Alive',
+    Content_Encoding: str  # 'gzip',
+    Content_Length: str  # '401',
+    Content_Type: str  # 'application/json;charset=UTF-8',
+    Keep_Alive: str  # 'max=20, timeout=20'
+    Pragma: str  # 'no-cache',
 
 
 @dataclass
 class HTTPResponse:
     """HTTPResponse"""
-    Status: str
-    Headers: Dict[str, Any]
     Data: bytes
-    decoded_datas: Dict[str, Any] = field(default_factory=dict, init=False)
-# pylint:enable=invalid-name
+    Headers: Dict[str, Any]
+    Status: str
+    datas: HTTPData = field(default=None, init=False)
+    headers: HTTPHeaders = field(default=None, init=False)
 
     def __post_init__(self: HTTPResponse) -> None:
         """post init"""
-        self.decoded_datas = loads(decompress(self.Data))
+        tmp = self.Headers.copy()
+        for old_key, value in self.Headers.items():
+            new_key = old_key.replace('-', '_')
+            tmp.pop(old_key)
+            tmp.update({new_key: value})
+        self.headers = HTTPHeaders(**tmp)
+        self.datas = HTTPData(raw_data=self.Data)
+
+# pylint:enable=invalid-name
 
 
 class PlanSteps(IntFlag):
