@@ -79,15 +79,18 @@ class HTTPResponse:
 
     def __post_init__(self: HTTPResponse) -> None:
         """post init"""
-        tmp = self.Headers.copy()
-        for old_key, value in self.Headers.items():
-            new_key = old_key.replace('-', '_')
-            tmp.pop(old_key)
-            tmp.update({new_key: value})
-        debug(f'<HTTPResponse.__post_init__> Status: {self.Status}')
-        debug(f'<HTTPResponse.__post_init__> Headers: {tmp}')
-        self.headers = HTTPHeaders(**tmp)
-        self.datas = HTTPData(raw_data=self.Data)
+        if self.Status == 200:
+            tmp = self.Headers.copy()
+            for old_key, value in self.Headers.items():
+                new_key = old_key.replace('-', '_')
+                tmp.pop(old_key)
+                tmp.update({new_key: value})
+            self.headers = HTTPHeaders(**tmp)
+            self.datas = HTTPData(raw_data=self.Data)
+        else:
+            debug(f'<HTTPResponse.__post_init__> Status: {self.Status}')
+            debug(f'<HTTPResponse.__post_init__> Headers: {self.Headers}')
+            debug(f'<HTTPResponse.__post_init__> Data: {loads(self.Data)}')
 
 # pylint:enable=invalid-name
 
