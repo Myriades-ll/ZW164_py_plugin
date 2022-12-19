@@ -5,7 +5,7 @@
 from __future__ import annotations
 
 from re import sub
-from typing import Any, Dict, Optional
+from typing import Any, Dict, List, Optional
 
 # plugin libs
 import Domoticz
@@ -114,6 +114,10 @@ class _DeviceMapping:
     def get_device_from_unit_id(self: _DeviceMapping, unit_id: int) -> Optional[Domoticz.Device]:
         """return the device"""
         return self._devices.get(unit_id)
+
+    def get_unit_ids_list(self: _DeviceMapping) -> List[int]:
+        """get_unit_ids"""
+        return list(self._devices.keys())
 
 
 class DzDevices(_DeviceMapping):
