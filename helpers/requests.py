@@ -245,7 +245,8 @@ class Request:
 
     def connect(self: Request) -> None:
         """Domoticz.Connect() wrapper"""
-        self._con.Connect()
+        if not self._con.Connected():
+            self._con.Connect()
 
     def close(self: Request) -> None:
         """Close connction"""
