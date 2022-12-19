@@ -183,7 +183,6 @@ class Plan:
                     return
             self._step = PlanSteps.ADD_PLAN
             self.next_step()
-        return  # FIXME: to remove
         elif self._step & PlanSteps.ADD_PLAN:
             debug(reponse)
             self._step = PlanSteps.GET_PLANS
