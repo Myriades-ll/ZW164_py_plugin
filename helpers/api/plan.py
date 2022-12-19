@@ -227,6 +227,7 @@ class Plan:
             with AppConfig() as app_config:
                 base_url = "".join(self._urls.get('addplanactivedevice'))
                 base_url = base_url.format(device_id, app_config.plan_id)
+                debug(base_url)
                 request = RequestRequest(
                     'Add device to plan',
                     base_url,
