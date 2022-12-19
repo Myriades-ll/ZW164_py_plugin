@@ -106,6 +106,7 @@ class App2:
                     if self._soundswitches.is_complete():
                         for endpoint in self._soundswitches:
                             self._dz_devices.update(endpoint)
+                        self._dom_api_plan.add_device(self._dz_devices._devices.keys())
             elif not self._zwave_gateway.is_complete():
                 self._zwave_gateway.update(response.Topic, response.Payload)
                 if self._zwave_gateway.is_complete():
