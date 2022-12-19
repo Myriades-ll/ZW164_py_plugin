@@ -18,7 +18,7 @@ from helpers import api
 from helpers.app_config import AppConfig
 from helpers.common import debug, error, status
 from helpers.decorators import log_func
-from helpers.requests import RequestMethod, RequestRequest, RequestResponse
+from helpers.requests import RequestMethod, RequestRequest
 
 
 # pylint:disable=invalid-name
@@ -173,10 +173,9 @@ class Plan:
         if self._step & PlanSteps.GET_PLANS:
             for plan in http_reponse.datas.result:
                 plan_datas = PlanDatas(**plan)
-                status(f'<Plan.message>{plan_datas}')
-                if plan.get('Name', '') == self._plan_name:
+                if plan_datas.Name == self._plan_name:
                     with AppConfig() as app_config:
-                        app_config.plan_id = plan.get('idx')
+                        app_config.plan_id = plan_datas.idx
                         status(f'Plan ID ({app_config.plan_id}) acquired!')
                     self._step = PlanSteps.FINISHED
                     return
