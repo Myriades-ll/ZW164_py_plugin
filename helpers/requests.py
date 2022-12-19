@@ -214,7 +214,7 @@ class Request:
         # datas
         if isinstance(input_request.datas, dict):
             request.update({'Data': dumps(input_request.datas)})
-        debug(request)
+        # debug(request)
         self.__requests_queue.append(request)
 
     @log_func(callback="str", log_return=True)

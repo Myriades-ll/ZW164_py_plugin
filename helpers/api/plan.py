@@ -165,9 +165,9 @@ class Plan:
     @log_func('debug', True, True)
     def next_step(self: Plan) -> None:
         """Execute next step to check Domoticz plan
-        # ignore_self_arg
+        #ignore_self_arg
         """
-        debug(f'Cur step: {self._step}')
+        debug(f'Cur step: {repr(self._step)}')
         if self._step & PlanSteps.GET_PLANS:
             request = RequestRequest(
                 'Get plans',
