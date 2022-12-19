@@ -167,7 +167,7 @@ class Plan:
 
     def message(self: Plan, omer: OMER) -> None:
         """Réception des données"""
-        http_reponse = HTTPResponse(**omer.datas)
+        http_reponse = HTTPResponse(**omer.data)
         status(f'<Plan.message>{http_reponse}')
         return
         # retrieve plan list
