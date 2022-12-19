@@ -39,7 +39,7 @@ class App2:
         self._dz_devices.on_start(devices)
         # Plugin plan
         self._dom_api_plan = helpers.api.Plan(helpers.PluginConfig.plugin_name)
-        # self._dom_api_plan.create()
+        self._dom_api_plan.create()
 
     def on_stop(self: App2) -> None:
         """place this in `onStop`"""
