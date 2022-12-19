@@ -117,7 +117,7 @@ class _DeviceMapping:
 
     def get_unit_ids_list(self: _DeviceMapping) -> List[int]:
         """get_unit_ids"""
-        return list(self._devices.keys())
+        return [device.ID for device in self._devices.values()]
 
 
 class DzDevices(_DeviceMapping):
