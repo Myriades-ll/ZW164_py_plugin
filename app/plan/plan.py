@@ -112,5 +112,5 @@ class Plan:
         """_check_con"""
         if connection is self._con:
             return True
-        error(f'<Plan> {connection}')
+        # error(f'<Plan> {connection}')
         return False
