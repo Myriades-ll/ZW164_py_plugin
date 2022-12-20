@@ -110,8 +110,7 @@ class Plan:
 
     def _check_con(self: Plan, connection: Connection) -> bool:
         """_check_con"""
-        if isinstance(self._con, Connection):
-            if connection.Name == self.plan_name:
-                return True
+        if connection is self._con:
+            return True
         error(f'<Plan> {connection}')
         return False
