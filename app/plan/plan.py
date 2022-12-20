@@ -14,7 +14,7 @@ from Domoticz import Connection
 from domoticz.responses import OnConnectResponse as OCTR
 from domoticz.responses import OnDisconnectResponse as ODTR
 from domoticz.responses import OnMessageResponse as OMER
-from helpers import debug, log_func
+from helpers import debug, error, log_func
 from helpers.plugin_config import PluginConfig
 
 # pylint:disable=invalid-name
@@ -72,15 +72,16 @@ class Plan:
 
     def on_connect(self: Plan, octr: OCTR) -> None:
         """on_connect"""
-        if self._plan_id == 0:
-            # TODO: (1) - retrive plan_id
-            # Headers = {"Connection": "keep-alive", "Accept": "Content-Type: text/html; charset=UTF-8"}
-            # myConn.Send({"Verb":"GET", "URL":"/page.html", "Headers": Headers})
-            self._con.Send(
-                Verb='GET',
-                URL='/json.htm?type=plans',
-                Headers=self.HEADERS
-            )
+        if self._check_con(octr.connection):
+            if self._plan_id == 0:
+                # TODO: (1) - retrive plan_id
+                # Headers = {"Connection": "keep-alive", "Accept": "Content-Type: text/html; charset=UTF-8"}
+                # myConn.Send({"Verb":"GET", "URL":"/page.html", "Headers": Headers})
+                self._con.Send(
+                    Verb='GET',
+                    URL='/json.htm?type=plans',
+                    Headers=self.HEADERS
+                )
 
     def on_disconnect(self: Plan, odtr: ODTR) -> None:
         """on_disconnect"""
@@ -112,4 +113,5 @@ class Plan:
         if isinstance(self._con, Connection):
             if connection.Name == self.plan_name:
                 return True
+        error(f'<Plan> {connection}')
         return False
