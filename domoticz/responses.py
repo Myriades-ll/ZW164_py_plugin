@@ -10,13 +10,18 @@ import Domoticz
 
 
 @dataclass
-class OnDisconnectResponse:
-    """OnDisconnectResponse"""
+class BaseConnectionReponse:
+    """BaseConnectionReponse"""
     connection: Domoticz.Connection
 
 
 @dataclass
-class OnConnectResponse(OnDisconnectResponse):
+class OnDisconnectResponse(BaseConnectionReponse):
+    """OnDisconnectResponse"""
+
+
+@dataclass
+class OnConnectResponse(BaseConnectionReponse):
     """OnConnectResponse"""
     status: int
     description: str
@@ -29,13 +34,13 @@ class OnConnectResponse(OnDisconnectResponse):
 
 
 @dataclass
-class OnMessageResponse(OnDisconnectResponse):
+class OnMessageResponse(BaseConnectionReponse):
     """OnMessageResponse"""
     data: dict = field(default_factory=dict)
 
 
 @dataclass
-class OnTimeoutResponse(OnDisconnectResponse):
+class OnTimeoutResponse(BaseConnectionReponse):
     """OnTimeoutResponse"""
 
 
@@ -52,13 +57,18 @@ class OnNotificationResponse:
 
 
 @dataclass
-class OnDeviceAddedResponse:
-    """OnDeviceAddedResponse"""
+class BaseDeviceReponse:
+    """BaseDeviceReponse"""
     unit: int
 
 
 @dataclass
-class OnCommandResponse(OnDeviceAddedResponse):
+class OnDeviceAddedResponse(BaseDeviceReponse):
+    """OnDeviceAddedResponse"""
+
+
+@dataclass
+class OnCommandResponse(BaseDeviceReponse):
     """OnCommandResponse"""
     command: str
     level: int = field(default_factory=int)
@@ -66,17 +76,17 @@ class OnCommandResponse(OnDeviceAddedResponse):
 
 
 @dataclass
-class OnDeviceModifiedResponse(OnDeviceAddedResponse):
+class OnDeviceModifiedResponse(BaseDeviceReponse):
     """onDeviceModifiedResponse"""
 
 
 @dataclass
-class OnDeviceRemovedResponse(OnDeviceAddedResponse):
+class OnDeviceRemovedResponse(BaseDeviceReponse):
     """onDeviceModifiedResponse"""
 
 
 @dataclass
-class OnSecurityEventResponse(OnDeviceAddedResponse):
+class OnSecurityEventResponse(BaseDeviceReponse):
     """onDeviceModifiedResponse"""
     level: int
     description: str
