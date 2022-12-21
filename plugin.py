@@ -70,7 +70,7 @@ def onConnect(*args):  # pylint: disable=invalid-name
     if octr.is_success():
         APP2.on_connect(octr)
     else:
-        helpers.error(octr)
+        helpers.error(f'onConnect: {octr}')
 
 
 @helpers.log_func('debug', separator_line=True)
