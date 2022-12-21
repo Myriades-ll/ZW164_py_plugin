@@ -70,6 +70,7 @@ class Plan:
             )
             self._con.Connect()
 
+    @log_func('debug', True, True)
     def on_connect(self: Plan, octr: OCTR) -> None:
         """on_connect"""
         if self._check_con(octr.connection):
@@ -89,7 +90,6 @@ class Plan:
             if not self._finished:
                 self._con.Connect()
 
-    @log_func('debug', True, True)
     def on_message(self: Plan, omer: OMER) -> None:
         """on_message
         #ignore_self_arg
