@@ -98,8 +98,13 @@ class Plan:
         #ignore_self_arg
         """
         if self._check_con(omer.connection):
-            http_datas = http.Response(**omer.data)
-            status(http_datas)
+            http_datas = http.Response(**omer.data).datas
+            if http_datas.status == '200':
+                if http_datas.title == 'Plans':
+                    for plan in http_datas.result:
+                        plan = PlanDatas(**plan)
+                        if plan.Name == self.plan_name:
+                            status(plan)
 
     def add_device(self: Plan, device_list: List[int]) -> None:
         """set_device_list
