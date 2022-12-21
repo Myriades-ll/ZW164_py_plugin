@@ -14,7 +14,7 @@ from Domoticz import Connection
 from domoticz.responses import OnConnectResponse as OCTR
 from domoticz.responses import OnDisconnectResponse as ODTR
 from domoticz.responses import OnMessageResponse as OMER
-from helpers import debug, error, log_func
+from helpers import debug, error, log_func, status
 from helpers.plugin_config import PluginConfig
 
 # pylint:disable=invalid-name
@@ -73,6 +73,7 @@ class Plan:
     @log_func('debug', True, True)
     def on_connect(self: Plan, octr: OCTR) -> None:
         """on_connect"""
+        status(octr, octr.connection.Name)
         if self._check_con(octr.connection):
             if self._plan_id == 0:
                 # TODO: (1) - retrive plan_id
