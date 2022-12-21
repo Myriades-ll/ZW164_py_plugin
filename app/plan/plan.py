@@ -62,13 +62,13 @@ class Plan:
         self.plan_name = parameters.get('Mode1')
         if self.plan_name:
             self._con = Connection(
-                self.plan_name,
+                self.plan_name + 'API_PLAN',
                 'TCP/IP',
                 'HTTP',
                 Address='127.0.0.1',
                 Port='8080'
             )
-            # self._con.Connect()
+            self._con.Connect()
 
     def on_connect(self: Plan, octr: OCTR) -> None:
         """on_connect"""
