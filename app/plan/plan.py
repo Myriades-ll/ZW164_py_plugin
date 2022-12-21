@@ -70,11 +70,11 @@ class Plan:
             )
             self._con.Connect()
 
-    @log_func('debug', True, True)
     def on_connect(self: Plan, octr: OCTR) -> None:
         """on_connect"""
         status('<Plan.on_connect>', octr, octr.connection.Name)
         if self._check_con(octr.connection):
+            status('API plan connection successfull!')
             if self._plan_id == 0:
                 # TODO: (1) - retrive plan_id
                 # Headers = {"Connection": "keep-alive", "Accept": "Content-Type: text/html; charset=UTF-8"}
@@ -98,7 +98,8 @@ class Plan:
         #ignore_self_arg
         """
         if self._check_con(omer.connection):
-            status(omer)
+            http_datas = http.Response(**omer.data)
+            status(http_datas)
 
     def add_device(self: Plan, device_list: List[int]) -> None:
         """set_device_list
