@@ -62,7 +62,7 @@ class Plan:
         self.plan_name = parameters.get('Mode1')
         if self.plan_name:
             self._con = Connection(
-                self.plan_name + 'API_PLAN',
+                self.plan_name + '_API_PLAN',
                 'TCP/IP',
                 'HTTP',
                 Address='127.0.0.1',
@@ -73,16 +73,18 @@ class Plan:
     @log_func('debug', True, True)
     def on_connect(self: Plan, octr: OCTR) -> None:
         """on_connect"""
-        status(octr, octr.connection.Name)
+        status('<Plan.on_connect>', octr, octr.connection.Name)
         if self._check_con(octr.connection):
             if self._plan_id == 0:
                 # TODO: (1) - retrive plan_id
                 # Headers = {"Connection": "keep-alive", "Accept": "Content-Type: text/html; charset=UTF-8"}
                 # myConn.Send({"Verb":"GET", "URL":"/page.html", "Headers": Headers})
                 self._con.Send(
-                    Verb='GET',
-                    URL='/json.htm?type=plans',
-                    Headers=self.HEADERS
+                    {
+                        'Verb': 'GET',
+                        'URL': '/json.htm?type=plans',
+                        'Headers': self.HEADERS
+                    }
                 )
 
     def on_disconnect(self: Plan, odtr: ODTR) -> None:
@@ -97,7 +99,6 @@ class Plan:
         """
         if self._check_con(omer.connection):
             status(omer)
-            pass
 
     def add_device(self: Plan, device_list: List[int]) -> None:
         """set_device_list
