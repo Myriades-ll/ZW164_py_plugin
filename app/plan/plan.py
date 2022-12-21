@@ -96,6 +96,7 @@ class Plan:
         #ignore_self_arg
         """
         if self._check_con(omer.connection):
+            status(omer)
             pass
 
     def add_device(self: Plan, device_list: List[int]) -> None:
