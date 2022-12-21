@@ -68,7 +68,8 @@ class Plan:
                 Address='127.0.0.1',
                 Port='8080'
             )
-            self._con.Connect()
+            # FIXME: remove to continue Dev
+            # self._con.Connect()
 
     def on_connect(self: Plan, octr: OCTR) -> None:
         """on_connect"""
