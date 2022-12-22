@@ -78,7 +78,6 @@ class Plan:
         if self._check_con(octr.connection):
             status('API plan connection successfull!')
             if self._plan_id == 0:
-                # TODO: (1) - retrive plan_id
                 self._plans_call()
 
     def on_disconnect(self: Plan, odtr: ODTR) -> None:
@@ -158,13 +157,18 @@ class Plan:
                 break
         # if plan_id not found then create
         if self._plan_id == 0:
-            self._con.Send(
-                {
-                    'Verb': 'GET',
-                    "URL": f'/json.htm?name={quote(self.plan_name)}&param=addplan&type=command',
-                    'Headers': self.HEADERS
-                }
-            )
+            self._addplan_call()
+            status(f'Creating plan {self.plan_name}')
+
+    def _addplan_call(self: Plan) -> None:
+        """_addplan_call"""
+        self._con.Send(
+            {
+                'Verb': 'GET',
+                "URL": f'/json.htm?name={quote(self.plan_name)}&param=addplan&type=command',
+                'Headers': self.HEADERS
+            }
+        )
 
     def _addplan_response(self: Plan, http_datas: http.HData) -> None:
         """_addplan"""
