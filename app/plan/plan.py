@@ -101,16 +101,16 @@ class Plan:
             if http_response.Status == '200':
                 http_datas = http_response.datas
                 self._call_response(http_datas)
-                if http_datas.status == 'OK':
-                    if http_datas.title == 'Plans':
-                        for plan in http_datas.result:
-                            plan = PlanDatas(**plan)
-                            if plan.Name == self.plan_name:
-                                self._plan_id = plan.idx
-                                status(
-                                    f'Plan id acquired: ({self._plan_id}){plan.Name}'
-                                )
-                                break
+                # if http_datas.status == 'OK':
+                #     if http_datas.title == 'Plans':
+                #         for plan in http_datas.result:
+                #             plan = PlanDatas(**plan)
+                #             if plan.Name == self.plan_name:
+                #                 self._plan_id = plan.idx
+                #                 status(
+                #                     f'Plan id acquired: ({self._plan_id}){plan.Name}'
+                #                 )
+                #                 break
             else:
                 error(f'Http error: {http_response.Status}')
 
@@ -146,6 +146,14 @@ class Plan:
                 f'<Plan._call_response> Data error: ({http_datas.status}){http_datas.title}'
             )
 
-    def _plans(self: Plan) -> None:
+    def _plans(self: Plan, http_datas: http.HData) -> None:
         """_plans"""
+        for plan in http_datas.result:
+            plan = PlanDatas(**plan)
+            if plan.Name == self.plan_name:
+                self._plan_id = plan.idx
+                status(
+                    f'Plan id acquired: ({self._plan_id}){plan.Name}'
+                )
+                break
     # endregion
