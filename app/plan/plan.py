@@ -173,7 +173,7 @@ class Plan:
         )
         status(f'Creating plan {self.plan_name}')
 
-    def _addplan_response(self: Plan, http_datas: http.HData) -> None:
+    def _addplan_response(self: Plan, _http_datas: http.HData) -> None:
         """_addplan"""
         self._plans_call()
 
@@ -189,7 +189,7 @@ class Plan:
             }
         )
 
-    def _deleteplan_response(self: Plan) -> None:
+    def _deleteplan_response(self: Plan, _http_datas: http.HData) -> None:
         """_deleteplan_response"""
         self._plan_id = 0
         status(f'Plan deleted {self.plan_name}')
