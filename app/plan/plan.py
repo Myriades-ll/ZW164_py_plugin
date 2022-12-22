@@ -79,15 +79,7 @@ class Plan:
             status('API plan connection successfull!')
             if self._plan_id == 0:
                 # TODO: (1) - retrive plan_id
-                # Headers = {"Connection": "keep-alive", "Accept": "Content-Type: text/html; charset=UTF-8"}
-                # myConn.Send({"Verb":"GET", "URL":"/page.html", "Headers": Headers})
-                self._con.Send(
-                    {
-                        'Verb': 'GET',
-                        'URL': '/json.htm?type=plans',
-                        'Headers': self.HEADERS
-                    }
-                )
+                self._plans_call()
 
     def on_disconnect(self: Plan, odtr: ODTR) -> None:
         """on_disconnect"""
@@ -127,7 +119,7 @@ class Plan:
     def _call_response(self: Plan, http_datas: http.HData) -> None:
         """_call_response"""
         if http_datas.status == 'OK':
-            method_name = '_'+http_datas.title.lower()
+            method_name = '_' + http_datas.title.lower() + '_response'
             if hasattr(self, method_name):
                 getattr(self, method_name)(http_datas)
             else:
@@ -141,8 +133,21 @@ class Plan:
                 http_datas.result
             )
 
-    def _plans(self: Plan, http_datas: http.HData) -> None:
-        """_plans"""
+    def _plans_call(self: Plan) -> None:
+        """_plans_call
+        # Headers = {"Connection": "keep-alive", "Accept": "Content-Type: text/html; charset=UTF-8"}
+        # myConn.Send({"Verb":"GET", "URL":"/page.html", "Headers": Headers})
+        """
+        self._con.Send(
+            {
+                'Verb': 'GET',
+                'URL': '/json.htm?type=plans',
+                'Headers': self.HEADERS
+            }
+        )
+
+    def _plans_response(self: Plan, http_datas: http.HData) -> None:
+        """_plans_response"""
         for plan in http_datas.result:
             plan = PlanDatas(**plan)
             if plan.Name == self.plan_name:
@@ -161,7 +166,8 @@ class Plan:
                 }
             )
 
-    def _addplan(self: Plan, http_datas: http.HData) -> None:
+    def _addplan_response(self: Plan, http_datas: http.HData) -> None:
         """_addplan"""
         status(http_datas)
+        self._plans_call()
     # endregion
