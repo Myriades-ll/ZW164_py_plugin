@@ -69,7 +69,7 @@ class Plan:
                 Port='8080'
             )
             # FIXME: UNCOMMENT to continue Dev
-            # self._con.Connect()
+            self._con.Connect()
 
     def on_connect(self: Plan, octr: OCTR) -> None:
         """on_connect"""
