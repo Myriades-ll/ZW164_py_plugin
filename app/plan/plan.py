@@ -68,7 +68,7 @@ class Plan:
                 Address='127.0.0.1',
                 Port='8080'
             )
-            # FIXME: remove to continue Dev
+            # FIXME: UNCOMMENT to continue Dev
             # self._con.Connect()
 
     def on_connect(self: Plan, octr: OCTR) -> None:
@@ -95,17 +95,24 @@ class Plan:
                 self._con.Connect()
 
     def on_message(self: Plan, omer: OMER) -> None:
-        """on_message
-        #ignore_self_arg
-        """
+        """on_message"""
         if self._check_con(omer.connection):
-            http_datas = http.Response(**omer.data).datas
-            if http_datas.status == '200':
-                if http_datas.title == 'Plans':
-                    for plan in http_datas.result:
-                        plan = PlanDatas(**plan)
-                        if plan.Name == self.plan_name:
-                            status(plan)
+            http_response = http.Response(**omer.data)
+            if http_response.Status == '200':
+                http_datas = http_response.datas
+                self._call_response(http_datas)
+                if http_datas.status == 'OK':
+                    if http_datas.title == 'Plans':
+                        for plan in http_datas.result:
+                            plan = PlanDatas(**plan)
+                            if plan.Name == self.plan_name:
+                                self._plan_id = plan.idx
+                                status(
+                                    f'Plan id acquired: ({self._plan_id}){plan.Name}'
+                                )
+                                break
+            else:
+                error(f'Http error: {http_response.Status}')
 
     def add_device(self: Plan, device_list: List[int]) -> None:
         """set_device_list
@@ -121,6 +128,24 @@ class Plan:
     def _check_con(self: Plan, connection: Connection) -> bool:
         """_check_con"""
         if connection is self._con:
-            return True
-        # error(f'<Plan> {connection}')
+            if self._con.Connected():
+                return True
         return False
+
+    # region -> on_messages private methods
+    def _call_response(self: Plan, http_datas: http.HData) -> None:
+        """_call_response"""
+        if http_datas.status == 'OK':
+            method_name = '_'+http_datas.title.lower()
+            if hasattr(self, method_name):
+                getattr(self, method_name)(http_datas)
+            else:
+                error(f'<Plan._call_response> Unknown methods: {method_name}')
+        else:
+            error(
+                f'<Plan._call_response> Data error: ({http_datas.status}){http_datas.title}'
+            )
+
+    def _plans(self: Plan) -> None:
+        """_plans"""
+    # endregion
