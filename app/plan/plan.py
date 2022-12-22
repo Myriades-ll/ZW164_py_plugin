@@ -161,7 +161,6 @@ class Plan:
         # if plan_id not found then create
         if self._plan_id == 0:
             self._addplan_call()
-            status(f'Creating plan {self.plan_name}')
 
     def _addplan_call(self: Plan) -> None:
         """_addplan_call"""
@@ -172,10 +171,10 @@ class Plan:
                 'Headers': self.HEADERS
             }
         )
+        status(f'Creating plan {self.plan_name}')
 
     def _addplan_response(self: Plan, http_datas: http.HData) -> None:
         """_addplan"""
-        status(http_datas)
         self._plans_call()
 
     def _deleteplan_call(self: Plan) -> None:
