@@ -52,9 +52,10 @@ class Plan:
 
     def __init__(self: Plan) -> None:
         """initialisation de la classe"""
+        self._con: Optional[Connection] = None
         self._devices = set()
         self._finished = False
-        self._con: Optional[Connection] = None
+        self._plan_devices = set()
         self._plan_id = 0
         self.plan_name = ""
 
@@ -71,6 +72,8 @@ class Plan:
             )
             # FIXME: UNCOMMENT to continue Dev
             self._con.Connect()
+        else:
+            status("No plan! Don't forget to add your devices.")
 
     def on_connect(self: Plan, octr: OCTR) -> None:
         """on_connect"""
@@ -174,4 +177,22 @@ class Plan:
         """_addplan"""
         status(http_datas)
         self._plans_call()
+
+    def _deleteplan_call(self: Plan) -> None:
+        """_deleteplan_call
+        /json.htm?idx=<plan_id>&param=deleteplan&type=command
+        """
+        self._con.Send(
+            {
+                'Verb': 'GET',
+                "URL": f'/json.htm?idx={self._plan_id}&param=deleteplan&type=command',
+                'Headers': self.HEADERS
+            }
+        )
+
+    def _deleteplan_response(self: Plan) -> None:
+        """_deleteplan_response"""
+        self._plan_id = 0
+        status(f'Plan deleted {self.plan_name}')
+
     # endregion
