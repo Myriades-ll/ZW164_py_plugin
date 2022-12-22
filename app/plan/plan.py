@@ -7,6 +7,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from enum import IntFlag, auto
 from typing import Any, Dict, List, Optional
+from urllib.parse import quote
 
 # plugin libs
 from app.plan import http
@@ -101,16 +102,6 @@ class Plan:
             if http_response.Status == '200':
                 http_datas = http_response.datas
                 self._call_response(http_datas)
-                # if http_datas.status == 'OK':
-                #     if http_datas.title == 'Plans':
-                #         for plan in http_datas.result:
-                #             plan = PlanDatas(**plan)
-                #             if plan.Name == self.plan_name:
-                #                 self._plan_id = plan.idx
-                #                 status(
-                #                     f'Plan id acquired: ({self._plan_id}){plan.Name}'
-                #                 )
-                #                 break
             else:
                 error(f'Http error: {http_response.Status}')
 
@@ -140,10 +131,14 @@ class Plan:
             if hasattr(self, method_name):
                 getattr(self, method_name)(http_datas)
             else:
-                error(f'<Plan._call_response> Unknown methods: {method_name}')
+                error(
+                    f'<Plan._call_response> Unknown methods: {method_name}',
+                    http_datas.result
+                )
         else:
             error(
-                f'<Plan._call_response> Data error: ({http_datas.status}){http_datas.title}'
+                f'<Plan._call_response> Data error: ({http_datas.status}){http_datas.title}',
+                http_datas.result
             )
 
     def _plans(self: Plan, http_datas: http.HData) -> None:
@@ -156,4 +151,14 @@ class Plan:
                     f'Plan id acquired: ({self._plan_id}){plan.Name}'
                 )
                 break
+        # if plan_id not found then create
+        if self._plan_id == 0:
+            self._con.Send(
+                {
+                    'Verb': 'GET',
+                    "URL": f'/json.htm?name={quote(self.plan_name)}&param=addplan&type=command',
+                    'Headers': self.HEADERS
+                }
+            )
+
     # endregion
