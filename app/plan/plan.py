@@ -161,4 +161,7 @@ class Plan:
                 }
             )
 
+    def _addplan(self: Plan, http_datas: http.HData) -> None:
+        """_addplan"""
+        status(http_datas)
     # endregion
