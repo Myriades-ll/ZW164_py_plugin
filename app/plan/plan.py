@@ -5,7 +5,6 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from enum import IntFlag, auto
 from typing import Any, Dict, List, Optional, Union
 from urllib.parse import quote
 
@@ -22,21 +21,23 @@ from helpers.plugin_config import PluginConfig
 
 
 @dataclass
+class GetPlanDevicesData:
+    """GetPlanDevicesData"""
+    DevSceneRowID: str  # "1034"
+    Name: str  # "N32E1: tone"
+    devidx: str  # "1034"
+    idx: str  # "278"
+    order: str  # "284"
+    type: int  # 0
+
+
+@dataclass
 class PlanDatas:
     """PlanDatas"""
     Devices: int
     Name: str
     Order: str
     idx: str
-
-
-class PlanSteps(IntFlag):
-    """Plans steps"""
-    GET_PLANS = auto()
-    ADD_PLAN = auto()
-    ADD_DEVICE = auto()
-    DELETE_PLAN = auto()
-    FINISHED = auto()
 
 
 class Plan:
@@ -105,8 +106,10 @@ class Plan:
         """
         if isinstance(device_list, int):
             self._devices.add(device_list)
+            self._addplanactivedevice_call()
         elif isinstance(device_list, list):
             self._devices.update(device_list)
+            self._addplanactivedevice_call()
         else:
             error(
                 '<Plan.add_device>',
@@ -223,5 +226,24 @@ class Plan:
 
     def _addplanactivedevice_response(self: Plan, _http_datas: http.HData) -> None:
         """_addplanactivedevice_response"""
+        self._getplandevices_call()
+
+    def _getplandevices_call(self: Plan) -> None:
+        """_getplandevices_call
+        /json.htm?idx=21&param=getplandevices&type=command
+        """
+        self._con.Send(
+            {
+                'Verb': 'GET',
+                "URL": f'/json.htm?idx={self._plan_id}&param=getplandevices&type=command',
+                'Headers': self.HEADERS
+            }
+        )
+
+    def _getplandevices_response(self: Plan, http_datas: http.HData) -> None:
+        """_getplandevices_response"""
+        for item in http_datas:
+            datas = GetPlanDevicesData(**item)
+            self._plan_devices.add(datas.devidx)
         self._addplanactivedevice_call()
     # endregion
