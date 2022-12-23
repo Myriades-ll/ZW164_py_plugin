@@ -229,7 +229,7 @@ class Plan:
             # FIXME: not tested; finished or not
             self._finished = True
             self._con.Disconnect()
-            status(f'All devices added to {self.plan_name}')
+            status(f'All devices added to {self.plan_name} location')
 
     def _addplanactivedevice_response(self: Plan, _http_datas: http.HData) -> None:
         """_addplanactivedevice_response"""
