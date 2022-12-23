@@ -71,7 +71,6 @@ class Plan:
                 Address='127.0.0.1',
                 Port='8080'
             )
-            # FIXME: UNCOMMENT to continue Dev
             self._con.Connect()
         else:
             status("No plan! Don't forget to add your devices.")
