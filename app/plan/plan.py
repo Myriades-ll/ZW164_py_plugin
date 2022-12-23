@@ -109,6 +109,7 @@ class Plan:
             self._getplandevices_call()
         elif isinstance(device_list, list):
             self._devices.update(device_list)
+            status(f'Device list: {self._devices}')
             self._getplandevices_call()
         else:
             error(
