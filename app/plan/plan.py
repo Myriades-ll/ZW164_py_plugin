@@ -106,10 +106,10 @@ class Plan:
         """
         if isinstance(device_list, int):
             self._devices.add(device_list)
-            self._addplanactivedevice_call()
+            self._getplandevices_call()
         elif isinstance(device_list, list):
             self._devices.update(device_list)
-            self._addplanactivedevice_call()
+            self._getplandevices_call()
         else:
             error(
                 '<Plan.add_device>',
