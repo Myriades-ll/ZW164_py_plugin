@@ -14,7 +14,7 @@ from Domoticz import Connection
 from domoticz.responses import OnConnectResponse as OCTR
 from domoticz.responses import OnDisconnectResponse as ODTR
 from domoticz.responses import OnMessageResponse as OMER
-from helpers import debug, error, log_func, status
+from helpers import error, status
 from helpers.plugin_config import PluginConfig
 
 # pylint:disable=invalid-name
@@ -77,7 +77,6 @@ class Plan:
 
     def on_connect(self: Plan, octr: OCTR) -> None:
         """on_connect"""
-        status('<Plan.on_connect>', octr, octr.connection.Name)
         if self._check_con(octr.connection):
             status('API plan connection successfull!')
             if self._plan_id == 0:
@@ -104,9 +103,11 @@ class Plan:
         @arg device_list (List[int]): liste des device idx de Domoticz
         """
         if isinstance(device_list, int):
+            self._finished = False
             self._devices.add(device_list)
             self._getplandevices_call()
         elif isinstance(device_list, list):
+            self._finished = False
             self._devices.update(device_list)
             self._getplandevices_call()
         else:
@@ -117,14 +118,15 @@ class Plan:
 
     def del_device(self: Plan, device_id: int) -> None:
         """del_device"""
-        # TODO: (latest) - remove device from plan
+        # FIXME: (latest) - remove device from plan
         self._devices.discard(device_id)
 
     def _check_con(self: Plan, connection: Connection) -> bool:
         """_check_con"""
-        if connection is self._con:
-            if self._con.Connected():
-                return True
+        if self.plan_name:
+            if connection is self._con:
+                if self._con.Connected():
+                    return True
         return False
 
     # region -> on_messages private methods
@@ -223,6 +225,11 @@ class Plan:
                     'Headers': self.HEADERS
                 }
             )
+        else:  # finished
+            # FIXME: not tested; finished or not
+            self._finished = True
+            self._con.Disconnect()
+            status(f'All devices added to {self.plan_name}')
 
     def _addplanactivedevice_response(self: Plan, _http_datas: http.HData) -> None:
         """_addplanactivedevice_response"""
@@ -247,8 +254,8 @@ class Plan:
             devidx = int(datas.devidx)
             if devidx not in self._plan_devices:
                 self._plan_devices.add(int(devidx))
-                status(
-                    f'Added ({devidx}) {datas.Name} to {self.plan_name} location'
-                )
+                # status(
+                #     f'Added ({devidx}) {datas.Name} to {self.plan_name} location'
+                # )
         self._addplanactivedevice_call()
     # endregion
