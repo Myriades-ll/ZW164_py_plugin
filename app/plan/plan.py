@@ -109,7 +109,6 @@ class Plan:
             self._getplandevices_call()
         elif isinstance(device_list, list):
             self._devices.update(device_list)
-            status(f'Device list: {self._devices}')
             self._getplandevices_call()
         else:
             error(
@@ -212,10 +211,7 @@ class Plan:
         """_addplanactivedevice_add
         /json.htm?activeidx=1034&activetype=0&idx=21&param=addplanactivedevice&type=command
         """
-        status(f'Devices: {self._devices}')
-        status(f'Devices: {self._plan_devices}')
         next_devices = self._devices - self._plan_devices
-        status(f'left devices: {next_devices}')
         if len(next_devices) > 0:
             self._con.Send(
                 {
