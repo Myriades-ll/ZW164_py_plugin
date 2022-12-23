@@ -249,10 +249,11 @@ class Plan:
         """_getplandevices_response"""
         for item in http_datas.result:
             datas = GetPlanDevicesData(**item)
-            if datas.devidx not in self._plan_devices:
-                self._plan_devices.add(int(datas.devidx))
+            devidx = int(datas.devidx)
+            if devidx not in self._plan_devices:
+                self._plan_devices.add(int(devidx))
                 status(
-                    f'Added ({datas.devidx}) {datas.Name} to {self.plan_name} location'
+                    f'Added ({devidx}) {datas.Name} to {self.plan_name} location'
                 )
         self._addplanactivedevice_call()
     # endregion
