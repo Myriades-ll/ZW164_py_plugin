@@ -250,7 +250,7 @@ class Plan:
         for item in http_datas.result:
             datas = GetPlanDevicesData(**item)
             if datas.devidx not in self._plan_devices:
-                self._plan_devices.add(datas.devidx)
+                self._plan_devices.add(int(datas.devidx))
                 status(
                     f'Added ({datas.devidx}) {datas.Name} to {self.plan_name} location'
                 )
