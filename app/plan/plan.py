@@ -172,6 +172,8 @@ class Plan:
         # if plan_id not found then create
         if self._plan_id == 0:
             self._addplan_call()
+        else:
+            self._addplanactivedevice_call()
 
     def _addplan_call(self: Plan) -> None:
         """_addplan_call"""
@@ -216,8 +218,7 @@ class Plan:
                     'Verb': 'GET',
                     "URL": ''.join([
                         f'/json.htm?activeidx={min(next_devices)}',
-                        '&activetype=0',
-                        f'&idx={self._plan_id}',
+                        f'&activetype=0&idx={self._plan_id}',
                         '&param=addplanactivedevice&type=command'
                     ]),
                     'Headers': self.HEADERS
@@ -244,6 +245,10 @@ class Plan:
         """_getplandevices_response"""
         for item in http_datas:
             datas = GetPlanDevicesData(**item)
-            self._plan_devices.add(datas.devidx)
+            if datas.devidx not in self._plan_devices:
+                self._plan_devices.add(datas.devidx)
+                status(
+                    f'Added ({datas.devidx}){datas.Name} to {self.plan_name}'
+                )
         self._addplanactivedevice_call()
     # endregion
