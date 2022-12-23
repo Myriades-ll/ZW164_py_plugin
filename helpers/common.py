@@ -64,4 +64,3 @@ def last_update_2_datetime(last_update: str) -> datetime:
             Domoticz.Error(f"strptime [ {last_update} <-> {dz_format} ]")
             last_update_dt = datetime.now()
     return last_update_dt
-
