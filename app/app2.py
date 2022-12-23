@@ -103,7 +103,7 @@ class App2:
                     if self._soundswitches.is_complete():
                         for endpoint in self._soundswitches:
                             self._dz_devices.update(endpoint)
-                        helpers.status(self._dz_devices._devices)
+                        helpers.status(self._dz_devices._devices[1])
                         # self._plan.add_device(
                         #     self._dz_devices.get_device_idxs_list()
                         # )
