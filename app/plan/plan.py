@@ -6,7 +6,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from enum import IntFlag, auto
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Union
 from urllib.parse import quote
 
 # plugin libs
@@ -99,11 +99,19 @@ class Plan:
             else:
                 error(f'Http error: {http_response.Status}')
 
-    def add_device(self: Plan, device_list: List[int]) -> None:
+    def add_device(self: Plan, device_list: Union[List[int], int]) -> None:
         """set_device_list
         @arg device_list (List[int]): liste des device idx de Domoticz
         """
-        self._devices.update(device_list)
+        if isinstance(device_list, int):
+            self._devices.add(device_list)
+        elif isinstance(device_list, list):
+            self._devices.update(device_list)
+        else:
+            error(
+                '<Plan.add_device>',
+                f'Unknown model datas: ({type(device_list)}){device_list}'
+            )
 
     def del_device(self: Plan, device_id: int) -> None:
         """del_device"""
@@ -194,4 +202,26 @@ class Plan:
         self._plan_id = 0
         status(f'Plan deleted {self.plan_name}')
 
+    def _addplanactivedevice_call(self: Plan) -> None:
+        """_addplanactivedevice_add
+        /json.htm?activeidx=1034&activetype=0&idx=21&param=addplanactivedevice&type=command
+        """
+        next_devices = self._devices - self._plan_devices
+        if len(next_devices) > 0:
+            self._con.Send(
+                {
+                    'Verb': 'GET',
+                    "URL": ''.join([
+                        f'/json.htm?activeidx={min(next_devices)}',
+                        '&activetype=0',
+                        f'&idx={self._plan_id}',
+                        '&param=addplanactivedevice&type=command'
+                    ]),
+                    'Headers': self.HEADERS
+                }
+            )
+
+    def _addplanactivedevice_response(self: Plan, _http_datas: http.HData) -> None:
+        """_addplanactivedevice_response"""
+        self._addplanactivedevice_call()
     # endregion
