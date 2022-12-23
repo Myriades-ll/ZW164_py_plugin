@@ -103,9 +103,10 @@ class App2:
                     if self._soundswitches.is_complete():
                         for endpoint in self._soundswitches:
                             self._dz_devices.update(endpoint)
-                        self._plan.add_device(
-                            self._dz_devices.get_device_idxs_list()
-                        )
+                        helpers.status(self._dz_devices._devices_mapping)
+                        # self._plan.add_device(
+                        #     self._dz_devices.get_device_idxs_list()
+                        # )
             elif not self._zwave_gateway.is_complete():
                 self._zwave_gateway.update(response.Topic, response.Payload)
                 if self._zwave_gateway.is_complete():
@@ -134,9 +135,9 @@ class App2:
             elif self._soundswitches.is_complete():
                 if isinstance(endpoint, CCSSEndpoint):
                     self._dz_devices.update(endpoint)
-                self._plan.add_device(
-                    self._dz_devices.get_device_idxs_list()
-                )
+                # self._plan.add_device(
+                #     self._dz_devices.get_device_idxs_list()
+                # )
 
     def on_device_removed(self: App2, odrr: ODRR) -> None:
         """on_device_removed"""
