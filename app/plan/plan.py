@@ -243,7 +243,7 @@ class Plan:
 
     def _getplandevices_response(self: Plan, http_datas: http.HData) -> None:
         """_getplandevices_response"""
-        for item in http_datas:
+        for item in http_datas.result:
             datas = GetPlanDevicesData(**item)
             if datas.devidx not in self._plan_devices:
                 self._plan_devices.add(datas.devidx)
