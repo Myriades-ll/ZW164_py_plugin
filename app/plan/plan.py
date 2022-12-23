@@ -212,6 +212,7 @@ class Plan:
         /json.htm?activeidx=1034&activetype=0&idx=21&param=addplanactivedevice&type=command
         """
         next_devices = self._devices - self._plan_devices
+        status(f'left devices: {next_devices}')
         if len(next_devices) > 0:
             self._con.Send(
                 {
@@ -248,7 +249,7 @@ class Plan:
             if datas.devidx not in self._plan_devices:
                 self._plan_devices.add(datas.devidx)
                 status(
-                    f'Added ({datas.devidx}){datas.Name} to {self.plan_name}'
+                    f'Added ({datas.devidx}) {datas.Name} to {self.plan_name} location'
                 )
         self._addplanactivedevice_call()
     # endregion
