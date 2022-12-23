@@ -119,6 +119,10 @@ class _DeviceMapping:
         """get_unit_ids"""
         return [device.ID for device in self._devices.values()]
 
+    def get_device_idxs_list(self: _DeviceMapping) -> List[int]:
+        """get_device_idxs_list"""
+        return [device.DeviceID for device in self._devices.values()]
+
 
 class DzDevices(_DeviceMapping):
     """Domoticz devices"""
