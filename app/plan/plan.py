@@ -41,7 +41,10 @@ class PlanDatas:
 
 
 class Plan:
-    """Classe Domoticz JSON/API:Plan"""
+    """Classe Domoticz JSON/API:Plan
+    This class is intended to be used with your own automation class.
+    Below you find see a functional automation class.
+    """
     HEADERS = {
         'Accept': 'application/json',
         'Accept-Charset': 'utf-8',
@@ -59,45 +62,6 @@ class Plan:
         self._plan_devices = set()
         self._plan_id = 0
         self.plan_name = ""
-
-    def on_start(self: Plan, parameters: Dict[str, Any]) -> None:
-        """on_start"""
-        self.plan_name = parameters.get('Mode1')
-        if self.plan_name:
-            self._con = Connection(
-                self.plan_name + '_API_PLAN',
-                'TCP/IP',
-                'HTTP',
-                Address='127.0.0.1',
-                Port='8080'
-            )
-            self._connect()
-        else:
-            status("No plan! Don't forget to add your devices.")
-
-    def on_connect(self: Plan, octr: OCTR) -> None:
-        """on_connect"""
-        if self._check_con(octr.connection):
-            status('API plan connection successfull!')
-            if self._plan_id == 0:
-                self._plans_call()
-            else:
-                self._getplandevices_call()
-
-    def on_disconnect(self: Plan, odtr: ODTR) -> None:
-        """on_disconnect"""
-        if self._check_con(odtr.connection):
-            if not self._finished:
-                self._con.Connect()
-
-    def on_message(self: Plan, omer: OMER) -> None:
-        """on_message"""
-        if self._check_con(omer.connection):
-            http_response = http.Response(**omer.data)
-            if http_response:
-                http_datas = http_response.datas
-                if http_datas:
-                    self._call_response(http_datas)
 
     def add_device(self: Plan, device_list: Union[List[int], int]) -> None:
         """set_device_list
@@ -119,7 +83,7 @@ class Plan:
 
     def del_device(self: Plan, device_id: int) -> None:
         """del_device"""
-        # FIXME: (latest) - remove device from plan
+        # FIXME: (latest) - not tested - remove device from plan
         self._devices.discard(device_id)
 
     def _connect(self: Plan, allready_conneted_callback: Optional[Callable] = None) -> None:
@@ -235,7 +199,6 @@ class Plan:
                 }
             )
         else:  # finished
-            # FIXME: not tested; finished or not
             self._finished = True
             self._con.Disconnect()
             status(f'All devices added to {self.plan_name} location')
@@ -268,3 +231,50 @@ class Plan:
                 # )
         self._addplanactivedevice_call()
     # endregion
+
+
+class PlanAutomation(Plan):
+    """Automation for domoticz location"""
+
+    def __init__(self: PlanAutomation) -> None:
+        """initialisation de la classe"""
+        Plan.__init__(self)
+
+    def on_start(self: Plan, parameters: Dict[str, Any]) -> None:
+        """on_start"""
+        self.plan_name = parameters.get('Mode1')
+        if self.plan_name:
+            self._con = Connection(
+                self.plan_name + '_API_PLAN',
+                'TCP/IP',
+                'HTTP',
+                Address='127.0.0.1',
+                Port='8080'
+            )
+            self._connect()
+        else:
+            status("No plan! Don't forget to add your devices.")
+
+    def on_connect(self: Plan, octr: OCTR) -> None:
+        """on_connect"""
+        if self._check_con(octr.connection):
+            status('API plan connection successfull!')
+            if self._plan_id == 0:
+                self._plans_call()
+            else:
+                self._getplandevices_call()
+
+    def on_disconnect(self: Plan, odtr: ODTR) -> None:
+        """on_disconnect"""
+        if self._check_con(odtr.connection):
+            if not self._finished:
+                self._con.Connect()
+
+    def on_message(self: Plan, omer: OMER) -> None:
+        """on_message"""
+        if self._check_con(omer.connection):
+            http_response = http.Response(**omer.data)
+            if http_response:
+                http_datas = http_response.datas
+                if http_datas:
+                    self._call_response(http_datas)

@@ -5,14 +5,14 @@
 # standard libs
 from __future__ import annotations
 
-from typing import Dict, Optional
+from typing import Any, Dict, Optional
 
 # plugin libs
 import Domoticz
 import helpers
 from app.devices.devices import DzDevices
 from app.mqtt.mqtt import Mqtt, MQTTResponse
-from app.plan.plan import Plan
+from app.plan.plan import PlanAutomation
 from app.zwave.soundswitch import CCSSEndpoint, CCSSNodes
 from app.zwave.zwave import ZwaveGateway
 from domoticz.responses import OnCommandResponse as OCDR
@@ -32,9 +32,11 @@ class App2:
     _zwave_gateway = ZwaveGateway()
     _soundswitches = CCSSNodes()
     _dz_devices = DzDevices()
-    _plan = Plan()
+    _plan = PlanAutomation()
 
-    def on_start(self: App2, parameters: dict, devices: Dict[int, Domoticz.Device]) -> None:
+    def on_start(
+            self: App2, parameters: Dict[str, Any],
+            devices: Dict[int, Domoticz.Device]) -> None:
         """place this in `onStart`"""
         self._mqtt.on_start(parameters)
         self._dz_devices.on_start(devices)
@@ -55,7 +57,6 @@ class App2:
         self._plan.on_disconnect(odtr)
         self._mqtt.on_disconnect(odtr)
 
-    @helpers.log_func('debug', True, True)
     def on_command(self: App2, ocdr: OCDR) -> None:
         """place this in `onConnect`"""
         command = self._soundswitches.send_command(
@@ -83,7 +84,6 @@ class App2:
             else:
                 helpers.error(message.Error)
 
-    # @helpers.log_func('debug', True, True)
     def _on_publish(self: App2, response: MQTTResponse) -> None:
         """Recieve message from broker
         #ignore_self_arg
