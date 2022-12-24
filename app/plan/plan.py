@@ -94,11 +94,9 @@ class Plan:
         """on_message"""
         if self._check_con(omer.connection):
             http_response = http.Response(**omer.data)
-            if http_response.Status == '200':
+            if http_response:
                 http_datas = http_response.datas
                 self._call_response(http_datas)
-            else:
-                error(f'Http error: {http_response.Status}')
 
     def add_device(self: Plan, device_list: Union[List[int], int]) -> None:
         """set_device_list
