@@ -198,10 +198,6 @@ class Plan:
             self._con.Disconnect()
             if self._devices == self._plan_devices:
                 status(f'All devices added to {self.plan_name} location')
-                status(
-                    _devices=self._devices,
-                    _plan_devices=self._plan_devices
-                )
 
     def _addplanactivedevice_response(self: Plan, _http_datas: http.HData) -> None:
         """_addplanactivedevice_response"""
@@ -223,14 +219,9 @@ class Plan:
         """_getplandevices_response"""
         for item in http_datas.result:
             datas = GetPlanDevicesData(**item)
-            status(datas)
             devidx = int(datas.devidx)
             if devidx not in self._plan_devices:
                 self._plan_devices.add(int(devidx))
-        status('<Plan._getplandevices_response>')
-        status(
-            _plan_devices=self._plan_devices
-        )
         self._addplanactivedevice_call()
     # endregion
 
