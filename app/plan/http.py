@@ -8,7 +8,9 @@ from dataclasses import dataclass, field
 from gzip import decompress
 from json import loads
 from typing import Any, Dict
-from helpers import debug
+
+# plugin libs
+from helpers import debug, error
 
 
 @dataclass
@@ -76,9 +78,12 @@ class Response:
                 encoded=self.headers.Content_Encoding
             )
         else:
-            debug(f'<HTTPResponse.__post_init__> Status: {self.Status}')
-            debug(f'<HTTPResponse.__post_init__> Headers: {self.Headers}')
-            debug(f'<HTTPResponse.__post_init__> Data: {self.Data}')
+            error('<HTTPResponse.__post_init__>')
+            error(
+                Status=self.Status,
+                Headers=self.Headers,
+                Data=self.Data
+            )
 
     def __bool__(self: Response) -> bool:
         """bool test wrapper"""
