@@ -96,7 +96,8 @@ class Plan:
             http_response = http.Response(**omer.data)
             if http_response:
                 http_datas = http_response.datas
-                self._call_response(http_datas)
+                if http_datas:
+                    self._call_response(http_datas)
 
     def add_device(self: Plan, device_list: Union[List[int], int]) -> None:
         """set_device_list
