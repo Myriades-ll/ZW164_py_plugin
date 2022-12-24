@@ -106,7 +106,7 @@ class Plan:
     # region -> on_messages private methods
     def _call_response(self: Plan, http_datas: http.HData) -> None:
         """_call_response"""
-        if http_datas.status == 'OK':
+        if http_datas:
             method_name = '_' + http_datas.title.lower() + '_response'
             if hasattr(self, method_name):
                 getattr(self, method_name)(http_datas)
@@ -115,11 +115,6 @@ class Plan:
                     f'<Plan._call_response> Unknown methods: {method_name}',
                     http_datas.result
                 )
-        else:
-            error(
-                f'<Plan._call_response> Data error: ({http_datas.status}){http_datas.title}',
-                http_datas.result
-            )
 
     def _plans_call(self: Plan) -> None:
         """_plans_call
