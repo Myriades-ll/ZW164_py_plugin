@@ -196,7 +196,7 @@ class Plan:
         else:  # finished
             self._finished = True
             self._con.Disconnect()
-            if self._devices == self._plan_devices:
+            if self._devices == self._plan_devices and len(self._plan_devices) > 0:
                 status(f'All devices added to {self.plan_name} location')
 
     def _addplanactivedevice_response(self: Plan, _http_datas: http.HData) -> None:
