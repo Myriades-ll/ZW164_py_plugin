@@ -198,6 +198,10 @@ class Plan:
             self._con.Disconnect()
             if self._devices == self._plan_devices:
                 status(f'All devices added to {self.plan_name} location')
+                status(
+                    _devices=self._devices,
+                    _plan_devices=self._plan_devices
+                )
 
     def _addplanactivedevice_response(self: Plan, _http_datas: http.HData) -> None:
         """_addplanactivedevice_response"""
