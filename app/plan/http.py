@@ -65,7 +65,7 @@ class Response:
 
     def __post_init__(self: Response) -> None:
         """post init"""
-        if self.Status == '200':
+        if self:
             tmp = {}
             for old_key, value in self.Headers.items():
                 new_key = old_key.replace('-', '_')
@@ -80,4 +80,6 @@ class Response:
             debug(f'<HTTPResponse.__post_init__> Headers: {self.Headers}')
             debug(f'<HTTPResponse.__post_init__> Data: {self.Data}')
 
-# pylint:enable=invalid-name
+    def __bool__(self: Response) -> bool:
+        """bool test wrapper"""
+        return self.Status == '200'
