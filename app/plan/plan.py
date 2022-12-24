@@ -142,7 +142,7 @@ class Plan:
         if self._plan_id == 0:
             self._addplan_call()
         else:
-            self._addplanactivedevice_call()
+            self._getplandevices_call()
 
     def _addplan_call(self: Plan) -> None:
         """_addplan_call"""
