@@ -161,7 +161,7 @@ class DzDevices(_DeviceMapping):
             device.Update(**self._update_at_creation(device.Name))
         # update defaultVolume
         datas = self._update_default_volume(endpoint.defaultVolume)
-        if datas.get('nValue') != device.nValue and datas.get('sValue') != device.sValue:
+        if datas.get('nValue') != device.nValue or datas.get('sValue') != device.sValue:
             device.Update(**datas)
             helpers.log(
                 f'Mise à jour volume: ({endpoint.node_id}-{endpoint.endpoint_id}){datas}'
@@ -180,7 +180,7 @@ class DzDevices(_DeviceMapping):
             device.Update(**self._update_at_creation(device.Name))
         # update toneId
         datas = self._update_default_tone(len(endpoint.tones), endpoint.toneId)
-        if datas.get('nValue') != device.nValue and datas.get('sValue') != device.sValue:
+        if datas.get('nValue') != device.nValue or datas.get('sValue') != device.sValue:
             device.Update(**datas)
             helpers.log(
                 f'Mise à jour son: ({endpoint.node_id}-{endpoint.endpoint_id}){datas}'
