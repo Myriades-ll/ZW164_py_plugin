@@ -125,10 +125,11 @@ class Plan:
 
     def _connect(self: Plan, allready_conneted_callback: Optional[Callable] = None) -> None:
         """_connect"""
-        if not self._con.Connected():
-            self._con.Connect()
-        elif callable(allready_conneted_callback):
-            allready_conneted_callback()
+        if self.plan_name:
+            if not self._con.Connected():
+                self._con.Connect()
+            elif callable(allready_conneted_callback):
+                allready_conneted_callback()
 
     def _check_con(self: Plan, connection: Connection) -> bool:
         """_check_con"""
