@@ -10,7 +10,7 @@ from json import loads
 from typing import Any, Dict
 
 # plugin libs
-from helpers import debug, error
+from helpers import debug, error, status
 
 
 @dataclass
@@ -24,7 +24,7 @@ class HData:
 
     def __post_init__(self: HData) -> None:
         """post init"""
-        debug(f'<HData.__post_init__> status: {self.status}')
+        status(f'<HData.__post_init__> status: {self.status}')
         tmp = self.raw_data
         if self.encoded == 'gzip':
             tmp = decompress(tmp)
