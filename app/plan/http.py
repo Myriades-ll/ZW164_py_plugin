@@ -10,7 +10,7 @@ from json import loads
 from typing import Any, Dict
 
 # plugin libs
-from helpers import debug, error, status
+from helpers import error
 
 
 @dataclass
@@ -31,8 +31,19 @@ class HData:
         for key, value in results.items():
             if hasattr(self, key):
                 setattr(self, key, value)
-        status(f'<HData.__post_init__> {self}')
+        if not self:
+            error('<HData.__post_init__>')
+            error(
+                status=self.status,
+                title=self.title,
+                result=self.result
+            )
 
+    def __bool__(self: HData) -> bool:
+        """bool wrapper
+        ne fonctionne qu'après le post init!
+        """
+        return self.status == 'OK'
 # pylint:disable=invalid-name,too-many-instance-attributes
 
 
