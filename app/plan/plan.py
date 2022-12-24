@@ -106,15 +106,14 @@ class Plan:
     # region -> on_messages private methods
     def _call_response(self: Plan, http_datas: http.HData) -> None:
         """_call_response"""
-        if http_datas:
-            method_name = '_' + http_datas.title.lower() + '_response'
-            if hasattr(self, method_name):
-                getattr(self, method_name)(http_datas)
-            else:
-                error(
-                    f'<Plan._call_response> Unknown methods: {method_name}',
-                    http_datas.result
-                )
+        method_name = '_' + http_datas.title.lower() + '_response'
+        if hasattr(self, method_name):
+            getattr(self, method_name)(http_datas)
+        else:
+            error(
+                f'<Plan._call_response> Unknown method: {method_name}',
+                http_datas.result
+            )
 
     def _plans_call(self: Plan) -> None:
         """_plans_call
@@ -237,7 +236,7 @@ class PlanAutomation(Plan):
         """initialisation de la classe"""
         Plan.__init__(self)
 
-    def on_start(self: Plan, parameters: Dict[str, Any]) -> None:
+    def on_start(self: PlanAutomation, parameters: Dict[str, Any]) -> None:
         """on_start"""
         self.plan_name = parameters.get('Mode1')
         if self.plan_name:
@@ -252,7 +251,7 @@ class PlanAutomation(Plan):
         else:
             status("No plan! Don't forget to add your devices.")
 
-    def on_connect(self: Plan, octr: OCTR) -> None:
+    def on_connect(self: PlanAutomation, octr: OCTR) -> None:
         """on_connect"""
         if self._check_con(octr.connection):
             status('API plan connection successfull!')
@@ -261,13 +260,13 @@ class PlanAutomation(Plan):
             else:
                 self._getplandevices_call()
 
-    def on_disconnect(self: Plan, odtr: ODTR) -> None:
+    def on_disconnect(self: PlanAutomation, odtr: ODTR) -> None:
         """on_disconnect"""
         if self._check_con(odtr.connection):
             if not self._finished:
                 self._con.Connect()
 
-    def on_message(self: Plan, omer: OMER) -> None:
+    def on_message(self: PlanAutomation, omer: OMER) -> None:
         """on_message"""
         if self._check_con(omer.connection):
             http_response = http.Response(**omer.data)
