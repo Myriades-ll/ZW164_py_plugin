@@ -161,10 +161,11 @@ class DzDevices(_DeviceMapping):
             device.Update(**self._update_at_creation(device.Name))
         # update defaultVolume
         datas = self._update_default_volume(endpoint.defaultVolume)
-        device.Update(**datas)
-        helpers.log(
-            f'Mise à jour volume: ({endpoint.node_id}-{endpoint.endpoint_id}){datas}'
-        )
+        if datas.get('nValue') != device.nValue and datas.get('sValue') != device.sValue:
+            device.Update(**datas)
+            helpers.log(
+                f'Mise à jour volume: ({endpoint.node_id}-{endpoint.endpoint_id}){datas}'
+            )
 
         # toneId
         device_id = base_device_id + 'toneId'
@@ -179,10 +180,11 @@ class DzDevices(_DeviceMapping):
             device.Update(**self._update_at_creation(device.Name))
         # update toneId
         datas = self._update_default_tone(len(endpoint.tones), endpoint.toneId)
-        device.Update(**datas)
-        helpers.log(
-            f'Mise à jour son: ({endpoint.node_id}-{endpoint.endpoint_id}){datas}'
-        )
+        if datas.get('nValue') != device.nValue and datas.get('sValue') != device.sValue:
+            device.Update(**datas)
+            helpers.log(
+                f'Mise à jour son: ({endpoint.node_id}-{endpoint.endpoint_id}){datas}'
+            )
 
     @staticmethod
     def _update_at_creation(device_name: str) -> Dict[str, Any]:

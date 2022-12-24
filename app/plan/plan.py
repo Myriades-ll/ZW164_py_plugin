@@ -84,7 +84,7 @@ class Plan:
 
     def del_device(self: Plan, device_id: int) -> None:
         """del_device"""
-        # FIXME: (latest) - not tested - remove device from plan
+        # TODO: (latest) - not tested - remove device from plan
         self._devices.discard(device_id)
 
     def _connect(self: Plan, allready_conneted_callback: Optional[Callable] = None) -> None:
