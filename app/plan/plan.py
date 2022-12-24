@@ -43,6 +43,7 @@ class PlanDatas:
 class Plan:
     """Classe Domoticz JSON/API:Plan
     This class is intended to be used with your own automation class.
+    Use it as a class extension.
     Below you find see a functional automation class.
     """
     HEADERS = {
