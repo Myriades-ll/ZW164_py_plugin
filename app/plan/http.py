@@ -24,7 +24,6 @@ class HData:
 
     def __post_init__(self: HData) -> None:
         """post init"""
-        status(f'<HData.__post_init__> status: {self.status}')
         tmp = self.raw_data
         if self.encoded == 'gzip':
             tmp = decompress(tmp)
@@ -32,6 +31,7 @@ class HData:
         for key, value in results.items():
             if hasattr(self, key):
                 setattr(self, key, value)
+        status(f'<HData.__post_init__> {self}')
 
 # pylint:disable=invalid-name,too-many-instance-attributes
 
