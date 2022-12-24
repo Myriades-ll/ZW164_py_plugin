@@ -5,7 +5,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Callable, Dict, List, Optional, Union
 from urllib.parse import quote
 
 # plugin libs
@@ -71,7 +71,7 @@ class Plan:
                 Address='127.0.0.1',
                 Port='8080'
             )
-            self._con.Connect()
+            self._connect()
         else:
             status("No plan! Don't forget to add your devices.")
 
@@ -81,6 +81,8 @@ class Plan:
             status('API plan connection successfull!')
             if self._plan_id == 0:
                 self._plans_call()
+            else:
+                self._getplandevices_call()
 
     def on_disconnect(self: Plan, odtr: ODTR) -> None:
         """on_disconnect"""
@@ -105,11 +107,11 @@ class Plan:
         if isinstance(device_list, int):
             self._finished = False
             self._devices.add(device_list)
-            self._getplandevices_call()
+            self._connect(self._getplandevices_call)
         elif isinstance(device_list, list):
             self._finished = False
             self._devices.update(device_list)
-            self._getplandevices_call()
+            self._connect(self._getplandevices_call)
         else:
             error(
                 '<Plan.add_device>',
@@ -120,6 +122,13 @@ class Plan:
         """del_device"""
         # FIXME: (latest) - remove device from plan
         self._devices.discard(device_id)
+
+    def _connect(self: Plan, allready_conneted_callback: Optional[Callable] = None) -> None:
+        """_connect"""
+        if not self._con.Connected():
+            self._con.Connect()
+        elif callable(allready_conneted_callback):
+            allready_conneted_callback()
 
     def _check_con(self: Plan, connection: Connection) -> bool:
         """_check_con"""
