@@ -134,10 +134,6 @@ class App2:
             elif self._soundswitches.is_complete():
                 if isinstance(endpoint, CCSSEndpoint):
                     self._dz_devices.update(endpoint)
-                # FIXME: maybe?
-                # self._plan.add_device(
-                #     self._dz_devices.get_device_idxs_list()
-                # )
 
     def on_device_removed(self: App2, odrr: ODRR) -> None:
         """on_device_removed"""

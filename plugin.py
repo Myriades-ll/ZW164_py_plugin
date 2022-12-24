@@ -51,7 +51,6 @@ def onStart():  # pylint:disable=invalid-name
     helpers.PluginConfig(Parameters)
 
     # now start
-    helpers.api.API_REQUEST = helpers.api.on_start()
     APP2.on_start(Parameters, Devices)
     # pylint:enable=undefined-variable
 
@@ -59,7 +58,6 @@ def onStart():  # pylint:disable=invalid-name
 @helpers.log_func('debug', separator_line=True)
 def onStop():  # pylint: disable=invalid-name
     """onStop"""
-    # helpers.api.on_stop()
     APP2.on_stop()
 
 
