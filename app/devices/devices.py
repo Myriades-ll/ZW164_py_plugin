@@ -140,7 +140,6 @@ class DzDevices(_DeviceMapping):
             deleted = self.remove_from_mapping(odrr.unit)
             helpers.status(f'Deleted device: {deleted}')
 
-    @helpers.log_func('debug', True, True)
     def update(self: DzDevices, endpoint: CCSSEndpoint) -> None:
         """update or create devices
         #ignore_self_arg
