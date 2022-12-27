@@ -6,12 +6,21 @@
 # standard libs
 from __future__ import annotations
 
+from dataclasses import dataclass
 from typing import Dict, Union
 
 # plugin libs
 import Domoticz
-from app.devices.devices import DeviceMappingDatas
 from helpers.common import debug, error
+
+
+@dataclass
+class DeviceMappingDatas:
+    """DeviceMappingDatas"""
+    endpoint_id: int
+    node_id: int
+    topic: str
+    unit: int
 
 
 class AppConfig:

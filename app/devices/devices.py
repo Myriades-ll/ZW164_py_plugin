@@ -4,7 +4,6 @@
 # standard libs
 from __future__ import annotations
 
-from dataclasses import dataclass
 from re import sub
 from typing import Any, Dict, List, Optional
 
@@ -14,15 +13,7 @@ import helpers
 from app.config import ZW164Config
 from app.zwave.soundswitch import CCSSEndpoint
 from domoticz.responses import OnDeviceRemovedResponse as ODRR
-
-
-@dataclass
-class DeviceMappingDatas:
-    """DeviceMappingDatas"""
-    endpoint_id: int
-    node_id: int
-    topic: str
-    unit: int
+from helpers.app_config import DeviceMappingDatas
 
 
 class _DeviceMapping:
