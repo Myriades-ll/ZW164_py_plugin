@@ -82,11 +82,7 @@ class Plan:
                 f'Unknown model datas: ({type(device_list)}){device_list}'
             )
 
-    def del_device(self: Plan, device_id: int) -> None:
-        """del_device"""
-        # TODO: (latest) - not tested - remove device from plan
-        self._devices.discard(device_id)
-
+    # region -> private methods
     def _connect(self: Plan, allready_conneted_callback: Optional[Callable] = None) -> None:
         """_connect"""
         if self.plan_name:
@@ -103,7 +99,6 @@ class Plan:
                     return True
         return False
 
-    # region -> on_messages private methods
     def _call_response(self: Plan, http_datas: http.HData) -> None:
         """_call_response"""
         method_name = '_' + http_datas.title.lower() + '_response'
