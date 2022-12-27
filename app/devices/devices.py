@@ -35,10 +35,7 @@ class _DeviceMapping:
                 item = eval(item)  # pylint:disable=eval-used
             self._devices_mapping.update({key: item})
             self._units_ids.add(item.unit)
-        try:
-            self._next_unit_id: int = min(set(range(1, 255)) - self._units_ids)
-        except ValueError:
-            helpers.error('No more unit avaible')
+        self.get_next_unit_id()
 
     def _save_mapping(self: _DeviceMapping) -> None:
         """save device mapping"""
