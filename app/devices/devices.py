@@ -4,6 +4,7 @@
 # standard libs
 from __future__ import annotations
 
+from dataclasses import dataclass
 from re import sub
 from typing import Any, Dict, List, Optional
 
@@ -13,16 +14,27 @@ import helpers
 from app.config import ZW164Config
 from app.zwave.soundswitch import CCSSEndpoint
 from domoticz.responses import OnDeviceRemovedResponse as ODRR
-from helpers.app_config import DeviceMappingDatas
+
+
+@dataclass
+class DeviceMappingDatas:
+    """DeviceMappingDatas"""
+    endpoint_id: int
+    node_id: int
+    topic: str
+    unit: int
 
 
 class _DeviceMapping:
     """Device mapping"""
-    _devices_ids = set()
-    _devices_mapping: Dict[str, DeviceMappingDatas] = {}
-    _devices: Dict[int, Domoticz.Device] = {}
-    _next_unit_id = -1
-    _units_ids = set()
+
+    def __init__(self: _DeviceMapping) -> None:
+        """initialisation de la classe"""
+        self._devices_ids = set()
+        self._devices_mapping: Dict[str, DeviceMappingDatas] = {}
+        self._devices: Dict[int, Domoticz.Device] = {}
+        self._next_unit_id = -1
+        self._units_ids = set()
 
     def init_mapping(self: _DeviceMapping) -> None:
         """Acquisition du mapping"""
@@ -95,6 +107,7 @@ class _DeviceMapping:
         try:
             self._next_unit_id: int = min(set(range(1, 255)) - self._units_ids)
         except ValueError:
+            self._next_unit_id = -1
             helpers.error('No more unit avaible')
         return self._next_unit_id
 
