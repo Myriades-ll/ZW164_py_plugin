@@ -30,12 +30,14 @@
 # plugin libs
 import helpers
 import app
-from domoticz.responses import OnConnectResponse as OCTR
-from domoticz.responses import OnDisconnectResponse as ODTR
-from domoticz.responses import OnMessageResponse as OMER
-from domoticz.responses import OnDeviceRemovedResponse as ODRR
-from domoticz.responses import OnCommandResponse as OCDR
-from domoticz.responses import on_event
+import domoticz
+# from domoticz.responses import OnConnectResponse as OCTR
+# from domoticz.responses import OnDisconnectResponse as ODTR
+# from domoticz.responses import OnMessageResponse as OMER
+# from domoticz.responses import OnDeviceRemovedResponse as ODRR
+# from domoticz.responses import OnCommandResponse as OCDR
+# from domoticz.responses import on_event
+
 __version__ = "2.1.0"
 __version_info__ = (2, 1, 0)
 __author__ = "Laurent aka Myriades"
@@ -64,7 +66,7 @@ def onStop() -> None:  # pylint: disable=invalid-name
 @helpers.log_func('debug', separator_line=True)
 def onConnect(*args: tuple) -> None:  # pylint: disable=invalid-name
     """onConnect"""
-    octr = OCTR(*args)
+    octr = domoticz.OnConnectResponse(*args)
     if octr.is_success():
         APP2.on_connect(octr)
     else:
@@ -72,15 +74,16 @@ def onConnect(*args: tuple) -> None:  # pylint: disable=invalid-name
 
 
 @helpers.log_func('debug', separator_line=True)
+@domoticz.on_event
 def onMessage(*args: tuple) -> None:  # pylint: disable=invalid-name
     """onMessage"""
-    APP2.on_message(OMER(*args))
+    APP2.on_message(domoticz.OnMessageResponse(*args))
 
 
 @helpers.log_func('debug', separator_line=True)
 def onCommand(*args: tuple) -> None:  # pylint: disable=invalid-name
     """onCommand"""
-    APP2.on_command(OCDR(*args))
+    APP2.on_command(domoticz.OnCommandResponse(*args))
 
 
 @helpers.log_func('debug', separator_line=True)
@@ -91,7 +94,7 @@ def onNotification(*_args: tuple) -> None:  # pylint: disable=invalid-name
 @helpers.log_func('debug', separator_line=True)
 def onDisconnect(*args: tuple) -> None:  # pylint: disable=invalid-name
     """onDisconnect"""
-    APP2.on_disconnect(ODTR(*args))
+    APP2.on_disconnect(domoticz.OnDisconnectResponse(*args))
 
 
 @helpers.log_func('debug', separator_line=True)
@@ -118,7 +121,7 @@ def onDeviceAdded(*_args: tuple) -> None:  # pylint: disable=invalid-name
 @helpers.log_func('debug', log_args=True, separator_line=True)
 def onDeviceRemoved(*args: tuple) -> None:  # pylint: disable=invalid-name
     """onDeviceRemoved"""
-    APP2.on_device_removed(ODRR(*args))
+    APP2.on_device_removed(domoticz.OnDeviceRemovedResponse(*args))
 
 
 @helpers.log_func('debug', separator_line=True)

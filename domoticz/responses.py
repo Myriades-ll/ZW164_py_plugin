@@ -11,6 +11,20 @@ from typing import Any, Callable
 import Domoticz
 import helpers
 
+__all__ = [
+    'on_event',
+    'OnCommandResponse',
+    'OnConnectResponse',
+    'OnDeviceAddedResponse',
+    'OnDeviceModifiedResponse',
+    'OnDeviceRemovedResponse',
+    'OnDisconnectResponse',
+    'OnMessageResponse',
+    'OnNotificationResponse',
+    'OnSecurityEventResponse',
+    'OnTimeoutResponse'
+]
+
 
 @dataclass
 class BaseConnectionReponse:
