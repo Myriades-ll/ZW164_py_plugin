@@ -4,6 +4,8 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from sys import modules
+from typing import Any, Callable
 
 # app libs
 import Domoticz
@@ -90,3 +92,19 @@ class OnSecurityEventResponse(BaseDeviceReponse):
     """onDeviceModifiedResponse"""
     level: int
     description: str
+
+
+def on_event(func: Callable) -> Any:
+    """This is a decorator"""
+
+    def inner(*args: tuple, **_kwargs: dict) -> Any:
+        """the inner func"""
+        func_name: str = func.__name__
+        class_name = func_name[0].upper() + func_name[1:] + 'Response'
+        class_ = getattr(modules.get('__main__'), class_name)
+        print(class_)
+        if class_ is not None:
+            return func(class_(*args))
+        return func(*args)
+
+    return inner

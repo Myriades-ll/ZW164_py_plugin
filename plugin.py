@@ -35,7 +35,7 @@ from domoticz.responses import OnDisconnectResponse as ODTR
 from domoticz.responses import OnMessageResponse as OMER
 from domoticz.responses import OnDeviceRemovedResponse as ODRR
 from domoticz.responses import OnCommandResponse as OCDR
-
+from domoticz.responses import on_event
 __version__ = "2.1.0"
 __version_info__ = (2, 1, 0)
 __author__ = "Laurent aka Myriades"
@@ -71,6 +71,7 @@ def onConnect(*args: tuple) -> None:  # pylint: disable=invalid-name
         helpers.error(f'onConnect: {octr}')
 
 
+@on_event
 @helpers.log_func('debug', separator_line=True)
 def onMessage(*args: tuple) -> None:  # pylint: disable=invalid-name
     """onMessage"""
