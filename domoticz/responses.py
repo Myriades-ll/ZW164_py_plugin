@@ -108,7 +108,6 @@ class OnSecurityEventResponse(BaseDeviceReponse):
     level: int
     description: str
 
-@helpers.log_func('debug', separator_line=True)
 def on_event(func: Callable) -> Any:
     """This is a decorator"""
 
@@ -116,9 +115,7 @@ def on_event(func: Callable) -> Any:
         """the inner func"""
         func_name: str = func.__name__
         class_name = func_name[0].upper() + func_name[1:] + 'Response'
-        helpers.debug(modules.get('domoticz'))
         class_ = getattr(modules.get('domoticz'), class_name)
-        helpers.debug(class_)
         if class_ is not None:
             return func(class_(*args))
         return func(*args)
