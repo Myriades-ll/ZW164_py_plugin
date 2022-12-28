@@ -2,7 +2,8 @@
 
 ![GitHub release (latest by date)][release_shield] ![Domoticz 2022.2][domoticz_shield] ![Python version][python_shield] ![Zwave JS-UI version][zjsui_shield]
 
-This plugin is intended to get you the ability to use Zwave hardwares that embed the [COMMAND_CLASS_SOUND_SWITCH (0x79|121)][def_CCSS]
+This plugin is intended to get you the ability to use Zwave hardwares that embed the [COMMAND_CLASS_SOUND_SWITCH (0x79|121)][def_CCSS].  
+In shorter way, you will be able to act with doorbells, sirens, ...
 
 ## Prerequisites
 
