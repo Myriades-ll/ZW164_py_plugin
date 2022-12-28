@@ -1,6 +1,8 @@
-# 2.1.0 - 2022/12/18
+# 2.1.0 - 2022/12/
 
 - Added: [todo list](/docs/todo.md)
+- Added: device added to location/plan automatically
+- Added: location/plan autocreation
 - Added: mark device as used @ device creation
 - Added: remove leading hardware name in front of device name @ device creation
 - Added: some Domoticz error logs, just in case of
