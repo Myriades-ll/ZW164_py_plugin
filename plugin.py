@@ -71,7 +71,6 @@ def onConnect(*args: tuple) -> None:  # pylint: disable=invalid-name
         helpers.error(f'onConnect: {octr}')
 
 
-@on_event
 @helpers.log_func('debug', separator_line=True)
 def onMessage(*args: tuple) -> None:  # pylint: disable=invalid-name
     """onMessage"""
