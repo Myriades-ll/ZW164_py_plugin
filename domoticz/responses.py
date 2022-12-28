@@ -116,7 +116,7 @@ def on_event(func: Callable) -> Any:
         """the inner func"""
         func_name: str = func.__name__
         class_name = func_name[0].upper() + func_name[1:] + 'Response'
-        helpers.debug(modules)
+        helpers.debug(modules.get('domoticz'))
         class_ = getattr(modules.get('__main__'), class_name)
         helpers.debug(class_)
         if class_ is not None:
