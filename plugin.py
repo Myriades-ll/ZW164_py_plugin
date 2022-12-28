@@ -75,9 +75,9 @@ def onConnect(*args: tuple) -> None:  # pylint: disable=invalid-name
 
 @helpers.log_func('debug', separator_line=True)
 @domoticz.on_event
-def onMessage(*args: tuple) -> None:  # pylint: disable=invalid-name
+def onMessage(omer: domoticz.OnMessageResponse) -> None:  # pylint: disable=invalid-name
     """onMessage"""
-    APP2.on_message(domoticz.OnMessageResponse(*args))
+    APP2.on_message(omer)
 
 
 @helpers.log_func('debug', separator_line=True)
