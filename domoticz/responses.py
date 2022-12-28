@@ -9,6 +9,7 @@ from typing import Any, Callable
 
 # app libs
 import Domoticz
+import helpers
 
 
 @dataclass
@@ -101,8 +102,9 @@ def on_event(func: Callable) -> Any:
         """the inner func"""
         func_name: str = func.__name__
         class_name = func_name[0].upper() + func_name[1:] + 'Response'
+        helpers.debug(modules)
         class_ = getattr(modules.get('__main__'), class_name)
-        print(class_)
+        helpers.debug(class_)
         if class_ is not None:
             return func(class_(*args))
         return func(*args)
