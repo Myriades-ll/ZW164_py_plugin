@@ -43,7 +43,7 @@ __author__ = "Laurent aka Myriades"
 APP2 = app.App2()
 
 
-def onStart():  # pylint:disable=invalid-name
+def onStart() -> None:  # pylint:disable=invalid-name
     """Démarrage du plugin"""
     # pylint:disable=undefined-variable
 
@@ -56,13 +56,13 @@ def onStart():  # pylint:disable=invalid-name
 
 
 @helpers.log_func('debug', separator_line=True)
-def onStop():  # pylint: disable=invalid-name
+def onStop() -> None:  # pylint: disable=invalid-name
     """onStop"""
     APP2.on_stop()
 
 
 @helpers.log_func('debug', separator_line=True)
-def onConnect(*args):  # pylint: disable=invalid-name
+def onConnect(*args: tuple) -> None:  # pylint: disable=invalid-name
     """onConnect"""
     octr = OCTR(*args)
     if octr.is_success():
@@ -72,24 +72,24 @@ def onConnect(*args):  # pylint: disable=invalid-name
 
 
 @helpers.log_func('debug', separator_line=True)
-def onMessage(*args):  # pylint: disable=invalid-name
+def onMessage(*args: tuple) -> None:  # pylint: disable=invalid-name
     """onMessage"""
     APP2.on_message(OMER(*args))
 
 
 @helpers.log_func('debug', separator_line=True)
-def onCommand(*args):  # pylint: disable=invalid-name
+def onCommand(*args: tuple) -> None:  # pylint: disable=invalid-name
     """onCommand"""
     APP2.on_command(OCDR(*args))
 
 
 @helpers.log_func('debug', separator_line=True)
-def onNotification(*_args):  # pylint: disable=invalid-name
+def onNotification(*_args: tuple) -> None:  # pylint: disable=invalid-name
     """onNotification"""
 
 
 @helpers.log_func('debug', separator_line=True)
-def onDisconnect(*args):  # pylint: disable=invalid-name
+def onDisconnect(*args: tuple) -> None:  # pylint: disable=invalid-name
     """onDisconnect"""
     APP2.on_disconnect(ODTR(*args))
 
@@ -101,26 +101,26 @@ def onHeartbeat() -> None:  # pylint: disable=invalid-name
 
 
 @helpers.log_func('debug', separator_line=True)
-def onDeviceModified(*_args) -> None:  # pylint: disable=invalid-name
+def onDeviceModified(*_args: tuple) -> None:  # pylint: disable=invalid-name
     """onDeviceModified"""
 
 
 @helpers.log_func('debug', separator_line=True)
-def onTimeout(*_args) -> None:  # pylint: disable=invalid-name
+def onTimeout(*_args: tuple) -> None:  # pylint: disable=invalid-name
     """onTimeout"""
 
 
 @helpers.log_func('debug', separator_line=True)
-def onDeviceAdded(*_args) -> None:  # pylint: disable=invalid-name
+def onDeviceAdded(*_args: tuple) -> None:  # pylint: disable=invalid-name
     """onDeviceAdded"""
 
 
 @helpers.log_func('debug', log_args=True, separator_line=True)
-def onDeviceRemoved(*args) -> None:  # pylint: disable=invalid-name
+def onDeviceRemoved(*args: tuple) -> None:  # pylint: disable=invalid-name
     """onDeviceRemoved"""
     APP2.on_device_removed(ODRR(*args))
 
 
 @helpers.log_func('debug', separator_line=True)
-def onSecurityEvent(*_args) -> None:  # pylint: disable=invalid-name
+def onSecurityEvent(*_args: tuple) -> None:  # pylint: disable=invalid-name
     """onSecurityEvent"""
