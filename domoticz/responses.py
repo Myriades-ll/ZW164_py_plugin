@@ -108,7 +108,7 @@ class OnSecurityEventResponse(BaseDeviceReponse):
     level: int
     description: str
 
-
+@helpers.log_func('debug', separator_line=True)
 def on_event(func: Callable) -> Any:
     """This is a decorator"""
 

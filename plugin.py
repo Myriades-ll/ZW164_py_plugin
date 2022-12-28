@@ -73,7 +73,6 @@ def onConnect(*args: tuple) -> None:  # pylint: disable=invalid-name
         helpers.error(f'onConnect: {octr}')
 
 
-@helpers.log_func('debug', separator_line=True)
 @domoticz.on_event
 def onMessage(omer: domoticz.OnMessageResponse) -> None:  # pylint: disable=invalid-name
     """onMessage"""
