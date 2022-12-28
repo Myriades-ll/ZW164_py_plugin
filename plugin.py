@@ -63,10 +63,9 @@ def onStop() -> None:  # pylint: disable=invalid-name
     APP2.on_stop()
 
 
-@helpers.log_func('debug', separator_line=True)
-def onConnect(*args: tuple) -> None:  # pylint: disable=invalid-name
+@domoticz.on_event
+def onConnect(octr: domoticz.OnConnectResponse) -> None:  # pylint: disable=invalid-name
     """onConnect"""
-    octr = domoticz.OnConnectResponse(*args)
     if octr.is_success():
         APP2.on_connect(octr)
     else:
@@ -79,10 +78,10 @@ def onMessage(omer: domoticz.OnMessageResponse) -> None:  # pylint: disable=inva
     APP2.on_message(omer)
 
 
-@helpers.log_func('debug', separator_line=True)
-def onCommand(*args: tuple) -> None:  # pylint: disable=invalid-name
+@domoticz.on_event
+def onCommand(ocdr: domoticz.OnCommandResponse) -> None:  # pylint: disable=invalid-name
     """onCommand"""
-    APP2.on_command(domoticz.OnCommandResponse(*args))
+    APP2.on_command(ocdr)
 
 
 @helpers.log_func('debug', separator_line=True)
@@ -90,10 +89,10 @@ def onNotification(*_args: tuple) -> None:  # pylint: disable=invalid-name
     """onNotification"""
 
 
-@helpers.log_func('debug', separator_line=True)
-def onDisconnect(*args: tuple) -> None:  # pylint: disable=invalid-name
+@domoticz.on_event
+def onDisconnect(odtr: domoticz.OnDisconnectResponse) -> None:  # pylint: disable=invalid-name
     """onDisconnect"""
-    APP2.on_disconnect(domoticz.OnDisconnectResponse(*args))
+    APP2.on_disconnect(odtr)
 
 
 @helpers.log_func('debug', separator_line=True)
@@ -117,10 +116,10 @@ def onDeviceAdded(*_args: tuple) -> None:  # pylint: disable=invalid-name
     """onDeviceAdded"""
 
 
-@helpers.log_func('debug', log_args=True, separator_line=True)
-def onDeviceRemoved(*args: tuple) -> None:  # pylint: disable=invalid-name
+@domoticz.on_event
+def onDeviceRemoved(odrr: domoticz.OnDeviceRemovedResponse) -> None:  # pylint: disable=invalid-name
     """onDeviceRemoved"""
-    APP2.on_device_removed(domoticz.OnDeviceRemovedResponse(*args))
+    APP2.on_device_removed(odrr)
 
 
 @helpers.log_func('debug', separator_line=True)

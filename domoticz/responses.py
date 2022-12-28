@@ -9,7 +9,6 @@ from typing import Any, Callable
 
 # app libs
 import Domoticz
-import helpers
 
 __all__ = [
     'on_event',
