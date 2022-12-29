@@ -64,6 +64,8 @@ in this plugin folder; usually ~/domoticz/plugins/ZW164_py_plugin
 git pull
 ```
 
+then restart the plugin.
+
 ## Limits
 
 You can't change actual volume while playing a sound. It will change for the next sound.
