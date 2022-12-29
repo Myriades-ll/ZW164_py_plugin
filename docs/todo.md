@@ -1,6 +1,7 @@
 # TODO list
 
 - Create a device that reflect the default tone configuration
+- Create HTML page for endpoint configuration
 
 ---
 
