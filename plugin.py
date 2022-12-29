@@ -28,15 +28,9 @@
 # standard libs
 
 # plugin libs
-import helpers
 import app
 import domoticz
-# from domoticz.responses import OnConnectResponse as OCTR
-# from domoticz.responses import OnDisconnectResponse as ODTR
-# from domoticz.responses import OnMessageResponse as OMER
-# from domoticz.responses import OnDeviceRemovedResponse as ODRR
-# from domoticz.responses import OnCommandResponse as OCDR
-# from domoticz.responses import on_event
+import helpers
 
 __version__ = "2.1.0"
 __version_info__ = (2, 1, 0)

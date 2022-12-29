@@ -28,11 +28,14 @@ __author__ = "Laurent aka Myriades"
 
 class App2:
     """The core V2"""
-    _mqtt = Mqtt()
-    _zwave_gateway = ZwaveGateway()
-    _soundswitches = CCSSNodes()
-    _dz_devices = DzDevices()
-    _plan = PlanAutomation()
+
+    def __init__(self: App2) -> None:
+        """initialisation de la classe"""
+        self._mqtt = Mqtt()
+        self._zwave_gateway = ZwaveGateway()
+        self._soundswitches = CCSSNodes()
+        self._dz_devices = DzDevices()
+        self._plan = PlanAutomation()
 
     def on_start(
             self: App2, parameters: Dict[str, Any],
@@ -40,7 +43,6 @@ class App2:
         """place this in `onStart`"""
         self._mqtt.on_start(parameters)
         self._dz_devices.on_start(devices)
-        # Plugin plan
         self._plan.on_start(parameters)
 
     def on_stop(self: App2) -> None:
