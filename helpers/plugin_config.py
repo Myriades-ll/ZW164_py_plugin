@@ -16,8 +16,8 @@ from helpers.decorators import log_func
 
 class PluginConfig:
     """Configuration du plugin"""
-    address = 'freebox-server.local'
-    port = '80'
+    address = ''
+    port = ''
     mac_address = []
     auto_protect = False
     debug_level = 0
@@ -37,17 +37,6 @@ class PluginConfig:
                 'DomoticzVersion', cls.domoticz_version)
             cls.address: str = parameters.get('Address', cls.address)
             cls.port: str = parameters.get('Port', cls.port)
-            # cls.mac_address: list = (
-            #     parameters.get('Mode1', '')).split(';')
-            # cls.auto_protect: bool = bool(
-            #     int(
-            #         parameters.get('Mode2', cls.auto_protect)
-            #     )
-            # )
-            # cls.plan_name: str = parameters.get('Mode3', cls.plan_name)
-            # cls.hardware_id: str = (
-            #     '0' + hex(parameters.get('HardwareID', cls.hardware_id))[2:]
-            # )[-2:].upper()
             cls._mode6()
         return super(PluginConfig, cls).__new__(cls)
 
@@ -63,7 +52,6 @@ class PluginConfig:
             cls.debug_level_python = int(debug_levels[1])
         if cls.debug_level:
             Domoticz.Debugging(cls.debug_level)
-            cls.__str__()
 
     @classmethod
     @log_func('debug')

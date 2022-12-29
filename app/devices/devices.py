@@ -5,7 +5,7 @@
 from __future__ import annotations
 
 from re import sub
-from typing import Any, Dict, Optional
+from typing import Any, Dict, List, Optional
 
 # plugin libs
 import Domoticz
@@ -18,11 +18,14 @@ from helpers.app_config import DeviceMappingDatas
 
 class _DeviceMapping:
     """Device mapping"""
-    _devices_ids = set()
-    _devices_mapping: Dict[str, DeviceMappingDatas] = {}
-    _devices: Dict[int, Domoticz.Device] = {}
-    _next_unit_id = -1
-    _units_ids = set()
+
+    def __init__(self: _DeviceMapping) -> None:
+        """initialisation de la classe"""
+        self._devices_ids = set()
+        self._devices_mapping: Dict[str, DeviceMappingDatas] = {}
+        self._devices: Dict[int, Domoticz.Device] = {}
+        self._next_unit_id = -1
+        self._units_ids = set()
 
     def init_mapping(self: _DeviceMapping) -> None:
         """Acquisition du mapping"""
@@ -35,10 +38,7 @@ class _DeviceMapping:
                 item = eval(item)  # pylint:disable=eval-used
             self._devices_mapping.update({key: item})
             self._units_ids.add(item.unit)
-        try:
-            self._next_unit_id: int = min(set(range(1, 255)) - self._units_ids)
-        except ValueError:
-            helpers.error('No more unit avaible')
+        self.get_next_unit_id()
 
     def _save_mapping(self: _DeviceMapping) -> None:
         """save device mapping"""
@@ -98,6 +98,7 @@ class _DeviceMapping:
         try:
             self._next_unit_id: int = min(set(range(1, 255)) - self._units_ids)
         except ValueError:
+            self._next_unit_id = -1
             helpers.error('No more unit avaible')
         return self._next_unit_id
 
@@ -114,6 +115,14 @@ class _DeviceMapping:
     def get_device_from_unit_id(self: _DeviceMapping, unit_id: int) -> Optional[Domoticz.Device]:
         """return the device"""
         return self._devices.get(unit_id)
+
+    def get_unit_ids_list(self: _DeviceMapping) -> List[int]:
+        """get_unit_ids"""
+        return [device.ID for device in self._devices.values()]
+
+    def get_device_idxs_list(self: _DeviceMapping) -> List[int]:
+        """get_device_idxs_list"""
+        return [device.DeviceID for device in self._devices.values()]
 
 
 class DzDevices(_DeviceMapping):
@@ -132,7 +141,6 @@ class DzDevices(_DeviceMapping):
             deleted = self.remove_from_mapping(odrr.unit)
             helpers.status(f'Deleted device: {deleted}')
 
-    @helpers.log_func('debug', True, True)
     def update(self: DzDevices, endpoint: CCSSEndpoint) -> None:
         """update or create devices
         #ignore_self_arg
@@ -154,10 +162,11 @@ class DzDevices(_DeviceMapping):
             device.Update(**self._update_at_creation(device.Name))
         # update defaultVolume
         datas = self._update_default_volume(endpoint.defaultVolume)
-        device.Update(**datas)
-        helpers.log(
-            f'Mise à jour volume: ({endpoint.node_id}-{endpoint.endpoint_id}){datas}'
-        )
+        if datas.get('nValue') != device.nValue or datas.get('sValue') != device.sValue:
+            device.Update(**datas)
+            helpers.log(
+                f'Mise à jour volume: ({endpoint.node_id}-{endpoint.endpoint_id}){datas}'
+            )
 
         # toneId
         device_id = base_device_id + 'toneId'
@@ -172,10 +181,11 @@ class DzDevices(_DeviceMapping):
             device.Update(**self._update_at_creation(device.Name))
         # update toneId
         datas = self._update_default_tone(len(endpoint.tones), endpoint.toneId)
-        device.Update(**datas)
-        helpers.log(
-            f'Mise à jour son: ({endpoint.node_id}-{endpoint.endpoint_id}){datas}'
-        )
+        if datas.get('nValue') != device.nValue or datas.get('sValue') != device.sValue:
+            device.Update(**datas)
+            helpers.log(
+                f'Mise à jour son: ({endpoint.node_id}-{endpoint.endpoint_id}){datas}'
+            )
 
     @staticmethod
     def _update_at_creation(device_name: str) -> Dict[str, Any]:

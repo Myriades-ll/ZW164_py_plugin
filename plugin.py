@@ -28,13 +28,9 @@
 # standard libs
 
 # plugin libs
-import helpers
 import app
-from domoticz.responses import OnConnectResponse as OCTR
-from domoticz.responses import OnDisconnectResponse as ODTR
-from domoticz.responses import OnMessageResponse as OMER
-from domoticz.responses import OnDeviceRemovedResponse as ODRR
-from domoticz.responses import OnCommandResponse as OCDR
+import domoticz
+import helpers
 
 __version__ = "2.1.0"
 __version_info__ = (2, 1, 0)
@@ -43,7 +39,7 @@ __author__ = "Laurent aka Myriades"
 APP2 = app.App2()
 
 
-def onStart():  # pylint:disable=invalid-name
+def onStart() -> None:  # pylint:disable=invalid-name
     """Démarrage du plugin"""
     # pylint:disable=undefined-variable
 
@@ -56,42 +52,41 @@ def onStart():  # pylint:disable=invalid-name
 
 
 @helpers.log_func('debug', separator_line=True)
-def onStop():  # pylint: disable=invalid-name
+def onStop() -> None:  # pylint: disable=invalid-name
     """onStop"""
     APP2.on_stop()
 
 
-@helpers.log_func('debug', separator_line=True)
-def onConnect(*args):  # pylint: disable=invalid-name
+@domoticz.on_event
+def onConnect(octr: domoticz.OnConnectResponse) -> None:  # pylint: disable=invalid-name
     """onConnect"""
-    octr = OCTR(*args)
     if octr.is_success():
         APP2.on_connect(octr)
     else:
-        helpers.error(octr)
+        helpers.error(f'onConnect: {octr}')
 
 
-@helpers.log_func('debug', separator_line=True)
-def onMessage(*args):  # pylint: disable=invalid-name
+@domoticz.on_event
+def onMessage(omer: domoticz.OnMessageResponse) -> None:  # pylint: disable=invalid-name
     """onMessage"""
-    APP2.on_message(OMER(*args))
+    APP2.on_message(omer)
 
 
-@helpers.log_func('debug', separator_line=True)
-def onCommand(*args):  # pylint: disable=invalid-name
+@domoticz.on_event
+def onCommand(ocdr: domoticz.OnCommandResponse) -> None:  # pylint: disable=invalid-name
     """onCommand"""
-    APP2.on_command(OCDR(*args))
+    APP2.on_command(ocdr)
 
 
 @helpers.log_func('debug', separator_line=True)
-def onNotification(*_args):  # pylint: disable=invalid-name
+def onNotification(*_args: tuple) -> None:  # pylint: disable=invalid-name
     """onNotification"""
 
 
-@helpers.log_func('debug', separator_line=True)
-def onDisconnect(*args):  # pylint: disable=invalid-name
+@domoticz.on_event
+def onDisconnect(odtr: domoticz.OnDisconnectResponse) -> None:  # pylint: disable=invalid-name
     """onDisconnect"""
-    APP2.on_disconnect(ODTR(*args))
+    APP2.on_disconnect(odtr)
 
 
 @helpers.log_func('debug', separator_line=True)
@@ -101,26 +96,26 @@ def onHeartbeat() -> None:  # pylint: disable=invalid-name
 
 
 @helpers.log_func('debug', separator_line=True)
-def onDeviceModified(*_args) -> None:  # pylint: disable=invalid-name
+def onDeviceModified(*_args: tuple) -> None:  # pylint: disable=invalid-name
     """onDeviceModified"""
 
 
 @helpers.log_func('debug', separator_line=True)
-def onTimeout(*_args) -> None:  # pylint: disable=invalid-name
+def onTimeout(*_args: tuple) -> None:  # pylint: disable=invalid-name
     """onTimeout"""
 
 
 @helpers.log_func('debug', separator_line=True)
-def onDeviceAdded(*_args) -> None:  # pylint: disable=invalid-name
+def onDeviceAdded(*_args: tuple) -> None:  # pylint: disable=invalid-name
     """onDeviceAdded"""
 
 
-@helpers.log_func('debug', log_args=True, separator_line=True)
-def onDeviceRemoved(*args) -> None:  # pylint: disable=invalid-name
+@domoticz.on_event
+def onDeviceRemoved(odrr: domoticz.OnDeviceRemovedResponse) -> None:  # pylint: disable=invalid-name
     """onDeviceRemoved"""
-    APP2.on_device_removed(ODRR(*args))
+    APP2.on_device_removed(odrr)
 
 
 @helpers.log_func('debug', separator_line=True)
-def onSecurityEvent(*_args) -> None:  # pylint: disable=invalid-name
+def onSecurityEvent(*_args: tuple) -> None:  # pylint: disable=invalid-name
     """onSecurityEvent"""

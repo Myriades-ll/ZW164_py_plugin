@@ -4,19 +4,40 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from sys import modules
+from typing import Any, Callable
 
 # app libs
 import Domoticz
 
+__all__ = [
+    'on_event',
+    'OnCommandResponse',
+    'OnConnectResponse',
+    'OnDeviceAddedResponse',
+    'OnDeviceModifiedResponse',
+    'OnDeviceRemovedResponse',
+    'OnDisconnectResponse',
+    'OnMessageResponse',
+    'OnNotificationResponse',
+    'OnSecurityEventResponse',
+    'OnTimeoutResponse'
+]
+
 
 @dataclass
-class OnDisconnectResponse:
-    """OnDisconnectResponse"""
+class BaseConnectionReponse:
+    """BaseConnectionReponse"""
     connection: Domoticz.Connection
 
 
 @dataclass
-class OnConnectResponse(OnDisconnectResponse):
+class OnDisconnectResponse(BaseConnectionReponse):
+    """OnDisconnectResponse"""
+
+
+@dataclass
+class OnConnectResponse(BaseConnectionReponse):
     """OnConnectResponse"""
     status: int
     description: str
@@ -29,13 +50,13 @@ class OnConnectResponse(OnDisconnectResponse):
 
 
 @dataclass
-class OnMessageResponse(OnDisconnectResponse):
+class OnMessageResponse(BaseConnectionReponse):
     """OnMessageResponse"""
     data: dict = field(default_factory=dict)
 
 
 @dataclass
-class OnTimeoutResponse(OnDisconnectResponse):
+class OnTimeoutResponse(BaseConnectionReponse):
     """OnTimeoutResponse"""
 
 
@@ -52,13 +73,18 @@ class OnNotificationResponse:
 
 
 @dataclass
-class OnDeviceAddedResponse:
-    """OnDeviceAddedResponse"""
+class BaseDeviceReponse:
+    """BaseDeviceReponse"""
     unit: int
 
 
 @dataclass
-class OnCommandResponse(OnDeviceAddedResponse):
+class OnDeviceAddedResponse(BaseDeviceReponse):
+    """OnDeviceAddedResponse"""
+
+
+@dataclass
+class OnCommandResponse(BaseDeviceReponse):
     """OnCommandResponse"""
     command: str
     level: int = field(default_factory=int)
@@ -66,17 +92,31 @@ class OnCommandResponse(OnDeviceAddedResponse):
 
 
 @dataclass
-class OnDeviceModifiedResponse(OnDeviceAddedResponse):
+class OnDeviceModifiedResponse(BaseDeviceReponse):
     """onDeviceModifiedResponse"""
 
 
 @dataclass
-class OnDeviceRemovedResponse(OnDeviceAddedResponse):
+class OnDeviceRemovedResponse(BaseDeviceReponse):
     """onDeviceModifiedResponse"""
 
 
 @dataclass
-class OnSecurityEventResponse(OnDeviceAddedResponse):
+class OnSecurityEventResponse(BaseDeviceReponse):
     """onDeviceModifiedResponse"""
     level: int
     description: str
+
+def on_event(func: Callable) -> Any:
+    """This is a decorator"""
+
+    def inner(*args: tuple, **_kwargs: dict) -> Any:
+        """the inner func"""
+        func_name: str = func.__name__
+        class_name = func_name[0].upper() + func_name[1:] + 'Response'
+        class_ = getattr(modules.get('domoticz'), class_name)
+        if class_ is not None:
+            return func(class_(*args))
+        return func(*args)
+
+    return inner
