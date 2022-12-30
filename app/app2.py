@@ -11,6 +11,7 @@ from typing import Any, Dict, Optional
 import Domoticz
 import helpers
 from app.devices.devices import DzDevices
+from app.html.html import HtmlPage
 from app.mqtt.mqtt import Mqtt, MQTTResponse
 from app.plan.plan import PlanAutomation
 from app.zwave.soundswitch import CCSSEndpoint, CCSSNodes
@@ -36,6 +37,7 @@ class App2:
         self._soundswitches = CCSSNodes()
         self._dz_devices = DzDevices()
         self._plan = PlanAutomation()
+        self._html = HtmlPage()
 
     def on_start(
             self: App2, parameters: Dict[str, Any],
@@ -44,10 +46,12 @@ class App2:
         self._mqtt.on_start(parameters)
         self._dz_devices.on_start(devices)
         self._plan.on_start(parameters)
+        self._html.on_start()
 
     def on_stop(self: App2) -> None:
         """place this in `onStop`"""
         self._mqtt.on_stop()
+        self._html.on_stop()
 
     def on_connect(self: App2, octr: OCTR) -> None:
         """place this in `onConnect`"""
