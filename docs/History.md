@@ -1,4 +1,4 @@
-# 2.1.0 - 2022/12/
+# 2.1.0 - 2022/12/29
 
 - Added: [todo list](/docs/todo.md)
 - Added: device added to location/plan automatically
