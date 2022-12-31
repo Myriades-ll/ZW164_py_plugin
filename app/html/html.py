@@ -25,7 +25,7 @@ class HtmlPage:
     def on_start(self: HtmlPage, parameters: PluginParameters) -> None:
         """onStart event"""
         self.parameters = parameters
-        # self.__install()
+        self.__install()
 
     def on_stop(self: HtmlPage) -> None:
         """onStop event"""
@@ -36,25 +36,27 @@ class HtmlPage:
         self.src_path = os.path.join(
             self.parameters.HomeFolder, 'app/html/files'
         )
-        # rename `index.html` with your plugin name
-        src_file = os.path.join(self.src_path, 'index.html')
-        if os.path.exists(src_file):
-            shutil.move(
-                src_file,
-                os.path.join(self.src_path, self.parameters.Name + '.html')
-            )
-        # rename `libs` dir with your plugin name
-        src_dir = os.path.join(self.src_path, 'libs')
-        if os.path.exists(src_dir):
-            os.rename(
-                src_dir,
-                os.path.join(self.src_path, self.parameters.Name)
-            )
-        helpers.debug(self.parameters)
         self.dst_path = os.path.join(
             self.parameters.StartupFolder, 'www/templates'
         )
-        # shutil.copytree(self.src_path, self.dst_path)
+        shutil.copy2(
+            os.path.join(self.src_path, 'index.html'),
+            os.path.join(self.dst_path, self.parameters.Name + '.html')
+        )
+        shutil.copy2(
+            os.path.join(self.src_path, 'zigbee2mqtt.js'),
+            os.path.join(self.dst_path, self.parameters.Name + '.js')
+        )
+        dst_path_extras = os.path.join(
+            self.dst_path,
+            self.parameters.Name
+        )
+        if not os.path.exists(dst_path_extras):
+            os.makedirs(dst_path_extras)
+        shutil.copytree(
+            os.path.join(self.src_path, 'libs'),
+            dst_path_extras
+        )
 
     def __uninstall(self: HtmlPage) -> None:
         """suppression des fichiers"""
