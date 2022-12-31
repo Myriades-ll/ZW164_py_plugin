@@ -43,14 +43,15 @@ class HtmlPage:
         self.dst_templates_path = os.path.join(self.dst_path, 'ccss_libs')
         self.src_templates_path = os.path.join(self.src_path, 'ccss_libs')
         # coyping files
-        shutil.copy2(
-            os.path.join(self.src_path, 'index.html'),
-            os.path.join(self.dst_path, self.parameters.Name + '.html')
-        )
-        shutil.copy2(
-            os.path.join(self.src_path, 'ccss.js'),
-            self.dst_path
-        )
+        if os.path.isdir(self.dst_path):
+            shutil.copy2(
+                os.path.join(self.src_path, 'index.html'),
+                os.path.join(self.dst_path, self.parameters.Name + '.html')
+            )
+            shutil.copy2(
+                os.path.join(self.src_path, 'ccss.js'),
+                self.dst_path
+            )
         if os.path.isdir(self.src_templates_path) and os.path.isdir(self.dst_templates_path):
             shutil.copytree(
                 self.src_templates_path,
