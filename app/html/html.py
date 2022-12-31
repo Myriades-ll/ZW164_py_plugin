@@ -5,7 +5,7 @@
 from __future__ import annotations
 
 import os
-from shutil import copy2
+import shutil
 
 # plugin libs
 from domoticz.parameters import PluginParameters
@@ -19,10 +19,23 @@ HTML_DEST = f'./www/templates/{HTML_NAME}.html'
 class HtmlPage:
     """The Html page"""
     parameters: PluginParameters
+    src_path: str
+    dst_path: str
 
     def on_start(self: HtmlPage, parameters: PluginParameters) -> None:
         """onStart event"""
         self.parameters = parameters
+        self.src_path = os.path.join(
+            self.parameters.HomeFolder, 'app/html/files'
+        )
+        #create index.html with your plugin name
+        shutil.move(
+            os.path.join(self.src_path, 'index.html'),
+            os.path.join(self.src_path, self.parameters.Name + '.html')
+        )
+        self.dst_path = os.path.join(
+            self.parameters.HomeFolder, 'www/templates'
+        )
         self.__install()
 
     def on_stop(self: HtmlPage) -> None:
@@ -32,9 +45,7 @@ class HtmlPage:
     def __install(self: HtmlPage) -> None:
         """installation des fichiers"""
         # copy2(HTML_SOUCRE, HTML_DEST)
-        src_path = os.path.join(self.parameters.HomeFolder, 'app/html/files')
-        for root, dirs, files in os.walk(src_path):
-            helpers.debug(root=root, dirs=dirs, files=files)
+        shutil.copytree(self.src_path, self.dst_path)
 
     def __uninstall(self: HtmlPage) -> None:
         """suppression des fichiers"""
