@@ -265,7 +265,7 @@ class CCSSNodes(Iterable):
         if results.command == 'getToneCount' and isinstance(results.result, int):
             if results.result > 0:
                 helpers.status(
-                    f'Update tones count: ({self._cur_node.node_id}){results.result}'
+                    f'Node {self._cur_node.node_id} - update tones count: {results.result}'
                 )
                 self._cur_node.tones_count = results.result
         if results.command == 'getToneInfo' and isinstance(results.result, dict):
