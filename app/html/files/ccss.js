@@ -1,11 +1,11 @@
 define([
     'app',
-    '../templates/zigbee2mqtt/viz',
-    '../templates/zigbee2mqtt/viz.full.render',
-    '../templates/zigbee2mqtt/leaflet',
-    '../templates/zigbee2mqtt/plugin_config',
-    '../templates/zigbee2mqtt/zigbee_devices',
-    '../templates/zigbee2mqtt/zigbee_groups',
+    '../templates/ccss_libs/viz',
+    '../templates/ccss_libs/viz.full.render',
+    '../templates/ccss_libs/leaflet',
+    '../templates/ccss_libs/plugin_config',
+    '../templates/ccss_libs/zigbee_devices',
+    '../templates/ccss_libs/zigbee_groups',
     'app/devices/Devices.js'
 ],
 function(app, Viz, vizRenderer, leaflet) {
