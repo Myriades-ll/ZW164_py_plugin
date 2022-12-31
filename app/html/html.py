@@ -25,17 +25,6 @@ class HtmlPage:
     def on_start(self: HtmlPage, parameters: PluginParameters) -> None:
         """onStart event"""
         self.parameters = parameters
-        self.src_path = os.path.join(
-            self.parameters.HomeFolder, 'app/html/files'
-        )
-        #create index.html with your plugin name
-        shutil.move(
-            os.path.join(self.src_path, 'index.html'),
-            os.path.join(self.src_path, self.parameters.Name + '.html')
-        )
-        self.dst_path = os.path.join(
-            self.parameters.HomeFolder, 'www/templates'
-        )
         self.__install()
 
     def on_stop(self: HtmlPage) -> None:
@@ -44,8 +33,28 @@ class HtmlPage:
 
     def __install(self: HtmlPage) -> None:
         """installation des fichiers"""
-        # copy2(HTML_SOUCRE, HTML_DEST)
-        shutil.copytree(self.src_path, self.dst_path)
+        self.src_path = os.path.join(
+            self.parameters.HomeFolder, 'app/html/files'
+        )
+        # rename `index.html` with your plugin name
+        src_file = os.path.join(self.src_path, 'index.html')
+        if os.path.exists(src_file):
+            shutil.move(
+                src_file,
+                os.path.join(self.src_path, self.parameters.Name + '.html')
+            )
+        # rename `libs` dir with your plugin name
+        src_dir = os.path.join(self.src_path, 'libs')
+        if os.path.exists(src_dir):
+            os.rename(
+                src_dir,
+                os.path.join(self.src_path, self.parameters.Name)
+            )
+        helpers.debug(self.parameters)
+        self.dst_path = os.path.join(
+            self.parameters.StartupFolder, 'www/templates'
+        )
+        # shutil.copytree(self.src_path, self.dst_path)
 
     def __uninstall(self: HtmlPage) -> None:
         """suppression des fichiers"""
