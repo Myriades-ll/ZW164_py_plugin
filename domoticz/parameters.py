@@ -10,7 +10,7 @@ from dataclasses import dataclass
 
 
 @dataclass
-class Parameters:
+class PluginParameters:
     """wrapper pour Parameters"""
     Address: str  # '127.0.0.1'
     Author: str  # 'Myriades'

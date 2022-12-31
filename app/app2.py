@@ -16,6 +16,7 @@ from app.mqtt.mqtt import Mqtt, MQTTResponse
 from app.plan.plan import PlanAutomation
 from app.zwave.soundswitch import CCSSEndpoint, CCSSNodes
 from app.zwave.zwave import ZwaveGateway
+from domoticz.parameters import PluginParameters
 from domoticz.responses import OnCommandResponse as OCDR
 from domoticz.responses import OnConnectResponse as OCTR
 from domoticz.responses import OnDeviceRemovedResponse as ODRR
@@ -43,10 +44,11 @@ class App2:
             self: App2, parameters: Dict[str, Any],
             devices: Dict[int, Domoticz.Device]) -> None:
         """place this in `onStart`"""
+        plugin_parameters = PluginParameters(**parameters)
         self._mqtt.on_start(parameters)
         self._dz_devices.on_start(devices)
         self._plan.on_start(parameters)
-        self._html.on_start()
+        self._html.on_start(plugin_parameters)
 
     def on_stop(self: App2) -> None:
         """place this in `onStop`"""
