@@ -51,7 +51,7 @@ class HtmlPage:
             self.dst_path,
             self.parameters.Name
         )
-        if not os.path.exists(dst_path_extras):
+        if not os.path.isdir(dst_path_extras):
             os.makedirs(dst_path_extras)
         shutil.copytree(
             os.path.join(self.src_path, 'libs'),
