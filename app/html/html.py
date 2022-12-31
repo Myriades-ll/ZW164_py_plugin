@@ -9,11 +9,6 @@ import shutil
 
 # plugin libs
 from domoticz.parameters import PluginParameters
-import helpers
-
-HTML_NAME = 'ZW164_py_plugin'
-HTML_SOUCRE = f'./plugins/{HTML_NAME}/app/html/index.html'
-HTML_DEST = f'./www/templates/{HTML_NAME}.html'
 
 
 class HtmlPage:
