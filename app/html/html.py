@@ -33,8 +33,8 @@ class HtmlPage:
         """installation des fichiers"""
         # copy2(HTML_SOUCRE, HTML_DEST)
         src_path = os.path.join(self.parameters.HomeFolder, 'app/html/files')
-        helpers.debug(src_path)
-        # for root, dirs, files in os.walk(top)
+        for root, dirs, files in os.walk(src_path):
+            helpers.debug(root=root, dirs=dirs, files=files)
 
     def __uninstall(self: HtmlPage) -> None:
         """suppression des fichiers"""
