@@ -51,7 +51,10 @@ class HtmlPage:
             self.dst_path,
             self.parameters.Name
         )
-        helpers.debug(dst_path_extras=dst_path_extras)
+        helpers.debug(
+            dst_path_extras=dst_path_extras,
+            isdir_dst_path_extras=os.path.isdir(dst_path_extras)
+        )
         if not os.path.isdir(dst_path_extras):
             os.makedirs(dst_path_extras)
         shutil.copytree(
