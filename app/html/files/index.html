@@ -11,18 +11,20 @@
 </script>
 
 <script>
-    require(['app'], function(app) {
+    require(['app'], function (app) {
         // Custom component definition
         app.component('myPluginRoot', {
             templateUrl: 'app/myplugin/sampleComponent.html',
-            controller: function($scope, domoticzApi) {
+            controller: function ($scope, domoticzApi) {
                 var $ctrl = this;
-                $ctrl.message = 'This is my plugin'
+                $ctrl.message = 'This is my plugin';
+                console.log('scope', $scope);
+                console.log('domoticzApi', domoticzApi);
             }
         });
 
         // This piece triggers Angular to re-render page with custom components support
-        angular.element(document).injector().invoke(function($compile) {
+        angular.element(document).injector().invoke(function ($compile) {
             var $div = angular.element('<my-plugin-root />');
             angular.element('#plugin-view').append($div);
 
