@@ -14,12 +14,12 @@ class PluginParameters:
     """wrapper pour Parameters"""
     Address: str  # '127.0.0.1'
     Author: str  # 'Myriades'
-    Database: str  # '/home/pi/domoticz/domoticz.db',
+    Database: str  # '~/domoticz/domoticz.db',
     DomoticzBuildTime: str  # '2022-11-05 13:05:35',
     DomoticzHash: str  # 'eea9db734',
     DomoticzVersion: str  # '2022.2',
     HardwareID: int  # 23,
-    HomeFolder: str  # '/home/pi/domoticz/plugins/ZW164_py_plugin/',
+    HomeFolder: str  # '~/domoticz/plugins/ZW164_py_plugin/',
     Key: str  # 'zw164_pyplug',
     Language: str  # 'fr',
     Mode1: str  # '',
@@ -32,8 +32,8 @@ class PluginParameters:
     Password: str  # '',
     Port: str  # '1883',
     SerialPort: str  # '',
-    StartupFolder: str  # '/home/pi/domoticz/',
-    UserDataFolder: str  # '/home/pi/domoticz/',
-    Username: str  # 'domoticz',
+    StartupFolder: str  # '~/domoticz/',
+    UserDataFolder: str  # '~/domoticz/',
+    Username: str  # '',
     Version: str  # '1.0',
     WebRoot: str  # ''
