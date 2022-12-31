@@ -25,7 +25,7 @@ class HtmlPage:
     def on_start(self: HtmlPage, parameters: PluginParameters) -> None:
         """onStart event"""
         self.parameters = parameters
-        self.__install()
+        # self.__install()
 
     def on_stop(self: HtmlPage) -> None:
         """onStop event"""
