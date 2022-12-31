@@ -65,4 +65,5 @@ class HtmlPage:
         """suppression des fichiers"""
         os.remove(os.path.join(self.dst_path, self.parameters.Name + '.html'))
         os.remove(os.path.join(self.dst_path, 'ccss.js'))
-        shutil.rmtree(self.dst_templates_path)
+        if os.path.isdir(self.dst_templates_path):
+            shutil.rmtree(self.dst_templates_path)
