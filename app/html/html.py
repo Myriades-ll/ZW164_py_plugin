@@ -21,6 +21,7 @@ class HtmlPage:
     parameters: PluginParameters
     src_path: str
     dst_path: str
+    templates_path: str
 
     def on_start(self: HtmlPage, parameters: PluginParameters) -> None:
         """onStart event"""
@@ -44,23 +45,20 @@ class HtmlPage:
             os.path.join(self.dst_path, self.parameters.Name + '.html')
         )
         shutil.copy2(
-            os.path.join(self.src_path, 'zigbee2mqtt.js'),
-            os.path.join(self.dst_path, self.parameters.Name + '.js')
+            os.path.join(self.src_path, 'ccss.js'),
+            self.dst_path
         )
-        dst_path_extras = os.path.join(
+        self.templates_path = os.path.join(
             self.dst_path,
             self.parameters.Name
         )
-        helpers.debug(
-            dst_path_extras=dst_path_extras,
-            isdir_dst_path_extras=os.path.isdir(dst_path_extras)
-        )
-        if os.path.isdir(dst_path_extras):
-            shutil.rmtree(dst_path_extras)
         shutil.copytree(
             os.path.join(self.src_path, 'libs'),
-            dst_path_extras
+            self.templates_path
         )
 
     def __uninstall(self: HtmlPage) -> None:
         """suppression des fichiers"""
+        os.remove(os.path.join(self.dst_path, self.parameters.Name + '.html'))
+        os.remove(os.path.join(self.dst_path, 'ccss.js'))
+        shutil.rmtree(self.templates_path)
