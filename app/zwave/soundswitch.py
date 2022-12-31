@@ -194,7 +194,7 @@ class CCSSNode:
             cur_endpoint = CCSSEndpoint(node_id, endpoint_id)
             self.endpoints.update({endpoint_id: cur_endpoint})
             helpers.status(
-                f'New endpoint found: ({self.node_id}){endpoint_id}'
+                f'Node {self.node_id} - new endpoint found: {endpoint_id}'
             )
         cur_endpoint.update(node_id, endpoint_id, topic, payload)
         return cur_endpoint
