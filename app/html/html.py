@@ -48,17 +48,13 @@ class HtmlPage:
             os.path.join(self.src_path, 'ccss.js'),
             self.dst_path
         )
-        self.templates_path = os.path.join(
-            self.dst_path,
-            self.parameters.Name
-        )
         shutil.copytree(
-            os.path.join(self.src_path, 'libs'),
-            self.templates_path
+            os.path.join(self.src_path, 'ccss_libs'),
+            self.dst_path
         )
 
     def __uninstall(self: HtmlPage) -> None:
         """suppression des fichiers"""
         os.remove(os.path.join(self.dst_path, self.parameters.Name + '.html'))
         os.remove(os.path.join(self.dst_path, 'ccss.js'))
-        shutil.rmtree(self.templates_path)
+        shutil.rmtree(os.path.join(self.dst_path, 'ccss_libs'))
