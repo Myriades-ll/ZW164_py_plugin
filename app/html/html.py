@@ -55,12 +55,11 @@ class HtmlPage:
             dst_path_extras=dst_path_extras,
             isdir_dst_path_extras=os.path.isdir(dst_path_extras)
         )
-        if not os.path.isdir(dst_path_extras):
-            os.makedirs(dst_path_extras)
+        if os.path.isdir(dst_path_extras):
+            shutil.rmtree(dst_path_extras)
         shutil.copytree(
             os.path.join(self.src_path, 'libs'),
-            dst_path_extras,
-            dirs_exist_ok=True
+            dst_path_extras
         )
 
     def __uninstall(self: HtmlPage) -> None:
