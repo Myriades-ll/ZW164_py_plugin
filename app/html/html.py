@@ -59,7 +59,8 @@ class HtmlPage:
             os.makedirs(dst_path_extras)
         shutil.copytree(
             os.path.join(self.src_path, 'libs'),
-            dst_path_extras
+            dst_path_extras,
+            dirs_exist_ok=True
         )
 
     def __uninstall(self: HtmlPage) -> None:
