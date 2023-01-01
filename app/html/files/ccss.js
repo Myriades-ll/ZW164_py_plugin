@@ -29,7 +29,7 @@ class Courbe {
     }
 
     #normalize_value(value, min, max) {
-        return Math.max(Math.min(value, min), max);
+        return Math.max(Math.min(value, max), min);
     }
 
     redraw(timed_values) {
