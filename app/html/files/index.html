@@ -7,7 +7,9 @@
         <a class="btnstylerev" back-button>{{ ::'Back' | translate }}</a>
         <h2 class="page-header">My Plugin UI</h2>
         <p>{{ $ctrl.message }}</p>
-    </div>
+        <p>{{ $ctrl.$scope }}</p>
+        <p>{{ $ctrl.domoticzApi }}</p>
+</div>
 </script>
 
 <script>
@@ -18,8 +20,6 @@
             controller: function ($scope, domoticzApi) {
                 var $ctrl = this;
                 $ctrl.message = 'This is my plugin';
-                console.log('scope', $scope);
-                console.log('domoticzApi', domoticzApi);
             }
         });
 
