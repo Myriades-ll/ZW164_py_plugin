@@ -57,6 +57,7 @@ class Courbe {
         )
         let non_zeros = deltas.reduce(
             function (accumulator, currentValue) {
+                console.log('Accumulator', accumulator);
                 if (currentValue > 0) {
                     return accumulator + 1;
                 }
