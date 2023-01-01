@@ -49,8 +49,10 @@ class Courbe {
                 deltas.push(delta_time)
             }
         );
+        console.log(deltas);
         let total_time = deltas.reduce(
             function (accumulator, currentValue) {
+                console.log(accumulator, currentValue);
                 accumulator + currentValue
             },
             0
