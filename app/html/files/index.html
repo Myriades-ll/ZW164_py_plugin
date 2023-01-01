@@ -2,34 +2,48 @@
 <div id="plugin-view"></div>
 
 <!-- Template for custom component -->
-<script type="text/ng-template" id="app/myplugin/sampleComponent.html">
-    <div class="container">
-        <a class="btnstylerev" back-button>{{ ::'Back' | translate }}</a>
-        <h2 class="page-header">My Plugin UI</h2>
-        <p>{{ $ctrl.message }}</p>
-        <p>{{ $.t($ctrl.$scope) }}</p>
-        <p>{{ $.t($ctrl.domoticzApi) }}</p>
-    </div>
+<script type="text/ng-template" id="app/ccss/sampleComponent.html">
+  <div class="container">
+      <a class="btnstylerev" back-button>{{ ::'Back' | translate }}</a>
+      <h2 class="page-header">My Plugin UI</h2>
+      <p>{{ $ctrl.message }}</p>
+      <svg
+          width="400"
+          height="200"
+          viewBox="0 0 400 200"
+          version="1.1"
+          xmlns="http://www.w3.org/2000/svg"
+          xmlns:svg="http://www.w3.org/2000/svg"
+          id="courbe" >
+          <path
+              style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+              d="M 0,200 100,0 h 100 l 100,200 h 100"
+              id="path876" />
+      </svg>
+  </div>
 </script>
 
 <script>
-    require(['app'], function (app) {
-        // Custom component definition
-        app.component('myPluginRoot', {
-            templateUrl: 'app/myplugin/sampleComponent.html',
-            controller: function ($scope, domoticzApi) {
-                var $ctrl = this;
-                $ctrl.message = 'This is my plugin';
-            }
-        });
-
-        // This piece triggers Angular to re-render page with custom components support
-        angular.element(document).injector().invoke(function ($compile) {
-            var $div = angular.element('<my-plugin-root />');
-            angular.element('#plugin-view').append($div);
-
-            var scope = angular.element($div).scope();
-            $compile($div)(scope);
-        });
+  require(["app"], function (app) {
+    // Custom component definition
+    app.component("myPluginRoot", {
+      templateUrl: "app/ccss/sampleComponent.html",
+      controller: function ($scope, domoticzApi) {
+        var $ctrl = this;
+        $ctrl.message = "This is my plugin";
+      },
     });
+
+    // This piece triggers Angular to re-render page with custom components support
+    angular
+      .element(document)
+      .injector()
+      .invoke(function ($compile) {
+        var $div = angular.element("<my-plugin-root />");
+        angular.element("#plugin-view").append($div);
+
+        var scope = angular.element($div).scope();
+        $compile($div)(scope);
+      });
+  });
 </script>
