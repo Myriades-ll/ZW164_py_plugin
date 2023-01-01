@@ -1,13 +1,31 @@
-class Point {
-    constructor(x_pos) {
-        this.x_pos = x_pos;
-        this.y_pos = 0;
+class ArrayOfNumbers extends Array {
+    constructor() {
+        super();
     }
-}
-class Line {
-    constructor(point_0, point_1) {
-        this.point_0 = point_0;
-        this.point_1 = point_1;
+
+    pushNumber(item) {
+        if (isFinite(item)) {
+            this.push(item);
+        }
+    }
+
+    sum() {
+        return this.reduce(
+            function (accumulator, currentValue) {
+                return accumulator + currentValue;
+            }, 0
+        )
+    }
+
+    non_zeros() {
+        return this.reduce(
+            function (accumulator, currentValue) {
+                if (currentValue > 0) {
+                    return accumulator + 1;
+                }
+                return accumulator;
+            }, 0
+        )
     }
 }
 
@@ -36,7 +54,7 @@ class Courbe {
         this.#context.clearRect(0, 0, this.canvas_width, this.canvas_height);
         // first point; fixed
         this.#context.moveTo(0, this.canvas_height);
-        let deltas = [];
+        let deltas = new ArrayOfNumbers();
         timed_values.forEach(
             (item, index) => {
                 let delta_time = 0.0;
@@ -46,25 +64,11 @@ class Courbe {
                 } else {// 100ms; from 0 to 255
                     delta_time += this.#normalize_value(item, 0, 255) * 0.1;
                 }
-                deltas.push(delta_time)
+                deltas.pushNumber(delta_time)
             }
         );
-        let total_time = deltas.reduce(
-            function (accumulator, currentValue) {
-                return accumulator + currentValue
-            },
-            0
-        )
-        let non_zeros = deltas.reduce(
-            function (accumulator, currentValue) {
-                console.log('Accumulator', accumulator);
-                if (currentValue > 0) {
-                    return accumulator + 1;
-                }
-                return accumulator;
-            },
-            0
-        )
+        let total_time = deltas.sum();
+        let non_zeros = deltas.non_zeros();
         console.log('total time', total_time);
         console.log('Non zeros values', non_zeros);
         // last point; fixed
