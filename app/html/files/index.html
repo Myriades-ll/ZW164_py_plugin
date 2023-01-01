@@ -7,9 +7,9 @@
         <a class="btnstylerev" back-button>{{ ::'Back' | translate }}</a>
         <h2 class="page-header">My Plugin UI</h2>
         <p>{{ $ctrl.message }}</p>
-        <p>{{ $ctrl.$scope }}</p>
-        <p>{{ $ctrl.domoticzApi }}</p>
-</div>
+        <p>{{ $.t($ctrl.$scope) }}</p>
+        <p>{{ $.t($ctrl.domoticzApi) }}</p>
+    </div>
 </script>
 
 <script>
