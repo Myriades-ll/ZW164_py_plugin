@@ -4,9 +4,8 @@ class ArrayOfNumbers extends Array {
     }
 
     pushNumber(item) {
-        if (isFinite(item)) {
-            this.push(item);
-        }
+        item *= 1;
+        if (isFinite(item)) this.push(item);
     }
 
     sum() {
@@ -69,6 +68,18 @@ class Courbe {
         );
         let total_time = deltas.sum();
         let non_zeros = deltas.non_zeros();
+        let y_value = 0;
+        deltas.forEach(
+            (item, index) => {
+                if (y_value == 0) y_value = this.canvas_height;
+                else y_value = 0;
+                this.#context.moveTo(
+                    (index + 1) * this.canvas_width / non_zeros
+                    ,
+                    y_value
+                );
+            }
+        )
         console.log('total time', total_time);
         console.log('Non zeros values', non_zeros);
         // last point; fixed
