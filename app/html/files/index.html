@@ -2,7 +2,7 @@
 <div id="plugin-view"></div>
 
 <!-- Template for custom component -->
-<script type="text/ng-template" id="app/ccss/sampleComponent.html">
+<script type="text/ng-template" id="app/ccss/sampleComponent">
   <div class="container">
       <script src="templates/ccss.js"></script>
       <a class="btnstylerev" back-button>{{ ::'Back' | translate }}</a>
@@ -18,7 +18,7 @@
   require(["app"], function (app) {
     // Custom component definition
     app.component("myPluginRoot", {
-      templateUrl: "app/ccss/sampleComponent.html",
+      templateUrl: "app/ccss/sampleComponent",
       controller: function ($scope, domoticzApi) {
         var $ctrl = this;
         $ctrl.message = "This is my plugin";
