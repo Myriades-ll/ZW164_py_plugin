@@ -6,12 +6,12 @@ class Courbe {
     }
 
     draw() {
-        ctx.moveTo(0, 100);
-        ctx.lineTo(100, 0);
-        ctx.lineTo(200, 0);
-        ctx.lineTo(300, 100);
-        ctx.lineTo(400, 100);
-        ctx.stroke();
+        this.context.moveTo(0, 100);
+        this.context.lineTo(100, 0);
+        this.context.lineTo(200, 0);
+        this.context.lineTo(300, 100);
+        this.context.lineTo(400, 100);
+        this.context.stroke();
     }
 }
 
