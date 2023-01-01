@@ -33,9 +33,9 @@ class Courbe {
     }
 
     redraw(timed_values) {
-        this.context.clearRect(0, 0, this.canvas_width, this.canvas_height);
+        this.#context.clearRect(0, 0, this.canvas_width, this.canvas_height);
         // first point; fixed
-        this.context.moveTo(0, this.canvas_height);
+        this.#context.moveTo(0, this.canvas_height);
         let deltas = [];
         timed_values.forEach(
             (item, index) => {
@@ -58,7 +58,7 @@ class Courbe {
         console.log(total_time);
         // last point; fixed
         this.#context.moveTo(this.#canvas_width, this.#canvas_height);
-        this.context.stroke();
+        this.#context.stroke();
     }
 }
 
