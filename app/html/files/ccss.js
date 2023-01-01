@@ -55,7 +55,7 @@ class Courbe {
             },
             0
         )
-        console.log(total_time);
+        console.log('total time', total_time);
         // last point; fixed
         this.#context.moveTo(this.#canvas_width, this.#canvas_height);
         this.#context.stroke();
