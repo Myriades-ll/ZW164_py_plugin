@@ -52,7 +52,8 @@ class Courbe {
     redraw(timed_values) {
         this.#context.clearRect(0, 0, this.canvas_width, this.canvas_height);
         // first point; fixed
-        this.#context.moveTo(0, this.canvas_height);
+        let y_value = this.#canvas_height;
+        this.#context.moveTo(0, y_value);
         let deltas = new ArrayOfNumbers();
         timed_values.forEach(
             (item, index) => {
@@ -68,14 +69,12 @@ class Courbe {
         );
         let total_time = deltas.sum();
         let non_zeros = deltas.non_zeros();
-        let y_value = 0;
         deltas.forEach(
             (item, index) => {
-                if (y_value == 0) y_value = this.canvas_height;
+                if (y_value == 0) y_value = this.#canvas_height;
                 else y_value = 0;
                 this.#context.moveTo(
-                    (index + 1) * this.canvas_width / non_zeros
-                    ,
+                    (index + 1) * this.#canvas_width / non_zeros,
                     y_value
                 );
             }
