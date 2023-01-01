@@ -49,15 +49,22 @@ class Courbe {
                 deltas.push(delta_time)
             }
         );
-        console.log(deltas);
         let total_time = deltas.reduce(
             function (accumulator, currentValue) {
-                console.log(accumulator, currentValue);
                 return accumulator + currentValue
             },
             0
         )
+        let non_zeros = deltas.reduce(
+            function (accumulator, currentValue) {
+                if (currentValue > 0) {
+                    return accumulator + 1;
+                }
+                return accumulator;
+            }
+        )
         console.log('total time', total_time);
+        console.log('Non zeros values', non_zeros);
         // last point; fixed
         this.#context.moveTo(this.#canvas_width, this.#canvas_height);
         this.#context.stroke();
