@@ -51,6 +51,7 @@ class Courbe {
 
     redraw(timed_values) {
         this.#context.clearRect(0, 0, this.canvas_width, this.canvas_height);
+        this.#context.beginPath();
         // first point; fixed
         let y_value = this.#canvas_height;
         this.#context.moveTo(0, y_value);
