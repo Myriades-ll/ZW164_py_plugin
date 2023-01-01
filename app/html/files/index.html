@@ -4,14 +4,13 @@
 <!-- Template for custom component -->
 <script type="text/ng-template" id="app/ccss/sampleComponent.html">
   <div class="container">
-        <script>
-            var canvas = document.getElementById('draw');
-            console.log(canvas);
-        </script>
+      <script src="templates/ccss.js"></script>
       <a class="btnstylerev" back-button>{{ ::'Back' | translate }}</a>
       <h2 class="page-header">My Plugin UI</h2>
       <p>{{ $ctrl.message }}</p>
-      <canvas id="draw"></canvas>
+      <p>
+        <canvas id="draw"></canvas>
+      </p>
   </div>
 </script>
 
