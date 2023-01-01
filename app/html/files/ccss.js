@@ -61,7 +61,8 @@ class Courbe {
                     return accumulator + 1;
                 }
                 return accumulator;
-            }
+            },
+            0
         )
         console.log('total time', total_time);
         console.log('Non zeros values', non_zeros);
