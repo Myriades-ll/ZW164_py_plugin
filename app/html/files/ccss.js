@@ -42,7 +42,7 @@ class ArrayOfNumbers extends Array {
         return this.reduce(
             (accumulator, currentValue) => {
                 console.log('sum()', accumulator, currentValue);
-                accumulator + currentValue;
+                return accumulator + currentValue;
             }, 0
         )
     }
