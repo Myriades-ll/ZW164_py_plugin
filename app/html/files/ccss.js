@@ -22,6 +22,7 @@ class ArrayOfNumbers extends Array {
      * @param {number | Array<number>} item
      */
     pushNumber(item) {
+        console.log(item);
         if (item instanceof Array) {
             if (this.isFiniteArray(item)) this.concat(item);
             else throw new Error("Not number values " + item)
