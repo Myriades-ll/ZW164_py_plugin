@@ -111,6 +111,7 @@ class Courbe {
             let non_zeros = deltas.non_zeros();
             console.log('total time', total_time);
             console.log('Non zeros values', non_zeros);
+            deltas.log();
             deltas.forEach(
                 (item, index) => {
                     y_value == 0 ? y_value = this.#canvas_height : y_value = 0;
