@@ -9,15 +9,11 @@ class ArrayOfNumbers extends Array {
     }
 
     sum() {
-        return this.reduce(
-            (accumulator, currentValue) => accumulator + currentValue, 0
-        )
+        return this.reduce((accumulator, currentValue) => accumulator + currentValue, 0)
     }
 
     sum(valueNumber) {
-        this.forEach(
-            (value, index) => this[index] = value + valueNumber
-        )
+        this.forEach((value, index) => this[index] = value + valueNumber)
     }
 
     non_zeros() {
@@ -29,6 +25,10 @@ class ArrayOfNumbers extends Array {
                 return accumulator;
             }, 0
         )
+    }
+
+    log() {
+        console.log(this);
     }
 }
 
