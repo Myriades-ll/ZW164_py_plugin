@@ -25,7 +25,7 @@ class ArrayOfNumbers extends Array {
         console.log(item);
         if (item instanceof Array) {
             console.log('item is an array');
-            if (this.isFiniteArray(item)) this.concat(item);
+            if (this.isFiniteArray(item)) this.push(...item);
             else throw new Error("Not number values " + item)
         } else {
             console.log('item is other');
