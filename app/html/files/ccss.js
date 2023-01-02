@@ -22,17 +22,13 @@ class ArrayOfNumbers extends Array {
      * @param {number | Array<number>} item
      */
     pushNumber(item) {
-        console.log(item);
         if (item instanceof Array) {
-            console.log('item is an array');
             if (this.isFiniteArray(item)) this.push(...item);
             else throw new Error("Not number values " + item)
         } else {
-            console.log('item is other');
             item *= 1;
             if (isFinite(item)) this.push(item);
         }
-        this.log();
     }
 
     /**
@@ -41,7 +37,6 @@ class ArrayOfNumbers extends Array {
     sum() {
         return this.reduce(
             (accumulator, currentValue) => {
-                console.log('sum()', accumulator, currentValue);
                 return accumulator + currentValue;
             }, 0
         )
@@ -127,6 +122,7 @@ class Courbe {
             )
             // last point; fixed
             this.#context.moveTo(this.#canvas_width, this.#canvas_height);
+            this.#context.strokeStyle = "red";
             this.#context.stroke();
         }
     }
