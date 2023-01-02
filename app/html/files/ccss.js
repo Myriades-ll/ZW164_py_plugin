@@ -10,13 +10,19 @@ class ArrayOfNumbers extends Array {
 
     sum() {
         return this.reduce(
-            (accumulator, currentValue) => accumulator + currentValue, 0
-        )
+            (accumulator, currentValue) => {
+                console.log('sum()', accumulator, currentValue);
+                accumulator + currentValue;
+            }
+        ), 0
     }
 
     sum(valueNumber) {
         this.forEach(
-            (value, index) => this[index] = value + valueNumber
+            (value, index) => {
+                console.log('sum(valueNumber)', value, index);
+                this[index] = value + valueNumber;
+            }
         )
     }
 
