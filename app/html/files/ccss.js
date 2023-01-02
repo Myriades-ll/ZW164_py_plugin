@@ -101,15 +101,14 @@ class Courbe {
         if (this.#is_canvas()) {
             this.#context.clearRect(0, 0, this.#canvas_width, this.#canvas_height);
             this.#context.beginPath();
+            this.#context.strokeStyle = "red";
             // first point; fixed
             let y_value = this.#canvas_height;
             this.#context.moveTo(0, y_value);
             let deltas = new ArrayOfNumbers();
             deltas.pushNumber(timed_values);
             let total_time = deltas.sum();
-            let non_zeros = deltas.non_zeros();
             console.log('total time', total_time);
-            console.log('Non zeros values', non_zeros);
             deltas.log();
             deltas.forEach(
                 (item, index) => {
@@ -122,7 +121,6 @@ class Courbe {
             )
             // last point; fixed
             this.#context.moveTo(this.#canvas_width, this.#canvas_height);
-            this.#context.strokeStyle = "red";
             this.#context.stroke();
         }
     }
