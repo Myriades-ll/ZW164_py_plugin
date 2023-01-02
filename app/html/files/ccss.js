@@ -62,6 +62,7 @@ class Courbe {
     #canvas_height;
     #canvas_width;
     #context;
+    #heights;
 
     /**
      * @param {HTMLCanvasElement} canvas
@@ -72,6 +73,12 @@ class Courbe {
             this.#context = this.canvas.getContext('2d');
             this.#canvas_height = this.canvas.height;
             this.#canvas_width = this.canvas.width;
+            this.#heights.push(...[
+                0,
+                0,
+                this.#canvas_height,
+                this.#canvas_height
+            ])
             this.#init();
         }
     }
@@ -103,8 +110,8 @@ class Courbe {
             this.#context.beginPath();
             this.#context.strokeStyle = "red";
             // first point; fixed
-            let y_value = this.#canvas_height;
-            this.#context.moveTo(0, y_value);
+            this.#context.moveTo(0, this.#canvas_height);
+            // building next points
             let deltas = new ArrayOfNumbers();
             deltas.pushNumber(timed_values);
             let total_time = deltas.sum();
@@ -112,10 +119,9 @@ class Courbe {
             deltas.log();
             deltas.forEach(
                 (item, index) => {
-                    y_value == 0 ? y_value = this.#canvas_height : y_value = 0;
                     this.#context.lineTo(
                         (index + 1) * this.#canvas_width * item / total_time,
-                        y_value
+                        this.#heights[index]
                     );
                 }
             )
