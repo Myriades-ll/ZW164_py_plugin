@@ -1,5 +1,3 @@
-import { ArrayOfNumbers } from 'templates/ccss_libs/types.js';
-
 class Courbe {
 
     #canvas_height = 0;
