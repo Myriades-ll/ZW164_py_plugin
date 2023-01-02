@@ -52,7 +52,7 @@ class HtmlPage:
                 os.path.join(self.src_path, 'ccss.js'),
                 self.dst_path
             )
-        if os.path.isdir(self.src_templates_path) and os.path.isdir(self.dst_templates_path):
+        if os.path.isdir(self.src_templates_path) and not os.path.isdir(self.dst_templates_path):
             shutil.copytree(
                 self.src_templates_path,
                 self.dst_templates_path
