@@ -39,8 +39,8 @@ class ArrayOfNumbers extends Array {
             (accumulator, currentValue) => {
                 console.log('sum()', accumulator, currentValue);
                 accumulator + currentValue;
-            }
-        ), 0
+            }, 0
+        )
     }
 
     /**
