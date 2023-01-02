@@ -113,14 +113,14 @@ class Courbe {
             deltas.forEach(
                 (item, index) => {
                     y_value == 0 ? y_value = this.#canvas_height : y_value = 0;
-                    this.#context.moveTo(
+                    this.#context.lineTo(
                         (index + 1) * this.#canvas_width * item / total_time,
                         y_value
                     );
                 }
             )
             // last point; fixed
-            this.#context.moveTo(this.#canvas_width, this.#canvas_height);
+            this.#context.lineTo(this.#canvas_width, this.#canvas_height);
             this.#context.stroke();
         }
     }
