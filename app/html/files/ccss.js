@@ -73,12 +73,12 @@ class Courbe {
             this.#context = this.canvas.getContext('2d');
             this.#canvas_height = this.canvas.height;
             this.#canvas_width = this.canvas.width;
-            this.#heights.push(...[
+            this.#heights = [
                 0,
                 0,
                 this.#canvas_height,
                 this.#canvas_height
-            ])
+            ];
             this.#init();
         }
     }
