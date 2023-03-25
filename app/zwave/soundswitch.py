@@ -194,7 +194,7 @@ class CCSSNode:
             cur_endpoint = CCSSEndpoint(node_id, endpoint_id)
             self.endpoints.update({endpoint_id: cur_endpoint})
             helpers.status(
-                f'New endpoint found: ({self.node_id}){endpoint_id}'
+                f'Node {self.node_id} - new endpoint found: {endpoint_id}'
             )
         cur_endpoint.update(node_id, endpoint_id, topic, payload)
         return cur_endpoint
@@ -265,7 +265,7 @@ class CCSSNodes(Iterable):
         if results.command == 'getToneCount' and isinstance(results.result, int):
             if results.result > 0:
                 helpers.status(
-                    f'Update tones count: ({self._cur_node.node_id}){results.result}'
+                    f'Node {self._cur_node.node_id} - update tones count: {results.result}'
                 )
                 self._cur_node.tones_count = results.result
         if results.command == 'getToneInfo' and isinstance(results.result, dict):

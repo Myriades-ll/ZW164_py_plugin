@@ -1,4 +1,14 @@
-# 2.1.0 - 2022/12/29
+# 2.2.0 -
+
+- Added: HTML page; in progress
+
+---
+
+## 2.1.1 - 2023/03/25
+
+- Fixed: bug in http header response analyse
+
+## 2.1.0 - 2022/12/29
 
 - Added: [todo list](/docs/todo.md)
 - Added: device added to location/plan automatically
@@ -11,8 +21,6 @@
 - Fixed: minor bug, wrong `nValue` when a command was thrown to hardware
 - Fixed: some unpythonic values
 - Removed: comments in README.md
-
----
 
 ## 2.0.0 - 2022/12/17
 

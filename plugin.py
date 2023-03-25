@@ -32,8 +32,8 @@ import app
 import domoticz
 import helpers
 
-__version__ = "2.1.0"
-__version_info__ = (2, 1, 0)
+__version__ = "2.1.1"
+__version_info__ = (2, 1, 1)
 __author__ = "Laurent aka Myriades"
 
 APP2 = app.App2()
@@ -63,7 +63,7 @@ def onConnect(octr: domoticz.OnConnectResponse) -> None:  # pylint: disable=inva
     if octr.is_success():
         APP2.on_connect(octr)
     else:
-        helpers.error(f'onConnect: {octr}')
+        helpers.error(octr)
 
 
 @domoticz.on_event

@@ -66,6 +66,7 @@ class HHeaders:
     Keep_Alive: str  # 'max=20, timeout=20'
     Pragma: str  # 'no-cache',
     Content_Encoding: str = field(default_factory=str)  # 'gzip',
+    Set_cookie: str = field(default_factory=str)
 
 
 @dataclass
