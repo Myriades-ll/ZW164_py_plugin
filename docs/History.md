@@ -4,6 +4,10 @@
 
 ---
 
+## 2.1.1 - 2023/03/25
+
+- Fixed: bug in http header response analyse
+
 ## 2.1.0 - 2022/12/29
 
 - Added: [todo list](/docs/todo.md)
